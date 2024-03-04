@@ -158,7 +158,7 @@ export function listItemForm<Fields extends FormFields>({
           );
 
           // @ts-expect-error field is PrimitiveAtom
-          set(field, { name: scopedNameAtom, originalFieldNameAtom, ...atoms });
+          set(field, { ...atoms, name: scopedNameAtom, originalFieldNameAtom });
         });
 
         return () => {
@@ -168,10 +168,10 @@ export function listItemForm<Fields extends FormFields>({
 
             // @ts-expect-error field is PrimitiveAtom
             set(field, {
+              ...atoms,
               // drop the scopedNameAtom, as to not make it original on next mount
               name: originalFieldNameAtom,
               originalFieldNameAtom: undefined,
-              ...atoms,
             });
           });
         };
