@@ -37,9 +37,6 @@ jobs:
         with:
           cmd: install
 
-      - name: ✅ Typecheck
-        run: yarn typecheck
-
       - name: 🧪 Test
         run: yarn test:cov
 

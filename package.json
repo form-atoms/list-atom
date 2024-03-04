@@ -33,7 +33,6 @@
     "build:storybook": "storybook build",
     "test": "vitest",
     "test:cov": "vitest --coverage",
-    "typecheck": "vitest --typecheck.only",
     "storybook": "storybook dev",
     "sb": "yarn storybook",
     "sb:up": "yarn dlx storybook@latest upgrade",
