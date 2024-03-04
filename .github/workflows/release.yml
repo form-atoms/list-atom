@@ -40,11 +40,11 @@ jobs:
       - name: 🧪 Test
         run: yarn test:cov
 
-      - name: 📊 Codecov
-        uses: codecov/codecov-action@v3
+      - name: 📊 Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
         with:
-          directory: coverage
-          verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: form-atoms/list-atom
 
       - name: 🔨 Build
         uses: borales/actions-yarn@v4
