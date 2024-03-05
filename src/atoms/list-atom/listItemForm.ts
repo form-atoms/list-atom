@@ -21,7 +21,8 @@ import {
 } from "jotai";
 import { atomEffect } from "jotai-effect";
 
-import { extendFieldAtom } from "../extendFieldAtom";
+import { extendAtom } from "../extendAtom";
+import { PrimitiveFormAtom } from "../types";
 
 export type ExtendFormAtom<Fields extends FormFields, State> =
   FormAtom<Fields> extends Atom<infer DefaultState>
@@ -130,8 +131,8 @@ export function listItemForm<Fields extends FormFields>({
         void
       >;
 }) {
-  const itemFormAtom: ListItemForm<Fields> = extendFieldAtom(
-    formAtom({ fields }),
+  const itemFormAtom: ListItemForm<Fields> = extendAtom(
+    formAtom({ fields }) as unknown as PrimitiveFormAtom<Fields>,
     (base, get) => {
       const nameAtom = atom((get) => {
         const list: ListItemForm<Fields>[] = get(formListAtom);
@@ -144,40 +145,56 @@ export function listItemForm<Fields extends FormFields>({
         const fields = get(base.fields);
 
         walkFields(fields, (field) => {
-          const { name: originalFieldNameAtom, ...atoms } = get(field);
+          const { name: _originalNameAtom, ...atoms } = get(field);
 
           const scopedNameAtom = atom(
             (get) => {
-              return [get(nameAtom), get(originalFieldNameAtom)]
+              return [get(nameAtom), get(_originalNameAtom)]
                 .filter(Boolean)
                 .join(".");
             },
             (_, set, update: string) => {
-              set(originalFieldNameAtom, update);
+              set(_originalNameAtom, update);
             },
           );
 
+          if (
+            typeof process !== "undefined" &&
+            process.env.NODE_ENV !== "production"
+          ) {
+            scopedNameAtom.debugLabel =
+              _originalNameAtom.debugLabel + "/scoped";
+          }
+
           // @ts-expect-error field is PrimitiveAtom
-          set(field, { ...atoms, name: scopedNameAtom, originalFieldNameAtom });
+          set(field, { ...atoms, name: scopedNameAtom, _originalNameAtom });
         });
 
         return () => {
           walkFields(fields, (field) => {
             // @ts-expect-error oh yes
-            const { originalFieldNameAtom, ...atoms } = get(field);
+            const { _originalNameAtom, ...atoms } = get(field);
 
             // @ts-expect-error field is PrimitiveAtom
             set(field, {
               ...atoms,
               // drop the scopedNameAtom, as to not make it original on next mount
-              name: originalFieldNameAtom,
-              originalFieldNameAtom: undefined,
+              name: _originalNameAtom,
+              _originalNameAtom: undefined,
             });
           });
         };
       });
 
       get(patchNamesEffect);
+
+      if (
+        typeof process !== "undefined" &&
+        process.env.NODE_ENV !== "production"
+      ) {
+        patchNamesEffect.debugPrivate = true;
+        nameAtom.debugPrivate = true;
+      }
 
       return {
         name: nameAtom,

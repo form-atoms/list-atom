@@ -12,7 +12,7 @@ import { atom } from "jotai";
 import { RESET, atomWithDefault, atomWithReset, splitAtom } from "jotai/utils";
 
 import { type ListItemForm, listItemForm } from "./listItemForm";
-import { type ExtendFieldAtom } from "../extendFieldAtom";
+import { type ExtendFieldAtom } from "../types";
 
 export type ListItem<Fields extends FormFields> = PrimitiveAtom<
   ListItemForm<Fields>
@@ -103,20 +103,29 @@ export function listAtom<
   }
 
   function buildItem(fields?: Fields): ListItemForm<Fields> {
-    return listItemForm({
+    const itemForm = listItemForm({
       fields: fields ?? formBuilder(),
       getListNameAtom: (get) => get(self).name,
       formListAtom: _formListAtom,
     });
+
+    if (
+      typeof process !== "undefined" &&
+      process.env.NODE_ENV !== "production"
+    ) {
+      itemForm.debugLabel = `list/${config.name ?? self}/form/${itemForm}`;
+      itemForm.debugPrivate = true;
+    }
+
+    return itemForm;
   }
 
   const makeFormList = (): ListItemForm<Fields>[] =>
     formBuilder(config.value).map(buildItem);
 
-  const initialFormListAtom = atomWithDefault(makeFormList);
-  const _formListAtom = atomWithDefault((get) => get(initialFormListAtom));
+  const _initialFormListAtom = atomWithDefault(makeFormList);
+  const _formListAtom = atomWithDefault((get) => get(_initialFormListAtom));
   const _splitListAtom = splitAtom(_formListAtom);
-
   /**
    * Unwraps the list of formAtoms, into list of fields of each form.
    */
@@ -134,7 +143,7 @@ export function listAtom<
   const touchedAtom = atomWithReset(false);
   const dirtyAtom = atom((get) => {
     const listUpdated = !arraysShallowEqual(
-      get(initialFormListAtom),
+      get(_initialFormListAtom),
       get(_formListAtom),
     );
 
@@ -163,8 +172,8 @@ export function listAtom<
 
     return hasNestedDirtyField;
   });
-  const listErrorsAtom = atom<string[]>([]);
-  const itemErrorsAtom = atom((get) => {
+  const _listErrorsAtom = atom<string[]>([]);
+  const _itemErrorsAtom = atom((get) => {
     // get errors from the nested forms
     const hasInvalidForm = get(_formListAtom)
       .map((formAtom) => {
@@ -190,7 +199,7 @@ export function listAtom<
       : [];
   });
   const errorsAtom = atom(
-    (get) => [...get(listErrorsAtom), ...get(itemErrorsAtom)],
+    (get) => [...get(_listErrorsAtom), ...get(_itemErrorsAtom)],
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (_get, _set, _value: string[]) => {
       // intentional NO-OP
@@ -221,7 +230,7 @@ export function listAtom<
     ) => {
       if (value === RESET) {
         set(_formListAtom, value);
-        set(initialFormListAtom, value);
+        set(_initialFormListAtom, value);
 
         const forms = get(_formListAtom);
 
@@ -237,7 +246,7 @@ export function listAtom<
             formListAtom: _formListAtom,
           }),
         );
-        set(initialFormListAtom, updatedFormList);
+        set(_initialFormListAtom, updatedFormList);
         set(_formListAtom, updatedFormList);
       } else {
         throw Error("Writing unsupported value to listFieldAtom value!");
@@ -247,7 +256,7 @@ export function listAtom<
 
   const resetAtom = atom<null, [void], void>(null, (get, set) => {
     set(errorsAtom, []);
-    set(listErrorsAtom, []);
+    set(_listErrorsAtom, []);
     set(touchedAtom, RESET);
     set(valueAtom, get(initialValueAtom) ?? RESET);
 
@@ -294,13 +303,13 @@ export function listAtom<
         if (isPromise(maybeValidatePromise)) {
           ptr === get(validateCountAtom) &&
             set(validateResultAtom, "validating");
-          errors = (await maybeValidatePromise) ?? get(listErrorsAtom);
+          errors = (await maybeValidatePromise) ?? get(_listErrorsAtom);
         } else {
-          errors = maybeValidatePromise ?? get(listErrorsAtom);
+          errors = maybeValidatePromise ?? get(_listErrorsAtom);
         }
 
         if (ptr === get(validateCountAtom)) {
-          set(listErrorsAtom, errors);
+          set(_listErrorsAtom, errors);
           set(validateResultAtom, errors.length > 0 ? "invalid" : "valid");
         }
       }
@@ -327,7 +336,7 @@ export function listAtom<
       ? await listValidate
       : listValidate;
 
-    state.set(listErrorsAtom, listError ?? []);
+    state.set(_listErrorsAtom, listError ?? []);
 
     return state.get(errorsAtom);
   };
@@ -343,19 +352,35 @@ export function listAtom<
     reset: resetAtom,
     validate: validateAtom,
     ref: refAtom,
-    buildItem,
     _validateCount: validateCountAtom,
-    _validateCallback: validateCallback,
+    _initialValue: initialValueAtom,
     /**
      * List private atoms
      */
     _splitList: _splitListAtom,
     _formList: _formListAtom,
     _formFields: _formFieldsAtom,
-    _initialValue: initialValueAtom,
   };
 
-  const self = atom(listAtoms);
+  const self = atom({
+    ...listAtoms,
+    buildItem,
+    _validateCallback: validateCallback,
+  });
+
+  if (typeof process !== "undefined" && process.env.NODE_ENV !== "production") {
+    Object.entries(listAtoms).map(([atomName, atom]) => {
+      atom.debugLabel = `list/${atomName}/${config.name ?? self}`;
+    });
+
+    self.debugPrivate = true;
+    _splitListAtom.debugPrivate = true;
+    _formListAtom.debugPrivate = true;
+    _formFieldsAtom.debugPrivate = true;
+    _initialFormListAtom.debugPrivate = true;
+    _listErrorsAtom.debugPrivate = true;
+    _itemErrorsAtom.debugPrivate = true;
+  }
 
   // @ts-expect-error ref with HTMLFieldset is ok
   return self;
