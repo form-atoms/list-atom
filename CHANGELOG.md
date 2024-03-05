@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/form-atoms/list-atom/compare/v1.0.2...v1.0.3) (2024-03-05)
+
+
+### Bug Fixes
+
+* **build:** omit story files ([26b76df](https://github.com/form-atoms/list-atom/commit/26b76dfaf23850847fe601d20ccae169e0d36866))
+
 ## [1.0.2](https://github.com/form-atoms/list-atom/compare/v1.0.1...v1.0.2) (2024-03-05)
 
 
