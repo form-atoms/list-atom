@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/form-atoms/list-atom/compare/v1.0.1...v1.0.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* **debug:** add labels to atoms, mark internal atoms as private ([0b5ea09](https://github.com/form-atoms/list-atom/commit/0b5ea090ea73ba21571ab62d158e3582c6e14b57))
+
 ## [1.0.1](https://github.com/form-atoms/list-atom/compare/v1.0.0...v1.0.1) (2024-03-05)
 
 
