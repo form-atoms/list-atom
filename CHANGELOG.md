@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/form-atoms/list-atom/compare/v1.0.0...v1.0.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* reuse the buildItem method when adding items to the list ([b9e0af5](https://github.com/form-atoms/list-atom/commit/b9e0af523b6a8b2e0a7a2163641897e5d18bb99d))
+
 # 1.0.0 (2024-03-04)
 
 
