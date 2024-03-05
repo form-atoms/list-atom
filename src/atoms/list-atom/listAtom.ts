@@ -66,7 +66,7 @@ export type ListAtom<Fields extends FormFields, Value> = ExtendFieldAtom<
      * @internal
      */
     _formFields: Atom<Fields[]>;
-    buildItem(): ListItemForm<Fields>;
+    buildItem(fields?: Fields): ListItemForm<Fields>;
   }
 >;
 
@@ -102,22 +102,16 @@ export function listAtom<
     }
   }
 
-  function buildItem(): ListItemForm<Fields> {
+  function buildItem(fields?: Fields): ListItemForm<Fields> {
     return listItemForm({
-      fields: formBuilder(),
+      fields: fields ?? formBuilder(),
       getListNameAtom: (get) => get(self).name,
       formListAtom: _formListAtom,
     });
   }
 
   const makeFormList = (): ListItemForm<Fields>[] =>
-    formBuilder(config.value).map((fields) =>
-      listItemForm({
-        fields,
-        getListNameAtom: (get) => get(self).name,
-        formListAtom: _formListAtom,
-      }),
-    );
+    formBuilder(config.value).map(buildItem);
 
   const initialFormListAtom = atomWithDefault(makeFormList);
   const _formListAtom = atomWithDefault((get) => get(initialFormListAtom));

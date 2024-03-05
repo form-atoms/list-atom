@@ -3,7 +3,6 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useTransition } from "react";
 
 import { ListAtom, ListItem } from "../../atoms/list-atom";
-import { listItemForm } from "../../atoms/list-atom/listItemForm";
 
 export const useListActions = <Fields extends FormFields, Value>(
   listAtom: ListAtom<Fields, Value>,
@@ -24,13 +23,7 @@ export const useListActions = <Fields extends FormFields, Value>(
   const add = useCallback((before?: ListItem<Fields>, fields?: Fields) => {
     dispatchSplitList({
       type: "insert",
-      value: fields
-        ? listItemForm({
-            fields,
-            getListNameAtom: (get) => get(listAtom).name,
-            formListAtom: atoms._formList,
-          })
-        : atoms.buildItem(),
+      value: atoms.buildItem(fields),
       before,
     });
     startTransition(() => {
