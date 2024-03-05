@@ -8,10 +8,9 @@ import {
 } from "form-atoms";
 
 import { AddButtonProps, List, ListProps, RemoveButtonProps } from "./List";
-import { ListField } from "./ListField.mock";
 import { listAtom } from "../../atoms";
-import { PicoFieldName } from "../../scenarios/PicoFieldName";
-import { StoryForm } from "../../scenarios/StoryForm";
+import { PicoFieldName } from "../../story/PicoFieldName";
+import { StoryForm } from "../../story/StoryForm";
 
 const RemoveButton = ({ remove }: RemoveButtonProps) => (
   <button type="button" className="outline secondary" onClick={remove}>
@@ -35,7 +34,9 @@ const meta = {
 
 export default meta;
 
-const AddHobbyButton = ({ add }: AddButtonProps<any>) => (
+const AddHobbyButton = ({
+  add,
+}: AddButtonProps<{ hobby: FieldAtom<string> }>) => (
   <button type="button" className="outline" onClick={() => add()}>
     Add hobby
   </button>
