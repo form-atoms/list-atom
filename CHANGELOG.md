@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/form-atoms/list-atom/compare/v1.0.5...v1.0.6) (2024-03-06)
+
+
+### Bug Fixes
+
+* **item#moveDown:** make item first when last ([c5f858d](https://github.com/form-atoms/list-atom/commit/c5f858d0816fadb0f1a796fb67878128a35145fb))
+
 ## [1.0.5](https://github.com/form-atoms/list-atom/compare/v1.0.4...v1.0.5) (2024-03-06)
 
 
