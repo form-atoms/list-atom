@@ -3,7 +3,7 @@ import { Atom, PrimitiveAtom } from "jotai";
 
 export type ExtendFieldAtom<Value, State> =
   FieldAtom<Value> extends Atom<infer DefaultState>
-    ? PrimitiveAtom<DefaultState & State> // fieldAtom is in practice writable - PrimitiveAtom
+    ? Atom<DefaultState & State>
     : never;
 
 export type PrimitiveFormAtom<Fields extends FormFields> =
