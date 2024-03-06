@@ -6,18 +6,18 @@ import type { ListAtom, ListItem } from "../../atoms/list-atom";
 import { useList } from "../../hooks";
 
 export type RemoveButtonProps = { remove: () => void };
-export type RemoveButtonProp = RenderProp<RemoveButtonProps, "RemoveButton">;
+type RemoveButtonProp = RenderProp<RemoveButtonProps, "RemoveButton">;
 
 export type AddButtonProps<Fields extends FormFields = Record<string, never>> =
   {
     add: (fields?: Fields) => void;
   };
-export type AddButtonProp<Fields extends FormFields> = RenderProp<
+type AddButtonProp<Fields extends FormFields> = RenderProp<
   AddButtonProps<Fields>,
   "AddButton"
 >;
 
-export type EmptyProp = RenderProp<unknown, "Empty">;
+type EmptyProp = RenderProp<unknown, "Empty">;
 
 export type ListItemProps<Fields extends FormFields> = {
   /**
