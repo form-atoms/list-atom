@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/form-atoms/list-atom/compare/v1.0.3...v1.0.4) (2024-03-06)
+
+
+### Bug Fixes
+
+* **types:** PrimitiveAtom extends PrimitiveAtom is broken ([edf45c1](https://github.com/form-atoms/list-atom/commit/edf45c18819bd9883a23a02c2806af3dddfd0b3a))
+
 ## [1.0.3](https://github.com/form-atoms/list-atom/compare/v1.0.2...v1.0.3) (2024-03-05)
 
 
