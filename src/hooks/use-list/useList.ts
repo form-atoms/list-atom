@@ -24,7 +24,11 @@ export const useList = <Fields extends FormFields, Value>(
     fields: formFields[index]!,
     remove: () => remove(item),
     moveUp: () => move(item, splitItems[index - 1]),
-    moveDown: () => move(item, splitItems[index + 2]),
+    moveDown: () =>
+      move(
+        item,
+        item === splitItems.at(-1) ? splitItems[0] : splitItems[index + 2],
+      ),
   }));
 
   return { remove, add, move, isEmpty, items };
