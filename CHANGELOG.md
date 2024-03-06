@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/form-atoms/list-atom/compare/v1.0.6...v1.0.7) (2024-03-06)
+
+
+### Bug Fixes
+
+* **List:** don't export internal props ([774f194](https://github.com/form-atoms/list-atom/commit/774f19475a658ed7c4cb1e4ba8e4e56d14905252))
+
 ## [1.0.6](https://github.com/form-atoms/list-atom/compare/v1.0.5...v1.0.6) (2024-03-06)
 
 
