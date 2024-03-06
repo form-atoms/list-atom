@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/form-atoms/list-atom/compare/v1.0.4...v1.0.5) (2024-03-06)
+
+
+### Bug Fixes
+
+* **scripts:** no postinstall ([c6c0d52](https://github.com/form-atoms/list-atom/commit/c6c0d52daa27c8c9164378090c2c1e934b87875d))
+
 ## [1.0.4](https://github.com/form-atoms/list-atom/compare/v1.0.3...v1.0.4) (2024-03-06)
 
 
