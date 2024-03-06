@@ -1,13 +1,16 @@
 <div align="center">
   <img height="300" style="margin: 32px" src="./public/form-atoms-banner-transparent.png#gh-dark-mode-only">
   <img width="180" style="margin: 32px" src="./public/form-atoms-field.svg#gh-light-mode-only">
-  <h1>list-atom extension for <a href="https://github.com/form-atoms/form-atoms" target="_blank">form-atoms</a></h1>
+  <h1>list-atom extension for the <a href="https://github.com/form-atoms/form-atoms" target="_blank">form-atoms</a></h1>
 </div>
 
-```
-yarn add jotai form-atoms @form-atoms/list-atom
+```sh
+npm install jotai-effect @form-atoms/list-atom
 ```
 
+<a aria-label="Minzipped size" href="https://bundlephobia.com/result?p=%40form-atoms/list-atom">
+  <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/%40form-atoms/list-atom?style=for-the-badge&labelColor=24292e">
+</a>
 <a aria-label="NPM version" href="https://www.npmjs.com/package/%40form-atoms/list-atom">
   <img alt="NPM Version" src="https://img.shields.io/npm/v/%40form-atoms/list-atom?style=for-the-badge&labelColor=24292e">
 </a>
