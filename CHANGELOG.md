@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/form-atoms/list-atom/compare/v1.0.8...v1.0.9) (2024-03-07)
+
+
+### Bug Fixes
+
+* **types:** cleanup the FormAtom copypaste, infer it without Atom wrap ([94ae550](https://github.com/form-atoms/list-atom/commit/94ae550a49f821042741eba3c3021e37c852a169))
+
 ## [1.0.8](https://github.com/form-atoms/list-atom/compare/v1.0.7...v1.0.8) (2024-03-07)
 
 
