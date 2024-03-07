@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/form-atoms/list-atom/compare/v1.0.10...v1.0.11) (2024-03-07)
+
+
+### Bug Fixes
+
+* **refAtom:** make the same type as fieldAtom ([f7dac70](https://github.com/form-atoms/list-atom/commit/f7dac708fce44af074680e81475df1f7a6d95d9b))
+
 ## [1.0.10](https://github.com/form-atoms/list-atom/compare/v1.0.9...v1.0.10) (2024-03-07)
 
 
