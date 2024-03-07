@@ -197,14 +197,14 @@ export function listAtom<
   });
   const errorsAtom = atom(
     (get) => [...get(_listErrorsAtom), ...get(_itemErrorsAtom)],
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (_get, _set, _value: string[]) => {
-      // intentional NO-OP
-      // the errors atom must be writable, as the `validateAtom` will write the errors returned from `_validateCallback`
-      // but we ignore it, as we already manage the `listErrors` internally
+    () => {
+      /**
+       * NOTE: Intentional NO-OP
+       * The errorAtom must be writable, as the `form.validateFields` will write the errors returned from `_validateCallback`.
+       * We ignore the write, as we already manage the `listErrors` internally.
+       */
     },
-  );
-
+  ) as PrimitiveAtom<string[]>;
   const validateCountAtom = atom(0);
   const validateResultAtom = atom<ValidateStatus>("valid");
   const refAtom = atom<HTMLFieldSetElement | null>(null);
