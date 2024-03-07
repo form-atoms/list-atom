@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/form-atoms/list-atom/compare/v1.0.7...v1.0.8) (2024-03-07)
+
+
+### Bug Fixes
+
+* remove unnecessary wrapping for fields ([bb1b1b4](https://github.com/form-atoms/list-atom/commit/bb1b1b4f9da8831cbd0e777307837e04dd60e105))
+
 ## [1.0.7](https://github.com/form-atoms/list-atom/compare/v1.0.6...v1.0.7) (2024-03-06)
 
 
