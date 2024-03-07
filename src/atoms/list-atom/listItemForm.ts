@@ -1,109 +1,24 @@
-import {
-  FormAtom,
-  FormFieldErrors,
-  FormFieldValues,
-  FormFields,
-  RESET,
-  SubmitStatus,
-  TouchedFields,
-  ValidateOn,
-  ValidateStatus,
-  formAtom,
-  walkFields,
-} from "form-atoms";
-import {
-  Atom,
-  Getter,
-  SetStateAction,
-  Setter,
-  WritableAtom,
-  atom,
-} from "jotai";
+import { FormAtom, FormFields, RESET, formAtom, walkFields } from "form-atoms";
+import { Atom, Getter, SetStateAction, WritableAtom, atom } from "jotai";
 import { atomEffect } from "jotai-effect";
 
 import { extendAtom } from "../extendAtom";
 import { PrimitiveFormAtom } from "../types";
 
-export type ExtendFormAtom<Fields extends FormFields, State> =
-  FormAtom<Fields> extends Atom<infer DefaultState>
-    ? Atom<DefaultState & State>
-    : never;
+type FormAtomState<Fields extends FormFields> =
+  FormAtom<Fields> extends Atom<infer State> ? State : never;
 
-// TODO(types): ExtendFormAtom does not work
-// The inferred type of this node exceeds the maximum length the compiler will serialize. An explicit type annotation is needed.
-type NamedFormAtom<Fields extends FormFields> = Atom<{
+type NamedFormAtomState<Fields extends FormFields> = FormAtomState<Fields> & {
   nameAtom: Atom<string>;
+};
 
-  /**
-   * An atom containing an object of nested field atoms
-   */
-  fields: WritableAtom<
-    Fields,
-    [Fields | typeof RESET | ((prev: Fields) => Fields)],
-    void
-  >;
-  /**
-   * An read-only atom that derives the form's values from
-   * its nested field atoms.
-   */
-  values: Atom<FormFieldValues<Fields>>;
-  /**
-   * An read-only atom that derives the form's errors from
-   * its nested field atoms.
-   */
-  errors: Atom<FormFieldErrors<Fields>>;
-  /**
-   * A read-only atom that returns `true` if any of the fields in
-   * the form are dirty.
-   */
-  dirty: Atom<boolean>;
-  /**
-   * A read-only atom derives the touched state of its nested field atoms.
-   */
-  touchedFields: Atom<TouchedFields<Fields>>;
-  /**
-   * A write-only atom that resets the form's nested field atoms
-   */
-  reset: WritableAtom<null, [], void>;
-  /**
-   * A write-only atom that validates the form's nested field atoms
-   */
-  validate: WritableAtom<null, [] | [ValidateOn], void>;
-  /**
-   * A read-only atom that derives the form's validation status
-   */
-  validateStatus: Atom<ValidateStatus>;
-  /**
-   * A write-only atom for submitting the form
-   */
-  submit: WritableAtom<
-    null,
-    [(value: FormFieldValues<Fields>) => void | Promise<void>],
-    void
-  >;
-  /**
-   * A read-only atom that reads the number of times the form has
-   * been submitted
-   */
-  submitCount: Atom<number>;
-  /**
-   * An atom that contains the form's submission status
-   */
-  submitStatus: WritableAtom<SubmitStatus, [SubmitStatus], void>;
-  _validateFields: (
-    get: Getter,
-    set: Setter,
-    event: ValidateOn,
-  ) => Promise<void>;
-}>;
+type NamedFormAtom<Fields extends FormFields> = Atom<
+  NamedFormAtomState<Fields>
+>;
 
 export type ListItemForm<Fields extends FormFields> = NamedFormAtom<Fields>;
 
-export function listItemForm<Fields extends FormFields>({
-  fields,
-  formListAtom,
-  getListNameAtom,
-}: {
+type ListItemFormConfig<Fields extends FormFields> = {
   /**
    * The fields of the item form.
    */
@@ -128,7 +43,13 @@ export function listItemForm<Fields extends FormFields>({
         [string | undefined | typeof RESET],
         void
       >;
-}) {
+};
+
+export function listItemForm<Fields extends FormFields>({
+  fields,
+  formListAtom,
+  getListNameAtom,
+}: ListItemFormConfig<Fields>) {
   const itemFormAtom: ListItemForm<Fields> = extendAtom(
     formAtom(fields) as unknown as PrimitiveFormAtom<Fields>,
     (base, get) => {
