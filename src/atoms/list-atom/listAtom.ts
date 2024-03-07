@@ -133,10 +133,7 @@ export function listAtom<
     const formLists = get(_formListAtom);
 
     return formLists.map((formAtom) => {
-      const formAtoms = get(formAtom);
-      const { fields } = get(formAtoms.fields);
-
-      return fields;
+      return get(get(formAtom).fields);
     });
   });
 
@@ -214,14 +211,9 @@ export function listAtom<
   const emptyAtom = atom((get) => get(_formListAtom).length === 0);
   const valueAtom = atom(
     (get) => {
-      const formLists = get(_formListAtom);
-
-      return formLists.map((formAtom) => {
-        const formAtoms = get(formAtom);
-        const { fields } = get(formAtoms.values);
-
-        return fields as Value;
-      });
+      return get(_formListAtom).map((formAtom) => {
+        return get(get(formAtom).values);
+      }) as Value[];
     },
     (
       get,

@@ -97,9 +97,7 @@ type NamedFormAtom<Fields extends FormFields> = Atom<{
   ) => Promise<void>;
 }>;
 
-export type ListItemForm<Fields extends FormFields> = NamedFormAtom<{
-  fields: Fields;
-}>;
+export type ListItemForm<Fields extends FormFields> = NamedFormAtom<Fields>;
 
 export function listItemForm<Fields extends FormFields>({
   fields,
@@ -132,7 +130,7 @@ export function listItemForm<Fields extends FormFields>({
       >;
 }) {
   const itemFormAtom: ListItemForm<Fields> = extendAtom(
-    formAtom({ fields }) as unknown as PrimitiveFormAtom<Fields>,
+    formAtom(fields) as unknown as PrimitiveFormAtom<Fields>,
     (base, get) => {
       const nameAtom = atom((get) => {
         const list: ListItemForm<Fields>[] = get(formListAtom);
