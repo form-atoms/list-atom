@@ -12,7 +12,7 @@ import { atom } from "jotai";
 import { RESET, atomWithDefault, atomWithReset, splitAtom } from "jotai/utils";
 
 import { type ListItemForm, listItemForm } from "./listItemForm";
-import { type ExtendFieldAtom } from "../types";
+import type { FieldAtomState } from "../types";
 
 export type ListItem<Fields extends FormFields> = PrimitiveAtom<
   ListItemForm<Fields>
@@ -35,39 +35,42 @@ type SplitAtomAction<Item> =
       before?: PrimitiveAtom<Item>;
     };
 
-export type ListAtom<Fields extends FormFields, Value> = ExtendFieldAtom<
-  Value[],
-  {
-    /**
-     * An atom indicating whether the list is empty.
-     */
-    empty: Atom<boolean>;
-    /**
-     * A splitAtom() instance from jotai/utils.
-     * It handles adding, removing and moving of items in the list.
-     * @internal
-     */
-    _splitList: WritableAtom<
-      PrimitiveAtom<ListItemForm<Fields>>[],
-      [SplitAtomAction<ListItemForm<Fields>>],
-      void
-    >;
-    /**
-     * An atom holding the list of forms of each item.
-     * @internal
-     */
-    _formList: WritableAtom<
-      ListItemForm<Fields>[],
-      [typeof RESET | SetStateAction<ListItemForm<Fields>[]>],
-      void
-    >;
-    /**
-     * An atom holding the fields of the internal formAtom of each item.
-     * @internal
-     */
-    _formFields: Atom<Fields[]>;
-    buildItem(fields?: Fields): ListItemForm<Fields>;
-  }
+type ListAtomState<Fields extends FormFields, Value> = FieldAtomState<
+  Value[]
+> & {
+  /**
+   * An atom indicating whether the list is empty.
+   */
+  empty: Atom<boolean>;
+  /**
+   * A splitAtom() instance from jotai/utils.
+   * It handles adding, removing and moving of items in the list.
+   * @internal
+   */
+  _splitList: WritableAtom<
+    PrimitiveAtom<ListItemForm<Fields>>[],
+    [SplitAtomAction<ListItemForm<Fields>>],
+    void
+  >;
+  /**
+   * An atom holding the list of forms of each item.
+   * @internal
+   */
+  _formList: WritableAtom<
+    ListItemForm<Fields>[],
+    [typeof RESET | SetStateAction<ListItemForm<Fields>[]>],
+    void
+  >;
+  /**
+   * An atom holding the fields of the internal formAtom of each item.
+   * @internal
+   */
+  _formFields: Atom<Fields[]>;
+  buildItem(fields?: Fields): ListItemForm<Fields>;
+};
+
+export type ListAtom<Fields extends FormFields, Value> = Atom<
+  ListAtomState<Fields, Value>
 >;
 
 export type ListAtomConfig<Fields extends FormFields, Value> = {
@@ -207,7 +210,14 @@ export function listAtom<
   ) as PrimitiveAtom<string[]>;
   const validateCountAtom = atom(0);
   const validateResultAtom = atom<ValidateStatus>("valid");
-  const refAtom = atom<HTMLFieldSetElement | null>(null);
+
+  /**
+   * The ref is practicaly not usable for list, but required to match the fieldAtom signature.
+   * @internal
+   */
+  const refAtom = atom<
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null
+  >(null);
   const emptyAtom = atom((get) => get(_formListAtom).length === 0);
   const valueAtom = atom(
     (get) => {
@@ -374,7 +384,6 @@ export function listAtom<
     _itemErrorsAtom.debugPrivate = true;
   }
 
-  // @ts-expect-error ref with HTMLFieldset is ok
   return self;
 }
 

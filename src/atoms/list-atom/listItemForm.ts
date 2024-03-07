@@ -1,12 +1,10 @@
-import { FormAtom, FormFields, RESET, formAtom, walkFields } from "form-atoms";
-import { Atom, Getter, SetStateAction, WritableAtom, atom } from "jotai";
+import { type FormFields, RESET, formAtom, walkFields } from "form-atoms";
+import type { Atom, Getter, SetStateAction, WritableAtom } from "jotai";
+import { atom } from "jotai";
 import { atomEffect } from "jotai-effect";
 
 import { extendAtom } from "../extendAtom";
-import { PrimitiveFormAtom } from "../types";
-
-type FormAtomState<Fields extends FormFields> =
-  FormAtom<Fields> extends Atom<infer State> ? State : never;
+import type { FormAtomState, PrimitiveFormAtom } from "../types";
 
 type NamedFormAtomState<Fields extends FormFields> = FormAtomState<Fields> & {
   nameAtom: Atom<string>;
