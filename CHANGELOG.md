@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/form-atoms/list-atom/compare/v1.0.9...v1.0.10) (2024-03-07)
+
+
+### Bug Fixes
+
+* **types:** errorsAtom as primitiveAtom ([2d2a6dd](https://github.com/form-atoms/list-atom/commit/2d2a6ddfd66275f2edf7e576f517b64093e0ac1c))
+
 ## [1.0.9](https://github.com/form-atoms/list-atom/compare/v1.0.8...v1.0.9) (2024-03-07)
 
 
