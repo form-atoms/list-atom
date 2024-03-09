@@ -6,6 +6,18 @@
   text-transform: uppercase;
 }
 
+.code-details {
+  margin: 0;
+}
+
+.code-details summary {
+  line-height: 31.5px;
+}
+
+.code-details summary:after {
+  margin-top: 5px;
+}
+
 @media (min-width: 576px) {
   .container {
     margin-top: var(--pico-spacing);

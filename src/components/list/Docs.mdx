@@ -1,4 +1,5 @@
-import { Meta, Canvas, ArgTypes, Description } from "@storybook/blocks";
+import { Meta, Canvas, Story, ArgTypes, Description } from "@storybook/blocks";
+import { Example } from "../../../.storybook/blocks/Example";
 import * as ListStories from "./List.stories";
 import * as ListItemStories from "./item/Item.stories";
 
@@ -39,11 +40,7 @@ The `children` render prop will receive the following props:
 
 ## Examples
 
-### List of objects
-
-<Description of={ListStories.ListOfObjects} />
-
-<Canvas sourceState="none" of={ListStories.ListOfObjects} />
+<Example of={ListStories.ListOfObjects}>
 
 ```tsx
 import { InputField, fieldAtom } from "form-atoms";
@@ -97,11 +94,9 @@ const Example = () => (
 );
 ```
 
-### Custom `AddButton`
+</Example>
 
-<Description of={ListStories.CustomAddButton} />
-
-<Canvas sourceState="none" of={ListStories.CustomAddButton} />
+<Example of={ListStories.CustomAddButton} >
 
 ```tsx
 import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
@@ -152,11 +147,9 @@ const Example = () => (
 );
 ```
 
-### `Empty` render prop
+</Example>
 
-<Description of={ListStories.EmptyRenderProp} />
-
-<Canvas sourceState="none" of={ListStories.EmptyRenderProp} />
+<Example  of={ListStories.EmptyRenderProp} >
 
 ```tsx
 import { fieldAtom, InputField } from "form-atoms";
@@ -195,11 +188,9 @@ const Example = () => (
 );
 ```
 
-### Ordering items
+</Example>
 
-<Description of={ListStories.OrderingItems} />
-
-<Canvas sourceState="none" of={ListStories.OrderingItems} />
+<Example of={ListStories.OrderingItems} >
 
 ```tsx
 import { fieldAtom, InputField } from "form-atoms";
@@ -235,13 +226,11 @@ const Example = () => (
 );
 ```
 
+</Example>
+
 ## Advanced
 
-### Nested List
-
-<Description of={ListStories.NestedList} />
-
-<Canvas sourceState="none" of={ListStories.NestedList} />
+<Example of={ListStories.NestedList} >
 
 ```tsx
 import { fieldAtom, InputField } from "form-atoms";
@@ -359,3 +348,5 @@ const RemoveButton = ({ remove }: RemoveButtonProps) => (
   </button>
 );
 ```
+
+</Example>
