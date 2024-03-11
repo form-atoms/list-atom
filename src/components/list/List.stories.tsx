@@ -5,6 +5,7 @@ import {
   type FormFields,
   InputField,
   fieldAtom,
+  useFieldActions,
 } from "form-atoms";
 
 import { AddButtonProps, List, ListProps, RemoveButtonProps } from "./List";
@@ -354,5 +355,95 @@ export const NestedList = listStory({
         </List>
       </article>
     ),
+  },
+});
+
+export const ProgrammaticallySetValue = listStory({
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "The `listAtom` is a regular `fieldAtom`, so it works with the form-atoms field hooks. " +
+          "Here we use the `setValue` action from the `useFieldActions()` hook to clear or initialize the list programmatically.",
+      },
+    },
+  },
+  args: {
+    atom: listAtom({
+      name: "environment",
+      value: [
+        { variable: "GITHUB_TOKEN", value: "<secret>" },
+        { variable: "NPM_TOKEN", value: "<secret>" },
+      ],
+      fields: ({ variable, value }) => ({
+        variable: fieldAtom({ name: "variable", value: variable }),
+        value: fieldAtom({ name: "value", value: value }),
+      }),
+    }),
+    children: ({ fields, RemoveButton }) => (
+      <div
+        style={{
+          display: "grid",
+          gridGap: 16,
+          gridTemplateColumns: "auto auto min-content",
+        }}
+      >
+        <div>
+          <InputField
+            atom={fields.variable}
+            render={(props) => <input {...props} placeholder="Variable Name" />}
+          />
+        </div>
+        <div>
+          <InputField
+            atom={fields.value}
+            render={(props) => (
+              <input {...props} placeholder="Variable Value" />
+            )}
+          />
+        </div>
+        <div>
+          <RemoveButton />
+        </div>
+      </div>
+    ),
+  },
+  render: (props) => {
+    const actions = useFieldActions(props.atom);
+
+    return (
+      <>
+        <List
+          {...props}
+          AddButton={({ add }) => (
+            <section className="grid">
+              <button type="button" className="outline" onClick={() => add()}>
+                New variable
+              </button>
+              <div />
+              <button
+                type="button"
+                className="outline secondary"
+                onClick={() => actions.setValue([])}
+              >
+                Clear
+              </button>
+              <button
+                type="button"
+                className="outline contrast"
+                onClick={() =>
+                  actions.setValue([
+                    { variable: "NPM_TOKEN", value: "secrettoken" },
+                    { variable: "NODE_ENV", value: "production" },
+                  ])
+                }
+              >
+                Set values from .env file
+              </button>
+            </section>
+          )}
+        />
+      </>
+    );
   },
 });

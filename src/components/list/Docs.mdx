@@ -259,7 +259,7 @@ const users = listAtom({
 const NestedListExample = () => {
   return (
     <List
-      field={users}
+      atom={users}
       AddButton={({ add }) => (
         <button type="button" className="outline" onClick={add}>
           Add Person
@@ -309,7 +309,7 @@ const NestedListExample = () => {
             </div>
           </div>
           <List
-            field={fields.accounts}
+            atom={fields.accounts}
             AddButton={({ add }) => (
               <button type="button" className="outline" onClick={add}>
                 Add Bank Account
@@ -337,6 +337,107 @@ const NestedListExample = () => {
             )}
           </List>
         </article>
+      )}
+    </List>
+  );
+};
+
+const RemoveButton = ({ remove }: RemoveButtonProps) => (
+  <button type="button" className="outline secondary" onClick={remove}>
+    Remove
+  </button>
+);
+```
+
+</Example>
+
+<Example of={ListStories.ProgrammaticallySetValue} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { listField, List, type AddButtonProps } from "@form-atoms/list-atom";
+
+const environmentListAtom = listAtom({
+  name: "environment",
+  value: [
+    { variable: "GITHUB_TOKEN", value: "<secret>" },
+    { variable: "NPM_TOKEN", value: "<secret>" },
+  ],
+  fields: ({ variable, value }) => ({
+    variable: fieldAtom({ name: "variable", value: variable }),
+    value: fieldAtom({ name: "value", value: value }),
+  }),
+});
+
+const ProgrammaticControls = ({ add }: AddButtonProps) => {
+  /**
+   * listAtom is fieldAtom, so any useField* hooks work:
+   */
+  const actions = useFieldActions(environmentListAtom);
+
+  return (
+    <section className="grid">
+      <button type="button" className="outline" onClick={() => add()}>
+        New variable
+      </button>
+      <button
+        type="button"
+        className="outline secondary"
+        onClick={() =>
+          // clear the field - remove all items
+          actions.setValue([])
+        }
+      >
+        Clear
+      </button>
+      <button
+        type="button"
+        className="outline contrast"
+        onClick={() =>
+          // set multiple values
+          actions.setValue([
+            { variable: "NPM_TOKEN", value: "secrettoken" },
+            { variable: "NODE_ENV", value: "production" },
+          ])
+        }
+      >
+        Set values from .env file
+      </button>
+    </section>
+  );
+};
+
+const ProgrammaticallySetValueExample = () => {
+  return (
+    <List atom={environmentListAtom} AddButton={ProgrammaticControls}>
+      {({ fields, RemoveButton }) => (
+        <div
+          style={{
+            display: "grid",
+            gridGap: 16,
+            gridTemplateColumns: "auto auto min-content",
+          }}
+        >
+          <div>
+            <InputField
+              atom={fields.variable}
+              render={(props) => (
+                <input {...props} placeholder="Variable Name" />
+              )}
+            />
+          </div>
+          <div>
+            <InputField
+              atom={fields.value}
+              render={(props) => (
+                <input {...props} placeholder="Variable Value" />
+              )}
+            />
+          </div>
+          <div>
+            <RemoveButton />
+          </div>
+        </div>
       )}
     </List>
   );
