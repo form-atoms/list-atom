@@ -1,6 +1,6 @@
 import { StoryObj } from "@storybook/react";
 import {
-  FieldAtom,
+  type FieldAtom,
   type FormFieldValues,
   type FormFields,
   InputField,
@@ -10,6 +10,7 @@ import {
 
 import { AddButtonProps, List, ListProps, RemoveButtonProps } from "./List";
 import { listAtom } from "../../atoms";
+import { PicoFieldErrors } from "../../story/PicoFieldErrors";
 import { PicoFieldName } from "../../story/PicoFieldName";
 import { StoryForm } from "../../story/StoryForm";
 
@@ -443,6 +444,67 @@ export const ProgrammaticallySetValue = listStory({
             </section>
           )}
         />
+      </>
+    );
+  },
+});
+
+export const ValidateAscendingValues = listStory({
+  parameters: {
+    docs: {
+      description: {
+        story: "",
+      },
+    },
+  },
+  args: {
+    initialValue: [{ level: 10 }, { level: 30 }, { level: 20 }],
+    atom: listAtom({
+      name: "levels",
+      value: [{ level: 0 }],
+      fields: ({ level }) => ({ level: fieldAtom<number>({ value: level }) }),
+      validate: ({ value }) => {
+        const errors: string[] = [];
+
+        if (1 < value.length) {
+          let [current] = value;
+
+          value.forEach((value, index) => {
+            if (index === 0) {
+              return;
+            }
+
+            if (value.level <= current!.level) {
+              errors.push(
+                `Level at index ${index} must greater than the previous.`,
+              );
+            }
+
+            current = value;
+          });
+        }
+
+        return errors;
+      },
+    }),
+    children: ({ fields, moveUp, moveDown, RemoveButton }) => (
+      <fieldset role="group">
+        <InputField atom={fields.level} component="input" type="number" />
+        <button type="button" className="outline" onClick={moveUp}>
+          Up
+        </button>
+        <button type="button" className="outline" onClick={moveDown}>
+          Down
+        </button>
+        <RemoveButton />
+      </fieldset>
+    ),
+  },
+  render: (props) => {
+    return (
+      <>
+        <List {...props} />
+        <PicoFieldErrors atom={props.atom} />
       </>
     );
   },
