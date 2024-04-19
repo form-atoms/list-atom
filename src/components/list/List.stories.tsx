@@ -7,12 +7,22 @@ import {
   fieldAtom,
   useFieldActions,
 } from "form-atoms";
+import { useState } from "react";
 
 import { AddButtonProps, List, ListProps, RemoveButtonProps } from "./List";
 import { listAtom } from "../../atoms";
+import { useListActions } from "../../hooks";
 import { PicoFieldErrors } from "../../story/PicoFieldErrors";
 import { PicoFieldName } from "../../story/PicoFieldName";
 import { StoryForm } from "../../story/StoryForm";
+
+const Empty = () => (
+  <article>
+    <p style={{ textAlign: "center" }}>
+      You don't have any items in your list. Start by adding your first one.
+    </p>
+  </article>
+);
 
 const RemoveButton = ({ remove }: RemoveButtonProps) => (
   <button type="button" className="outline secondary" onClick={remove}>
@@ -31,6 +41,7 @@ const meta = {
   args: {
     AddButton,
     RemoveButton,
+    Empty,
   },
 };
 
@@ -147,6 +158,73 @@ export const CustomAddButton = listStory({
   },
 });
 
+export const PositioningAddButton = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "You can disable the default add button by setting a no-render `AddButton` prop. You can control the list from outside by the `useListActions` hook. Here we render a button with `add` action only besides the last item in the list.",
+      },
+    },
+  },
+  render: () => {
+    const [atom] = useState(() =>
+      listAtom({
+        name: "productFeatures",
+        value: [{ feature: "quality materials" }, { feature: "solid build" }],
+        fields: ({ feature }) => ({ feature: fieldAtom({ value: feature }) }),
+      }),
+    );
+
+    const listActions = useListActions(atom);
+
+    const FreePositionAddButton = () => (
+      <button className="outline" onClick={() => listActions.add()}>
+        Add
+      </button>
+    );
+
+    return (
+      <List
+        atom={atom}
+        AddButton={() => <></>}
+        RemoveButton={RemoveButton}
+        Empty={() => {
+          return (
+            <article style={{ textAlign: "center" }}>
+              <p>
+                You don't have any items in your list. Start by adding your
+                first one.
+              </p>
+              <FreePositionAddButton />
+            </article>
+          );
+        }}
+      >
+        {({ fields, RemoveButton, index, count }) => (
+          <div
+            style={{
+              display: "grid",
+              gridGap: 16,
+              gridTemplateColumns: "auto min-content min-content",
+            }}
+          >
+            <InputField atom={fields.feature} component="input" />
+            <div style={{ width: 300 }}>
+              {index + 1 === count && (
+                <fieldset role="group">
+                  <FreePositionAddButton />
+                  <RemoveButton />
+                </fieldset>
+              )}
+            </div>
+          </div>
+        )}
+      </List>
+    );
+  },
+};
+
 export const EmptyRenderProp = listStory({
   parameters: {
     docs: {
@@ -158,7 +236,7 @@ export const EmptyRenderProp = listStory({
   },
   args: {
     atom: listAtom({
-      value: [{ hobby: "gardening" }],
+      value: [] as { hobby: string }[],
       fields: ({ hobby }) => ({ hobby: fieldAtom<string>({ value: hobby }) }),
     }),
     AddButton: AddHobbyButton,
