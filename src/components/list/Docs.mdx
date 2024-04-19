@@ -203,15 +203,16 @@ const hobbies = listAtom({
 });
 
 const Example = () => (
-  <List atom={hobbies} initialValue={["coding", "gardening", "mountain bike"]}>
+  <List
+    atom={hobbies}
+    initialValue={[
+      { hobby: "coding" },
+      { hobby: "gardening" },
+      { hobby: "mountain bike" },
+    ]}
+  >
     {({ fields, moveUp, moveDown, RemoveButton }) => (
-      <div
-        style={{
-          display: "grid",
-          gridGap: 16,
-          gridTemplateColumns: "auto min-content min-content min-content",
-        }}
-      >
+      <fieldset role="group">
         <InputField atom={fields.hobby} component="input" />
         <button type="button" className="outline" onClick={moveUp}>
           Up
@@ -220,7 +221,43 @@ const Example = () => (
           Down
         </button>
         <RemoveButton />
-      </div>
+      </fieldset>
+    )}
+  </List>
+);
+```
+
+</Example>
+
+<Example of={ListStories.Prepend} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { List, listAtom } from "@form-atoms/list-atom";
+
+const hobbies = listAtom({
+  value: [],
+  name: "hobbies",
+  fields: ({ hobby }) => ({ hobby: fieldAtom({ value: hobby }) }),
+});
+
+const Example = () => (
+  <List
+    atom={hobbies}
+    initialValue={[
+      { hobby: "swimming" },
+      { hobby: "gardening" },
+      { hobby: "coding" },
+    ]}
+  >
+    {({ fields, RemoveButton, add, item }) => (
+      <fieldset role="group">
+        <InputField atom={fields.hobby} component="input" />
+        <button type="button" className="outline" onClick={() => add(item)}>
+          Prepend
+        </button>
+        <RemoveButton />
+      </fieldset>
     )}
   </List>
 );

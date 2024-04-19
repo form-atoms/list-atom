@@ -193,21 +193,20 @@ export const Prepend = listStory({
       value: [{ hobby: "gardening" }],
       fields: ({ hobby }) => ({ hobby: fieldAtom({ value: hobby }) }),
     }),
+    initialValue: [
+      { hobby: "swimming" },
+      { hobby: "gardening" },
+      { hobby: "coding" },
+    ],
     AddButton: AddHobbyButton,
     children: ({ fields, RemoveButton, add, item }) => (
-      <div
-        style={{
-          display: "grid",
-          gridGap: 16,
-          gridTemplateColumns: "auto min-content min-content",
-        }}
-      >
+      <fieldset role="group">
         <InputField atom={fields.hobby} component="input" />
         <button type="button" className="outline" onClick={() => add(item)}>
           Prepend
         </button>
         <RemoveButton />
-      </div>
+      </fieldset>
     ),
   },
 });
