@@ -1,4 +1,4 @@
-import type { AtomStore, FormFieldValues, FormFields } from "form-atoms";
+import type { AtomStore, FormFieldValues, FormFields, RESET } from "form-atoms";
 import { Fragment, FunctionComponent, useCallback } from "react";
 import type { RenderProp } from "react-render-prop-type";
 
@@ -71,7 +71,7 @@ export type ListProps<Fields extends FormFields, Value> = Partial<
    * A list atom.
    */
   atom: ListAtom<Fields, Value>;
-  initialValue?: Value[];
+  initialValue?: Value[] | typeof RESET;
   /**
    * When using atoms with a scope, the provider with the same scope will be used.
    * The recommendation for the scope value is a unique symbol. The primary use case
