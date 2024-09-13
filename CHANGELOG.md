@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/form-atoms/list-atom/compare/v1.0.11...v1.0.12) (2024-09-13)
+
+
+### Bug Fixes
+
+* **valueAtom:** enable setValue with a callback function ([#11](https://github.com/form-atoms/list-atom/issues/11)) ([2569a5c](https://github.com/form-atoms/list-atom/commit/2569a5c5c15ab3d3d0b0e5bde2f4884be6e2eb24))
+
 ## [1.0.11](https://github.com/form-atoms/list-atom/compare/v1.0.10...v1.0.11) (2024-03-07)
 
 
