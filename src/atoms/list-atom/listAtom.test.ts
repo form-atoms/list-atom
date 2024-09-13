@@ -73,6 +73,54 @@ describe("listAtom()", () => {
     expect(result.result.current).toEqual([{ age: 80 }, { age: 70 }]);
   });
 
+  describe("useFieldActions(listAtom).setValue", () => {
+    test("works with array value", async () => {
+      const ages = listAtom({
+        value: [{ age: 10 }],
+        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+      });
+
+      const { result: fieldActions } = renderHook(() => useFieldActions(ages));
+
+      await act(async () =>
+        fieldActions.current.setValue([{ age: 20 }, { age: 40 }]),
+      );
+
+      const result = renderHook(() => useFieldValue(ages));
+
+      expect(result.result.current).toEqual([{ age: 20 }, { age: 40 }]);
+    });
+
+    test("works with a callback function", async () => {
+      const ages = listAtom({
+        value: [{ age: 10 }],
+        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+      });
+
+      const { result: fieldActions } = renderHook(() => useFieldActions(ages));
+
+      await act(async () =>
+        fieldActions.current.setValue((ages) => [...ages, { age: 30 }]),
+      );
+
+      const result = renderHook(() => useFieldValue(ages));
+
+      expect(result.result.current).toEqual([{ age: 10 }, { age: 30 }]);
+    });
+
+    test("throws for non-array value", async () => {
+      const ages = listAtom({
+        value: [{ age: 10 }],
+        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+      });
+
+      const { result: fieldActions } = renderHook(() => useFieldActions(ages));
+
+      // @ts-expect-error invalid value
+      expect(() => fieldActions.current.setValue({ age: 30 })).toThrowError();
+    });
+  });
+
   describe("resetting form", () => {
     test("the formActions.reset resets the field value", async () => {
       const ages = listAtom({

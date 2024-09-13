@@ -7,7 +7,13 @@ import type {
   ValidateStatus,
 } from "form-atoms";
 import { walkFields } from "form-atoms";
-import type { Atom, PrimitiveAtom, SetStateAction, WritableAtom } from "jotai";
+import type {
+  Atom,
+  Getter,
+  PrimitiveAtom,
+  SetStateAction,
+  WritableAtom,
+} from "jotai";
 import { atom } from "jotai";
 import { RESET, atomWithDefault, atomWithReset, splitAtom } from "jotai/utils";
 
@@ -211,6 +217,12 @@ export function listAtom<
   const validateCountAtom = atom(0);
   const validateResultAtom = atom<ValidateStatus>("valid");
 
+  function readListValue(get: Getter) {
+    return get(_formListAtom).map((formAtom) => {
+      return get(get(formAtom).values);
+    }) as Value[];
+  }
+
   /**
    * The ref is practicaly not usable for list, but required to match the fieldAtom signature.
    * @internal
@@ -220,15 +232,11 @@ export function listAtom<
   >(null);
   const emptyAtom = atom((get) => get(_formListAtom).length === 0);
   const valueAtom = atom(
-    (get) => {
-      return get(_formListAtom).map((formAtom) => {
-        return get(get(formAtom).values);
-      }) as Value[];
-    },
+    readListValue,
     (
       get,
       set,
-      value: Value[] | typeof RESET | ((prev: Value[]) => Value[]), // the function is here just to match the type of FieldAtom!
+      value: Value[] | typeof RESET | ((prev: Value[]) => Value[]),
     ) => {
       if (value === RESET) {
         set(_formListAtom, value);
@@ -240,18 +248,17 @@ export function listAtom<
           const { reset } = get(form);
           set(reset);
         }
-      } else if (Array.isArray(value)) {
-        const updatedFormList = formBuilder(value).map((fields) =>
-          listItemForm({
-            fields,
-            getListNameAtom: (get) => get(self).name,
-            formListAtom: _formListAtom,
-          }),
-        );
-        set(_initialFormListAtom, updatedFormList);
-        set(_formListAtom, updatedFormList);
       } else {
-        throw Error("Writing unsupported value to listFieldAtom value!");
+        const update =
+          typeof value === "function" ? value(readListValue(get)) : value;
+
+        if (Array.isArray(update)) {
+          const updatedFormList = formBuilder(update).map(buildItem);
+          set(_initialFormListAtom, updatedFormList);
+          set(_formListAtom, updatedFormList);
+        } else {
+          throw Error("Writing unsupported value to listAtom!");
+        }
       }
     },
   );
