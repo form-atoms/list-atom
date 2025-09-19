@@ -16,7 +16,7 @@ export const useHydrateField = <Value>(
           [field.value, initialValue],
           [field._initialValue, initialValue],
         ]
-      : [],
+      : ([] as any),
     options,
   );
 };
