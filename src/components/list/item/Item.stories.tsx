@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/react";
+import { Meta } from "@storybook/react-vite";
 import { FormFields } from "form-atoms";
 
 import { ListItemProps } from "../List";

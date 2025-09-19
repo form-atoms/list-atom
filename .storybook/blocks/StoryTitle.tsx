@@ -1,6 +1,6 @@
 import React from "react";
-import { Markdown, useOf } from "@storybook/blocks";
-import type { ModuleExport } from "@storybook/types";
+import { Markdown, useOf } from "@storybook/addon-docs/blocks";
+import type { ModuleExport } from "storybook/internal/types";
 
 export const StoryTitle = ({ of }: { of: ModuleExport }) => {
   const resolvedOf = useOf(of || "story", ["story", "meta"]);

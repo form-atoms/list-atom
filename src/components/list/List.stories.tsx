@@ -1,4 +1,4 @@
-import { StoryObj } from "@storybook/react";
+import { StoryObj } from "@storybook/react-vite";
 import {
   type FieldAtom,
   type FormFieldValues,
