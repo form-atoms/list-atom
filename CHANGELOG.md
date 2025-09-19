@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/form-atoms/list-atom/compare/v1.0.12...v1.1.0) (2025-09-19)
+
+
+### Features
+
+* **input-name:** jotai effect stable v1 ([907ca2b](https://github.com/form-atoms/list-atom/commit/907ca2b1418b5a406e205ca41472bc5363c92951))
+
 ## [1.0.12](https://github.com/form-atoms/list-atom/compare/v1.0.11...v1.0.12) (2024-09-13)
 
 
