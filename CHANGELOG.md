@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/form-atoms/list-atom/compare/v1.1.0...v2.0.0) (2025-09-19)
+
+
+### Features
+
+* **name-scoping:** upgrade effect to v2 ([e90543a](https://github.com/form-atoms/list-atom/commit/e90543a1c5c374f8386442ea49a702f9b432aa13))
+
+
+### BREAKING CHANGES
+
+* **name-scoping:** you need to update the jotai effect
+
 # [1.1.0](https://github.com/form-atoms/list-atom/compare/v1.0.12...v1.1.0) (2025-09-19)
 
 
