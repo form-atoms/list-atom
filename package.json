@@ -78,7 +78,7 @@
     "happy-dom": "^18.0.1",
     "jotai": "2.14.0",
     "jotai-devtools": "0.8.0",
-    "jotai-effect": "0.6.0",
+    "jotai-effect": "1.1.4",
     "lodash.shuffle": "^4.2.0",
     "prettier": "3.6.2",
     "react": "^18.2.0",
@@ -125,7 +125,7 @@
   "peerDependencies": {
     "form-atoms": "^3",
     "jotai": "^2",
-    "jotai-effect": "^0",
+    "jotai-effect": "^1",
     "react": ">=16.8"
   }
 }

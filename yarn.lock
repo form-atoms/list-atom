@@ -810,7 +810,7 @@ __metadata:
     happy-dom: "npm:^18.0.1"
     jotai: "npm:2.14.0"
     jotai-devtools: "npm:0.8.0"
-    jotai-effect: "npm:0.6.0"
+    jotai-effect: "npm:1.1.4"
     lodash.shuffle: "npm:^4.2.0"
     prettier: "npm:3.6.2"
     react: "npm:^18.2.0"
@@ -826,7 +826,7 @@ __metadata:
   peerDependencies:
     form-atoms: ^3
     jotai: ^2
-    jotai-effect: ^0
+    jotai-effect: ^1
     react: ">=16.8"
   languageName: unknown
   linkType: soft
@@ -6540,12 +6540,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai-effect@npm:0.6.0":
-  version: 0.6.0
-  resolution: "jotai-effect@npm:0.6.0"
+"jotai-effect@npm:1.1.4":
+  version: 1.1.4
+  resolution: "jotai-effect@npm:1.1.4"
   peerDependencies:
     jotai: ">=2.5.0"
-  checksum: 10/d7e8ecf9acc6bcdcaaad2f80f51fc3064078c4ffd557076e434dcf058d7e3b98537560460e58b3ab3ae075449703e5791f0c4feced7392767285d71b8ec311e1
+  checksum: 10/053cdec580ef6c97d5da0793610159a0599f52a0d05e679a3a2ee746a2417498b5e5f45cc2c8d167214d261e4d5ce80eeb9264ce279b45a79d55c876c3db0511
   languageName: node
   linkType: hard
 
