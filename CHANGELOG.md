@@ -1,3 +1,15 @@
+# [2.1.0-next.1](https://github.com/form-atoms/list-atom/compare/v2.0.0...v2.1.0-next.1) (2025-10-01)
+
+
+### Bug Fixes
+
+* **release:** use OIDC instead of npm token for publishing ([42abd9e](https://github.com/form-atoms/list-atom/commit/42abd9e2be0f88e34661db8f1763079f81d7de43))
+
+
+### Features
+
+* **compound-components:** drop render props, introduce compounding ([d9fa7f0](https://github.com/form-atoms/list-atom/commit/d9fa7f026699ebded2dfedaf44558963890648a7))
+
 # [2.0.0](https://github.com/form-atoms/list-atom/compare/v1.1.0...v2.0.0) (2025-09-19)
 
 
