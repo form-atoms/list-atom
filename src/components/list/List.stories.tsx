@@ -22,14 +22,15 @@ const RemoveButton = ({ remove }: { remove: () => void }) => (
 
 type ListArgs<Fields extends FormFields> = {
   atom: ListAtom<Fields, any>;
-} & RenderProp<{
-  List: ReturnType<typeof createComponents<NoInfer<Fields>>>;
-  atom: ListAtom<Fields, any>;
-}>;
+} & RenderProp<
+  ReturnType<typeof createComponents<NoInfer<Fields>>> & {
+    atom: ListAtom<Fields, any>;
+  }
+>;
 
 const meta = {
   render({ atom, children }: ListArgs<FormFields>) {
-    const List = createComponents(atom);
+    const { List } = createComponents(atom);
 
     return children({ List, atom });
   },
@@ -434,7 +435,7 @@ export const NestedList = listStory({
                 </div>
               </div>
               <List.Nested atom={fields.accounts}>
-                {(List) => (
+                {({ List }) => (
                   <>
                     <List.Item>
                       {({ fields, index, remove }) => (

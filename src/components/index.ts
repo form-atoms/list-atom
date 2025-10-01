@@ -3,16 +3,33 @@ import { FunctionComponent } from "react";
 
 import { type AddButtonProps, createAddButton } from "./add-button";
 import { type EmptyProps, createEmpty } from "./empty";
-import { ItemProps, createItem } from "./item";
-import { createList } from "./list";
+import { type ItemProps, createItem } from "./item";
+import { type ListProps, createList } from "./list";
 import { NestedList, type NestedListProps } from "./nested";
 import type { ListAtom } from "../atoms";
 
 export type Components<Fields extends FormFields> = {
-  Add: FunctionComponent<AddButtonProps<Fields>>;
-  Empty: FunctionComponent<EmptyProps>;
-  Item: FunctionComponent<ItemProps<Fields>>;
-  Nested: FunctionComponent<NestedListProps<any>>;
+  /**
+   * A component to initialize the listAtom.
+   */
+  List: FunctionComponent<ListProps<Fields>> & {
+    /**
+     * A component to iterate and render each of the list items.
+     */
+    Item: FunctionComponent<ItemProps<Fields>>;
+    /**
+     * A component to control adding new or initialized items to the list.
+     */
+    Add: FunctionComponent<AddButtonProps<Fields>>;
+    /**
+     * A component which renders children only when the list is empty.
+     */
+    Empty: FunctionComponent<EmptyProps>;
+    /**
+     * A utility to re-create the components bound to list from a prop.
+     */
+    Nested: FunctionComponent<NestedListProps<any>>;
+  };
 };
 
 /**
@@ -23,12 +40,12 @@ export type Components<Fields extends FormFields> = {
 export function createComponents<Fields extends FormFields>(
   listAtom: ListAtom<Fields, any>,
 ) {
-  const List = createList(listAtom);
-
-  return Object.assign(List, {
+  const List = Object.assign(createList(listAtom), {
     Add: createAddButton(listAtom),
     Empty: createEmpty(listAtom),
     Item: createItem(listAtom),
     Nested: NestedList,
   });
+
+  return { List };
 }

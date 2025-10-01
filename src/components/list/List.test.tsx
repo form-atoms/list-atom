@@ -15,7 +15,7 @@ describe("<List />", () => {
 
     const form = formAtom({ friends });
     const { result } = renderHook(() => useFormSubmit(form));
-    const List = createComponents(friends);
+    const { List } = createComponents(friends);
     render(
       <List>
         <List.Item>
@@ -44,7 +44,7 @@ describe("<List />", () => {
 
       const form = formAtom({ friends });
       const { result } = renderHook(() => useFormSubmit(form));
-      const List = createComponents(friends);
+      const { List } = createComponents(friends);
 
       render(
         <List initialValue={[{ name: "Mark" }]}>
@@ -76,7 +76,7 @@ describe("<List />", () => {
         }),
       });
 
-      const List = createComponents(userList);
+      const { List } = createComponents(userList);
       render(
         <List initialValue={users}>
           <List.Item>
@@ -96,7 +96,7 @@ describe("<List />", () => {
         fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
       });
 
-      const List = createComponents(friends);
+      const { List } = createComponents(friends);
 
       render(
         <List>
@@ -132,7 +132,7 @@ describe("<List />", () => {
       });
 
       // @ts-ignore FIXME empty value array
-      const List = createComponents(friends);
+      const { List } = createComponents(friends);
 
       render(
         <List>
@@ -152,7 +152,7 @@ describe("<List />", () => {
         fields: ({ name = "Alice" }) => ({ name: fieldAtom({ value: name }) }),
       });
 
-      const List = createComponents(friends);
+      const { List } = createComponents(friends);
 
       render(
         <List>
@@ -184,7 +184,7 @@ describe("<List />", () => {
         fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
       });
 
-      const List = createComponents(friends);
+      const { List } = createComponents(friends);
 
       render(
         <List>
@@ -224,7 +224,7 @@ describe("<List />", () => {
       });
 
       // @ts-ignore FIXME empty value array
-      const List = createComponents(friends);
+      const { List } = createComponents(friends);
 
       render(
         <List>
@@ -241,7 +241,7 @@ describe("<List />", () => {
         fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
       });
 
-      const List = createComponents(friends);
+      const { List } = createComponents(friends);
 
       render(
         <List>
