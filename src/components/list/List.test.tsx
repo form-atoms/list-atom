@@ -3,7 +3,7 @@ import { userEvent } from "@testing-library/user-event";
 import { InputField, fieldAtom, formAtom, useFormSubmit } from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
 
-import { List } from "./List";
+import { createComponents } from "../";
 import { listAtom } from "../../atoms";
 
 describe("<List />", () => {
@@ -15,9 +15,12 @@ describe("<List />", () => {
 
     const form = formAtom({ friends });
     const { result } = renderHook(() => useFormSubmit(form));
+    const List = createComponents(friends);
     render(
-      <List atom={friends}>
-        {({ fields }) => <InputField atom={fields.name} component="input" />}
+      <List>
+        <List.Item>
+          {({ fields }) => <InputField atom={fields.name} component="input" />}
+        </List.Item>
       </List>,
     );
 
@@ -41,9 +44,15 @@ describe("<List />", () => {
 
       const form = formAtom({ friends });
       const { result } = renderHook(() => useFormSubmit(form));
+      const List = createComponents(friends);
+
       render(
-        <List atom={friends} initialValue={[{ name: "Mark" }]}>
-          {({ fields }) => <InputField atom={fields.name} component="input" />}
+        <List initialValue={[{ name: "Mark" }]}>
+          <List.Item>
+            {({ fields }) => (
+              <InputField atom={fields.name} component="input" />
+            )}
+          </List.Item>
         </List>,
       );
 
@@ -67,45 +76,40 @@ describe("<List />", () => {
         }),
       });
 
+      const List = createComponents(userList);
       render(
-        <List atom={userList} initialValue={users}>
-          {({ fields }) => <InputField atom={fields.name} component="input" />}
+        <List initialValue={users}>
+          <List.Item>
+            {({ fields }) => (
+              <InputField atom={fields.name} component="input" />
+            )}
+          </List.Item>
         </List>,
       );
     });
   });
 
-  describe("RemoveButton render prop", () => {
-    it("renders 'Remove' label by default", () => {
-      const friends = listAtom({
-        value: [{ name: "Alice" }],
-        fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
-      });
-
-      render(
-        <List atom={friends}>{({ RemoveButton }) => <RemoveButton />}</List>,
-      );
-
-      const RemoveButton = screen.getByText("Remove");
-
-      expect(RemoveButton).toBeInTheDocument();
-      expect(RemoveButton).toHaveAttribute("type", "button");
-    });
-
+  describe("List.Item remove action", () => {
     it("removes the respective list item", async () => {
       const friends = listAtom({
         value: [{ name: "Alice" }],
         fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
       });
 
+      const List = createComponents(friends);
+
       render(
-        <List atom={friends}>
-          {({ fields, RemoveButton }) => (
-            <>
-              <InputField atom={fields.name} component="input" />
-              <RemoveButton />
-            </>
-          )}
+        <List>
+          <List.Item>
+            {({ fields, remove }) => (
+              <>
+                <InputField atom={fields.name} component="input" />
+                <button type="button" onClick={remove}>
+                  Remove
+                </button>
+              </>
+            )}
+          </List.Item>
         </List>,
       );
 
@@ -120,14 +124,21 @@ describe("<List />", () => {
     });
   });
 
-  describe("AddButton render prop", () => {
+  describe("List.Add component", () => {
     it("renders 'Add item' label by default", () => {
       const friends = listAtom({
         value: [],
         fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
       });
 
-      render(<List atom={friends}>{() => <></>}</List>);
+      // @ts-ignore FIXME empty value array
+      const List = createComponents(friends);
+
+      render(
+        <List>
+          <List.Add />
+        </List>,
+      );
 
       const AddButton = screen.getByText("Add item");
 
@@ -137,75 +148,108 @@ describe("<List />", () => {
 
     it("appends empty item to the list by calling the item builder prop", async () => {
       const friends = listAtom({
-        value: [],
+        value: [{ name: "Bobek" }],
         fields: ({ name = "Alice" }) => ({ name: fieldAtom({ value: name }) }),
       });
 
+      const List = createComponents(friends);
+
       render(
-        <List atom={friends}>
-          {({ fields }) => (
-            <InputField
-              atom={fields.name}
-              render={(props) => <input {...props} data-testid="friend" />}
-            />
-          )}
+        <List>
+          <List.Item>
+            {({ fields }) => (
+              <InputField
+                atom={fields.name}
+                render={(props) => <input {...props} data-testid="friend" />}
+              />
+            )}
+          </List.Item>
+          <List.Add />
         </List>,
       );
 
       const AddButton = screen.getByText("Add item");
 
       expect(AddButton).toBeInTheDocument();
+      expect(screen.queryAllByTestId("friend")).toHaveLength(1);
 
       await act(() => userEvent.click(AddButton));
 
-      expect(screen.queryByDisplayValue("Alice")).toBeInTheDocument();
-      expect(screen.queryAllByTestId("friend")).toHaveLength(1);
+      expect(screen.queryAllByTestId("friend")).toHaveLength(2);
     });
 
     it("can add item with explicit fields", async () => {
       const friends = listAtom({
-        value: [],
+        value: [{ name: "Lolek" }],
         fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
       });
 
+      const List = createComponents(friends);
+
       render(
-        <List
-          atom={friends}
-          AddButton={({ add }) => (
-            <button
-              type="button"
-              onClick={() => add({ name: fieldAtom({ value: "Bobek" }) })}
-            >
-              add fields
-            </button>
-          )}
-        >
-          {({ fields }) => <InputField atom={fields.name} component="input" />}
+        <List>
+          <List.Item>
+            {({ fields }) => (
+              <InputField atom={fields.name} component="input" />
+            )}
+          </List.Item>
+          <List.Add>
+            {({ add }) => (
+              <button
+                type="button"
+                onClick={() => add({ name: fieldAtom({ value: "Bobek" }) })}
+              >
+                add fren
+              </button>
+            )}
+          </List.Add>
         </List>,
       );
 
-      const AddButton = screen.getByText("add fields");
+      const AddFren = screen.getByText("add fren");
 
-      await act(() => userEvent.click(AddButton));
+      expect(screen.queryByDisplayValue("Bobek")).not.toBeInTheDocument();
+
+      await act(() => userEvent.click(AddFren));
 
       expect(screen.queryByDisplayValue("Bobek")).toBeInTheDocument();
     });
   });
 
-  describe("Empty render prop", () => {
-    it("renders when there are no items", async () => {
+  describe("List.Empty component", () => {
+    it("renders children when there are no items", async () => {
       const friends = listAtom({
         value: [],
         fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
       });
 
+      // @ts-ignore FIXME empty value array
+      const List = createComponents(friends);
+
       render(
-        <List atom={friends} Empty={() => <p>No friends</p>}>
-          {({ fields }) => <InputField atom={fields.name} component="input" />}
+        <List>
+          <List.Empty>No frens</List.Empty>
         </List>,
       );
 
-      expect(screen.queryByText("No friends")).toBeInTheDocument();
+      expect(screen.queryByText("No frens")).toBeInTheDocument();
+    });
+
+    it("renders nothing when there are some items", async () => {
+      const friends = listAtom({
+        value: [{ name: "Bobette" }],
+        fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
+      });
+
+      const List = createComponents(friends);
+
+      render(
+        <List>
+          <List.Empty>empty message</List.Empty>
+        </List>,
+      );
+
+      expect(screen.queryByText("empty message")).not.toBeInTheDocument();
     });
   });
 });
