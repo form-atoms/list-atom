@@ -35,7 +35,7 @@ const environmentVariables = listAtom({
 
 const form = formAtom({ environmentVariables });
 
-const List = createComponents(environmentVariables);
+const { List } = createComponents(environmentVariables);
 
 export const Form = () => {
   const { submit } = useForm(form);
@@ -94,9 +94,13 @@ export const Form = () => {
 | [`useListActions()`](#uselistactions) | A hook that returns a `add`, `remove` & `move` actions, that can be used to interact with the list atom state. |
 | [`useList()`](#uselist)               | A hook that returns the list `items` ready to be rendred together with the list actions.                       |
 
-| Components        | Description                                                                                                                            |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| [`<List>`](#list) | A component that render the individual items of listAtom with render props to render `AddButton`, `RemoveButton` and/or `Empty` slate. |
+| Components                    | Description                                                     |
+| ----------------------------- | --------------------------------------------------------------- |
+| [`<List>`](#list)             | A component to initialize the listAtom via `initialValue` prop. |
+| [`<List.Add>`](#listadd)      | Adds new or initialized items to the list.                      |
+| [`<List.Item>`](#listitem)    | Iterate and render each of the list items.                      |
+| [`<List.Empty>`](#listempty)  | Render children only when the list has no items.                |
+| [`<List.Nested>`](#listempty) | Helper for nesting list within an `<List.Item>`.                |
 
 ## List atoms
 
@@ -318,7 +322,13 @@ Create a compound List components:
 ```tsx
 import { createComponents } from "@form-atoms/list-atom";
 
-const List = createComponents(myListAtom);
+const { List } = createComponents(myListAtom);
+
+// Usage:
+// List.Add
+// List.Empty
+// List.Item
+// List.Nested
 ```
 
 #### Returns
@@ -411,28 +421,20 @@ type ListItemProps<Fields extends FormFields> = {
 };
 ```
 
-### &lt;List.Empty&gt;
-
-#### Props
-
-| Name     | Type        | Required? | Description                              |
-| -------- | ----------- | --------- | ---------------------------------------- |
-| children | `ReactNode` | No        | Content to render when the list is empty |
-
 ### &lt;List.Add&gt;
 
 #### Props
 
-| Name     | Type                                     | Required? | Description   |
-| -------- | ---------------------------------------- | --------- | ------------- |
-| children | `(props: AddButtonProps) => JSX.Element` | No        | A render prop |
+| Name     | Type                               | Required? | Description   |
+| -------- | ---------------------------------- | --------- | ------------- |
+| children | `(props: AddProps) => JSX.Element` | No        | A render prop |
 
 #### Render Props
 
 Your `children` render prop will receive the following props:
 
 ```ts
-type AddButtonProps<Fields extends FormFields> = {
+type AddProps<Fields extends FormFields> = {
   /**
    * Append a new item to the end of the list.
    * When called with current item, it will be prepend with a new item.
@@ -440,6 +442,14 @@ type AddButtonProps<Fields extends FormFields> = {
   add: (fields?: Fields) => void;
 };
 ```
+
+### &lt;List.Empty&gt;
+
+#### Props
+
+| Name     | Type        | Required? | Description                              |
+| -------- | ----------- | --------- | ---------------------------------------- |
+| children | `ReactNode` | No        | Content to render when the list is empty |
 
 ### &lt;List.Nested&gt;
 

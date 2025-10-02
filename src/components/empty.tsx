@@ -9,9 +9,11 @@ export type EmptyProps = PropsWithChildren;
 export function createEmpty<Fields extends FormFields>(
   listAtom: ListAtom<Fields, any>,
 ) {
-  return function Empty({ children }: EmptyProps) {
+  function Empty({ children }: EmptyProps) {
     const { isEmpty } = useListState(listAtom);
 
     return isEmpty ? <>{children}</> : null;
-  };
+  }
+
+  return { Empty };
 }

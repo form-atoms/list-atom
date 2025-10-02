@@ -6,13 +6,13 @@ import {
   fieldAtom,
   useFieldActions,
 } from "form-atoms";
-
-import { ListAtom, listAtom } from "../../atoms";
-import { PicoFieldErrors } from "../../story/PicoFieldErrors";
-import { PicoFieldName } from "../../story/PicoFieldName";
-import { StoryForm } from "../../story/StoryForm";
-import { createComponents } from "..";
 import { RenderProp } from "react-render-prop-type";
+
+import { ListAtom, listAtom } from "../atoms";
+import { PicoFieldErrors } from "../story/PicoFieldErrors";
+import { PicoFieldName } from "../story/PicoFieldName";
+import { StoryForm } from "../story/StoryForm";
+import { createList } from "./list";
 
 const RemoveButton = ({ remove }: { remove: () => void }) => (
   <button type="button" className="outline secondary" onClick={remove}>
@@ -23,14 +23,14 @@ const RemoveButton = ({ remove }: { remove: () => void }) => (
 type ListArgs<Fields extends FormFields> = {
   atom: ListAtom<Fields, any>;
 } & RenderProp<
-  ReturnType<typeof createComponents<NoInfer<Fields>>> & {
+  ReturnType<typeof createList<NoInfer<Fields>>> & {
     atom: ListAtom<Fields, any>;
   }
 >;
 
 const meta = {
   render({ atom, children }: ListArgs<FormFields>) {
-    const { List } = createComponents(atom);
+    const { List } = createList(atom);
 
     return children({ List, atom });
   },
@@ -163,7 +163,7 @@ export const PositioningAddButton = listStory({
     docs: {
       description: {
         story:
-          "You can disable the default add button by setting a no-render `AddButton` prop. You can control the list from outside by the `useListActions` hook. Here we render a button with `add` action only besides the last item in the list.",
+          "You can control the list from outside by the `useListActions` hook. Here we render a button with `add` action only besides the last item in the list.",
       },
     },
   },
