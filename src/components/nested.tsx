@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import type { FormFields } from "form-atoms";
 import type { RenderProp } from "react-render-prop-type";
 
@@ -13,7 +13,7 @@ export function Nested<Fields extends FormFields>({
   atom,
   children,
 }: NestedProps<Fields>) {
-  const [components] = useState(() => createList(atom));
+  const components = useMemo(() => createList(atom), [atom]);
 
   return children(components as any);
 }

@@ -377,9 +377,7 @@ export type Components<Fields extends FormFields> = {
 | -------- | --------------------------------------- | --------- | ------------- |
 | children | `(props: ListItemProps) => JSX.Element` | Yes       | A render prop |
 
-#### Render Props
-
-Your `children` render prop will receive the following props:
+#### Children Props
 
 ```ts
 type ListItemProps<Fields extends FormFields> = {
@@ -429,15 +427,13 @@ type ListItemProps<Fields extends FormFields> = {
 | -------- | ---------------------------------- | --------- | ------------- |
 | children | `(props: AddProps) => JSX.Element` | No        | A render prop |
 
-#### Render Props
-
-Your `children` render prop will receive the following props:
+#### Children Props
 
 ```ts
 type AddProps<Fields extends FormFields> = {
   /**
-   * Append a new item to the end of the list.
-   * When called with current item, it will be prepend with a new item.
+   * An action to append a new item to the end of the list.
+   * @param fields optionaly set initialized fields.
    */
   add: (fields?: Fields) => void;
 };

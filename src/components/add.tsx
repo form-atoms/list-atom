@@ -6,6 +6,10 @@ import { useListActions } from "../hooks";
 
 export type AddProps<Fields extends FormFields> = Partial<
   RenderProp<{
+    /**
+     * An action to append a new item to the end of the list.
+     * @param fields optionaly set initialized fields.
+     */
     add: (fields?: Fields) => void;
   }>
 >;
