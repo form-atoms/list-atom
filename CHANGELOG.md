@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/form-atoms/list-atom/compare/v2.1.0...v2.1.1) (2025-10-02)
+
+
+### Bug Fixes
+
+* **Nested:** use memo instead of state ([ad3c27e](https://github.com/form-atoms/list-atom/commit/ad3c27efbc85d8195145f2ff954008eb58d9ced8))
+
 # [2.1.0](https://github.com/form-atoms/list-atom/compare/v2.0.0...v2.1.0) (2025-10-02)
 
 
