@@ -35,7 +35,7 @@ const environmentVariables = listAtom({
 
 const form = formAtom({ environmentVariables });
 
-const { List } = createComponents(environmentVariables);
+const { List } = createList(environmentVariables);
 
 export const Form = () => {
   const { submit } = useForm(form);
@@ -315,14 +315,14 @@ export type UseList<Fields extends FormFields> = UseListActions<Fields> & {
 
 #### [⇗ Back to top](#table-of-contents)
 
-## createComponents(listAtom)
+## createList(listAtom)
 
 Create a compound List components:
 
 ```tsx
-import { createComponents } from "@form-atoms/list-atom";
+import { createList } from "@form-atoms/list-atom";
 
-const { List } = createComponents(myListAtom);
+const { List } = createList(myListAtom);
 
 // Usage:
 // List.Add

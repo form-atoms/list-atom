@@ -53,7 +53,7 @@ const { List } = createList(myAtom);
 
 ```tsx
 import { InputField, fieldAtom } from "form-atoms";
-import { listField, createList } from "@form-atoms/list-atom";
+import { listAtom, createList } from "@form-atoms/list-atom";
 
 const envVars = listAtom({
   value: [
@@ -112,7 +112,7 @@ const Example = () => (
 
 ```tsx
 import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
-import { type ListField, createList, listField } from "@form-atoms/list-atom";
+import { createList, listAtom } from "@form-atoms/list-atom";
 
 const productPros = listAtom({
   value: [{ feature: "quality materials used" }, { feature: "not so heavy" }],
@@ -171,7 +171,7 @@ const Example = () => (
 
 ```tsx
 import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
-import { List, listField } from "@form-atoms/list-atom";
+import { List, listAtom } from "@form-atoms/list-atom";
 
 const atom = listAtom({
   name: "productFeatures",
@@ -497,7 +497,7 @@ const NestedListExample = () => {
 
 ```tsx
 import { fieldAtom, InputField, useFieldActions } from "form-atoms";
-import { listField, createList } from "@form-atoms/list-atom";
+import { listAtom, createList } from "@form-atoms/list-atom";
 
 const environmentListAtom = listAtom({
   name: "environment",
