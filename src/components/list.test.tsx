@@ -2,8 +2,8 @@ import { act, render, renderHook, screen } from "@testing-library/react";
 import { fieldAtom, formAtom, useFormSubmit } from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
 
-import { createList } from "./List";
-import { listAtom } from "../../atoms";
+import { createList } from "./list";
+import { listAtom } from "../atoms";
 
 describe("<List />", () => {
   it("renders children", () => {
