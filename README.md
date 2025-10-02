@@ -423,16 +423,16 @@ type ListItemProps<Fields extends FormFields> = {
 
 #### Props
 
-| Name     | Type                                     | Required? | Description   |
-| -------- | ---------------------------------------- | --------- | ------------- |
-| children | `(props: AddButtonProps) => JSX.Element` | No        | A render prop |
+| Name     | Type                               | Required? | Description   |
+| -------- | ---------------------------------- | --------- | ------------- |
+| children | `(props: AddProps) => JSX.Element` | No        | A render prop |
 
 #### Render Props
 
 Your `children` render prop will receive the following props:
 
 ```ts
-type AddButtonProps<Fields extends FormFields> = {
+type AddProps<Fields extends FormFields> = {
   /**
    * Append a new item to the end of the list.
    * When called with current item, it will be prepend with a new item.

@@ -1,7 +1,7 @@
 import type { FormFields } from "form-atoms";
 import { FunctionComponent } from "react";
 
-import { type AddButtonProps, createAddButton } from "./add-button";
+import { type AddProps, createAdd } from "./add";
 import { type EmptyProps, createEmpty } from "./empty";
 import { type ItemProps, createItem } from "./item";
 import { type ListProps, createList } from "./list";
@@ -20,7 +20,7 @@ export type Components<Fields extends FormFields> = {
     /**
      * A component to control adding new or initialized items to the list.
      */
-    Add: FunctionComponent<AddButtonProps<Fields>>;
+    Add: FunctionComponent<AddProps<Fields>>;
     /**
      * A component which renders children only when the list is empty.
      */
@@ -40,12 +40,14 @@ export type Components<Fields extends FormFields> = {
 export function createComponents<Fields extends FormFields>(
   listAtom: ListAtom<Fields, any>,
 ) {
-  const List = Object.assign(createList(listAtom), {
-    Add: createAddButton(listAtom),
-    Empty: createEmpty(listAtom),
-    Item: createItem(listAtom),
+  const root = createList(listAtom);
+
+  Object.assign(root.List, {
+    ...createAdd(listAtom),
+    ...createEmpty(listAtom),
+    ...createItem(listAtom),
     Nested: NestedList,
   });
 
-  return { List };
+  return root;
 }

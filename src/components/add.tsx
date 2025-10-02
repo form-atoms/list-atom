@@ -4,24 +4,26 @@ import type { ListAtom } from "../atoms";
 
 import { useListActions } from "../hooks";
 
-export type AddButtonProps<Fields extends FormFields> = Partial<
+export type AddProps<Fields extends FormFields> = Partial<
   RenderProp<{
     add: (fields?: Fields) => void;
   }>
 >;
 
-export function createAddButton<Fields extends FormFields>(
+export function createAdd<Fields extends FormFields>(
   listAtom: ListAtom<Fields, any>,
 ) {
-  return function AddButton({
+  function Add({
     children = ({ add }) => (
       <button type="button" onClick={() => add()}>
         Add item
       </button>
     ),
-  }: AddButtonProps<Fields>) {
+  }: AddProps<Fields>) {
     const actions = useListActions(listAtom);
 
     return children({ add: (fields) => actions.add(undefined, fields) });
-  };
+  }
+
+  return { Add };
 }
