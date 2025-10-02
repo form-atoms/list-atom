@@ -1,7 +1,7 @@
 import { Meta } from "@storybook/react-vite";
 import { FormFields } from "form-atoms";
 
-import { ListItemProps } from "../List";
+import { ListItemProps } from "./item";
 
 const ListItem = <Fields extends FormFields>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -78,15 +78,6 @@ const meta = {
       table: {
         type: {
           summary: "() => void",
-        },
-      },
-    },
-    RemoveButton: {
-      description:
-        "A component to render the `RemoveButton` passed to the original `<ListField />`. It removes the current item when clicked.. It doesn't accept props.",
-      table: {
-        type: {
-          summary: "FunctionComponent",
         },
       },
     },

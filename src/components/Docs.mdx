@@ -33,11 +33,17 @@ import { createList } from "@form-atoms/list-atom";
 - ✅ Scoped field `name` attribute with dynamic index position.
 - ✅ Supports **nesting list within item**.
 
-## Props
+## Usage
 
-### Children props
+```ts
+import { createList } from "@form-atoms/list-atom";
 
-The `children` render prop will receive the following props:
+const { List } = createList(myAtom);
+
+// List.Item
+// List.Add
+// List.Empty
+```
 
 {/* <ArgTypes of={ListItemStories} /> */}
 
