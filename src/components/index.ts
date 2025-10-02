@@ -5,7 +5,7 @@ import { type AddProps, createAdd } from "./add";
 import { type EmptyProps, createEmpty } from "./empty";
 import { type ItemProps, createItem } from "./item";
 import { type ListProps, createList } from "./list";
-import { NestedList, type NestedListProps } from "./nested";
+import { Nested, type NestedProps } from "./nested";
 import type { ListAtom } from "../atoms";
 
 export type Components<Fields extends FormFields> = {
@@ -28,7 +28,7 @@ export type Components<Fields extends FormFields> = {
     /**
      * A utility to re-create the components bound to list from a prop.
      */
-    Nested: FunctionComponent<NestedListProps<any>>;
+    Nested: FunctionComponent<NestedProps<any>>;
   };
 };
 
@@ -46,7 +46,7 @@ export function createComponents<Fields extends FormFields>(
     ...createAdd(listAtom),
     ...createEmpty(listAtom),
     ...createItem(listAtom),
-    Nested: NestedList,
+    Nested,
   });
 
   return root;
