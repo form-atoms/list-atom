@@ -22,7 +22,7 @@ npm install jotai-effect @form-atoms/list-atom
 
 ```tsx
 import { fromAtom, useForm, fieldAtom, InputField } from "form-atoms";
-import { listAtom, List } from "@form-atoms/list-atom";
+import { listAtom, createComponents } from "@form-atoms/list-atom";
 
 const environmentVariables = listAtom({
   name: "environment",
@@ -35,34 +35,48 @@ const environmentVariables = listAtom({
 
 const form = formAtom({ environmentVariables });
 
+const { List } = createComponents(environmentVariables);
+
 export const Form = () => {
   const { submit } = useForm(form);
 
   return (
     <form onSubmit={submit(console.log)}>
-      <List atom={environmentVariables}>
-        {({ fields }) => (
-          <>
-            <InputField
-              atom={fields.key}
-              render={(props) => (
-                <>
-                  <label>Variable Key</label>
-                  <input {...props} />
-                </>
-              )}
-            />
-            <InputField
-              atom={fields.value}
-              render={(props) => (
-                <>
-                  <label>Variable Value</label>
-                  <input {...props} />
-                </>
-              )}
-            />
-          </>
-        )}
+      <List>
+        <List.Item>
+          {({ fields, remove }) => (
+            <>
+              <InputField
+                atom={fields.key}
+                render={(props) => (
+                  <>
+                    <label>Variable Key</label>
+                    <input {...props} />
+                  </>
+                )}
+              />
+              <InputField
+                atom={fields.value}
+                render={(props) => (
+                  <>
+                    <label>Variable Value</label>
+                    <input {...props} />
+                  </>
+                )}
+              />
+              <button type="button" onClick={remove}>
+                Remove
+              </button>
+            </>
+          )}
+        </List.Item>
+        <List.Add>
+          {({ add }) => (
+            <button type="button" onClick={add}>
+              Add variable
+            </button>
+          )}
+        </List.Add>
       </List>
     </form>
   );
@@ -80,9 +94,13 @@ export const Form = () => {
 | [`useListActions()`](#uselistactions) | A hook that returns a `add`, `remove` & `move` actions, that can be used to interact with the list atom state. |
 | [`useList()`](#uselist)               | A hook that returns the list `items` ready to be rendred together with the list actions.                       |
 
-| Components        | Description                                                                                                                            |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| [`<List>`](#list) | A component that render the individual items of listAtom with render props to render `AddButton`, `RemoveButton` and/or `Empty` slate. |
+| Components                    | Description                                                     |
+| ----------------------------- | --------------------------------------------------------------- |
+| [`<List>`](#list)             | A component to initialize the listAtom via `initialValue` prop. |
+| [`<List.Add>`](#listadd)      | Adds new or initialized items to the list.                      |
+| [`<List.Item>`](#listitem)    | Iterate and render each of the list items.                      |
+| [`<List.Empty>`](#listempty)  | Render children only when the list has no items.                |
+| [`<List.Nested>`](#listempty) | Helper for nesting list within an `<List.Item>`.                |
 
 ## List atoms
 
@@ -297,21 +315,67 @@ export type UseList<Fields extends FormFields> = UseListActions<Fields> & {
 
 #### [⇗ Back to top](#table-of-contents)
 
-## Components
+## createComponents(listAtom)
+
+Create a compound List components:
+
+```tsx
+import { createComponents } from "@form-atoms/list-atom";
+
+const { List } = createComponents(myListAtom);
+
+// Usage:
+// List.Add
+// List.Empty
+// List.Item
+// List.Nested
+```
+
+#### Returns
+
+```ts
+export type Components<Fields extends FormFields> = {
+  /**
+   * A component to initialize the listAtom.
+   */
+  List: FunctionComponent<ListProps<Fields>> & {
+    /**
+     * A component to iterate and render each of the list items.
+     */
+    Item: FunctionComponent<ItemProps<Fields>>;
+    /**
+     * A component to control adding new or initialized items to the list.
+     */
+    Add: FunctionComponent<AddButtonProps<Fields>>;
+    /**
+     * A component which renders children only when the list is empty.
+     */
+    Empty: FunctionComponent<EmptyProps>;
+    /**
+     * A utility to re-create the components bound to list from a prop.
+     */
+    Nested: FunctionComponent<NestedListProps<any>>;
+  };
+};
+```
 
 ### &lt;List&gt;
 
 #### Props
 
-| Name         | Type                                                  | Required? | Description                                                               |
-| ------------ | ----------------------------------------------------- | --------- | ------------------------------------------------------------------------- |
-| atom         | `ListAtom<FormFields, Value>`                         | Yes       | A list atom                                                               |
-| children     | `(props: ListItemProps) => JSX.Element`               | Yes       | A render prop                                                             |
-| initialValue | `Value[]`                                             | No        | A value to (re)initialize the listAtom                                    |
-| RemoveButton | `FunctionComponent<{remove: () => void}>`             | no        | A render prop receiving `remove` function for each individual list item   |
-| AddButton    | `FunctionComponent<{add: (fields?: Fields) => void}>` | No        | A render prop to render a button adding new items to the end of the list  |
-| Empty        | `FunctionComponent`                                   | No        | A render prop to render a blank slate when there are no items in the list |
-| store        | `AtomStore`                                           | No        | [A Jotai store](https://jotai.org/docs/api/core#createstore)              |
+| Name         | Type        | Required? | Description                                                  |
+| ------------ | ----------- | --------- | ------------------------------------------------------------ |
+| children     | `ReactNode` | Yes       | A react nodes                                                |
+| initialValue | `Value[]`   | No        | A value to (re)initialize the listAtom                       |
+| store        | `AtomStore` | No        | [A Jotai store](https://jotai.org/docs/api/core#createstore) |
+
+### &lt;List.Item&gt;
+
+#### Props
+
+| Name     | Type                                    | Required? | Description   |
+| -------- | --------------------------------------- | --------- | ------------- |
+| children | `(props: ListItemProps) => JSX.Element` | Yes       | A render prop |
 
 #### Render Props
 
@@ -354,12 +418,47 @@ type ListItemProps<Fields extends FormFields> = {
    * When called for the last item, the item moves to the start of the list.
    */
   moveDown: () => void;
-  /**
-   * A component with an onClick handler bound to remove the current item from the list.
-   */
-  RemoveButton: FunctionComponent;
 };
 ```
+
+### &lt;List.Add&gt;
+
+#### Props
+
+| Name     | Type                               | Required? | Description   |
+| -------- | ---------------------------------- | --------- | ------------- |
+| children | `(props: AddProps) => JSX.Element` | No        | A render prop |
+
+#### Render Props
+
+Your `children` render prop will receive the following props:
+
+```ts
+type AddProps<Fields extends FormFields> = {
+  /**
+   * Append a new item to the end of the list.
+   * When called with current item, it will be prepend with a new item.
+   */
+  add: (fields?: Fields) => void;
+};
+```
+
+### &lt;List.Empty&gt;
+
+#### Props
+
+| Name     | Type        | Required? | Description                              |
+| -------- | ----------- | --------- | ---------------------------------------- |
+| children | `ReactNode` | No        | Content to render when the list is empty |
+
+### &lt;List.Nested&gt;
+
+#### Props
+
+| Name     | Type                                 | Required? | Description                                                        |
+| -------- | ------------------------------------ | --------- | ------------------------------------------------------------------ |
+| atom     | `ListAtom<Fields>`                   | Yes       | A listAtom for which to create nested compound components          |
+| children | `(props: Components) => JSX.Element` | Yes       | A render prop with a List compound component bound to the listAtom |
 
 #### [⇗ Back to top](#table-of-contents)
 
