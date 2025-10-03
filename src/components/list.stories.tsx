@@ -65,17 +65,14 @@ export const ListOfObjects = listStory({
   args: {
     atom: listAtom({
       name: "environment",
-      value: [
-        { variable: "GITHUB_TOKEN", value: "<secret>" },
-        { variable: "NPM_TOKEN", value: "<secret>" },
-      ],
-      fields: ({ variable, value }) => ({
-        variable: fieldAtom({ name: "variable", value: variable }),
-        value: fieldAtom({ name: "value", value: value }),
+      value: [{ variable: "GITHUB_TOKEN", value: "<secret>" }],
+      fields: () => ({
+        variable: fieldAtom({ name: "variable", value: "" }),
+        value: fieldAtom({ name: "value", value: "" }),
       }),
     }),
     children: ({ List }) => (
-      <List>
+      <List initialValue={[{ value: "<secret>", variable: "NPM_TOKEN" }]}>
         <List.Item>
           {({ fields, remove }) => (
             <div
@@ -101,7 +98,7 @@ export const ListOfObjects = listStory({
                     <input {...props} placeholder="Variable Value" />
                   )}
                 />
-                <PicoFieldName field={fields.variable} />
+                <PicoFieldName field={fields.value} />
               </div>
               <div>
                 <RemoveButton remove={remove} />
@@ -128,7 +125,7 @@ export const CustomAddButton = listStory({
     atom: listAtom({
       name: "productFeatures",
       value: [{ feature: "quality materials" }, { feature: "solid build" }],
-      fields: ({ feature }) => ({ feature: fieldAtom({ value: feature }) }),
+      fields: () => ({ feature: fieldAtom({ value: "" }) }),
     }),
     children: ({ List }) => (
       <List>
@@ -145,9 +142,7 @@ export const CustomAddButton = listStory({
             <button
               type="button"
               className="outline"
-              onClick={() =>
-                add({ feature: fieldAtom({ value: "beautiful colors" }) })
-              }
+              onClick={() => add({ feature: "beautiful colors" })}
             >
               Add initialized item
             </button>
@@ -171,7 +166,7 @@ export const PositioningAddButton = listStory({
     atom: listAtom({
       name: "productFeatures",
       value: [{ feature: "quality materials" }, { feature: "solid build" }],
-      fields: ({ feature }) => ({ feature: fieldAtom({ value: feature }) }),
+      fields: () => ({ feature: fieldAtom({ value: "" }) }),
     }),
     children: ({ List }) => {
       return (
@@ -231,8 +226,8 @@ export const EmptyList = listStory({
   },
   args: {
     atom: listAtom({
-      value: [] as { hobby: string }[],
-      fields: ({ hobby }) => ({ hobby: fieldAtom<string>({ value: hobby }) }),
+      value: [],
+      fields: () => ({ hobby: fieldAtom<string>({ value: "" }) }),
     }),
     children: ({ List }) => (
       <List>
@@ -276,7 +271,7 @@ export const Prepend = listStory({
     atom: listAtom({
       name: "hobbies",
       value: [{ hobby: "gardening" }],
-      fields: ({ hobby }) => ({ hobby: fieldAtom({ value: hobby }) }),
+      fields: () => ({ hobby: fieldAtom({ value: "" }) }),
     }),
     children: ({ List }) => (
       <List
@@ -319,7 +314,7 @@ export const OrderingItems = listStory({
     atom: listAtom({
       name: "hobbies",
       value: [{ hobby: "gardening" }],
-      fields: ({ hobby }) => ({ hobby: fieldAtom<string>({ value: hobby }) }),
+      fields: () => ({ hobby: fieldAtom({ value: "" }) }),
     }),
     children: ({ List }) => (
       <List
@@ -374,14 +369,14 @@ export const NestedList = listStory({
           accounts: [{ iban: "SK89 7500 0000 0000 1234 5671" }],
         },
       ],
-      fields: ({ name, lastName, accounts = [] }) => ({
-        name: fieldAtom({ value: name, name: "name" }),
-        lastName: fieldAtom({ value: lastName, name: "lastName" }),
+      fields: () => ({
+        name: fieldAtom({ value: "", name: "name" }),
+        lastName: fieldAtom({ value: "", name: "lastName" }),
         accounts: listAtom({
           name: "accounts",
-          value: accounts,
-          fields: ({ iban }) => ({
-            iban: fieldAtom({ value: iban, name: "iban" }),
+          value: [],
+          fields: () => ({
+            iban: fieldAtom({ value: "", name: "iban" }),
           }),
         }),
       }),
@@ -538,9 +533,9 @@ export const ProgrammaticallySetValue = listStory({
         { variable: "GITHUB_TOKEN", value: "<secret>" },
         { variable: "NPM_TOKEN", value: "<secret>" },
       ],
-      fields: ({ variable, value }) => ({
-        variable: fieldAtom({ name: "variable", value: variable }),
-        value: fieldAtom({ name: "value", value: value }),
+      fields: () => ({
+        variable: fieldAtom({ name: "variable", value: "" }),
+        value: fieldAtom({ name: "value", value: "" }),
       }),
     }),
     children: ({ List, atom }) => (
@@ -605,7 +600,7 @@ export const ValidateAscendingValues = listStory({
     atom: listAtom({
       name: "levels",
       value: [{ level: 0 }],
-      fields: ({ level }) => ({ level: fieldAtom<number>({ value: level }) }),
+      fields: () => ({ level: fieldAtom<number>({ value: 0 }) }),
       validate: ({ value }) => {
         const errors: string[] = [];
 

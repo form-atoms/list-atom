@@ -16,7 +16,12 @@ type NamedFormAtom<Fields extends FormFields> = Atom<
 
 export type ListItemForm<Fields extends FormFields> = NamedFormAtom<Fields>;
 
-type ListItemFormConfig<Fields extends FormFields> = {
+type ListItemFormConfig<Fields extends FormFields, Value> = {
+  /**
+   * The item value to initialize the fields.
+   * Value is optional, e.g. when calling actions.add(), often we want a blank field.
+   */
+  value?: Value; // perf hack, no need to have the FormFieldValues<Fields> inference here
   /**
    * The fields of the item form.
    */
@@ -43,11 +48,12 @@ type ListItemFormConfig<Fields extends FormFields> = {
       >;
 };
 
-export function listItemForm<Fields extends FormFields>({
+export function listItemForm<Fields extends FormFields, Value>({
+  value,
   fields,
   formListAtom,
   getListNameAtom,
-}: ListItemFormConfig<Fields>) {
+}: ListItemFormConfig<Fields, Value>) {
   const itemFormAtom: ListItemForm<Fields> = extendAtom(
     formAtom(fields) as unknown as PrimitiveFormAtom<Fields>,
     (base, get) => {
@@ -103,7 +109,34 @@ export function listItemForm<Fields extends FormFields>({
         };
       });
 
+      // NOTE: patchNames, for an unkonwn reason, must be mounted before the initializeItem, otherwise there is infinite loop in test.
       get(patchNamesEffect);
+
+      const initializeItemEffect = atomEffect((get, set) => {
+        if (!value) {
+          return;
+        }
+        const fields = get(base.fields);
+
+        walkFields(fields, (field, path) => {
+          const atoms = get(field);
+
+          const val = [...path].reduce(
+            (source, key) =>
+              Object.hasOwn(source, key) ? source[key] : undefined,
+            value as unknown as any,
+          );
+
+          if (val) {
+            set(atoms._initialValue, val);
+            set(atoms.value, val);
+          }
+        });
+      });
+
+      if (value) {
+        get(initializeItemEffect);
+      }
 
       if (
         typeof process !== "undefined" &&

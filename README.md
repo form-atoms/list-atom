@@ -22,7 +22,7 @@ npm install jotai-effect @form-atoms/list-atom
 
 ```tsx
 import { fromAtom, useForm, fieldAtom, InputField } from "form-atoms";
-import { listAtom, createComponents } from "@form-atoms/list-atom";
+import { listAtom, createList } from "@form-atoms/list-atom";
 
 const environmentVariables = listAtom({
   name: "environment",
