@@ -7,7 +7,6 @@ export const Example = ({
   of,
   children,
 }: PropsWithChildren<{ of: ModuleExport }>) => {
-  console.log({ of });
   return (
     <>
       <StoryTitle of={of} />

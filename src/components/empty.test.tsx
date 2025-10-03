@@ -9,7 +9,7 @@ describe("<Empty /> component", () => {
   describe("when there are no items in the list", () => {
     const friends = listAtom({
       value: [],
-      fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
+      fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
     });
 
     // @ts-ignore FIXME empty value array
@@ -25,7 +25,7 @@ describe("<Empty /> component", () => {
   describe("when the list has one or more items", () => {
     const friends = listAtom({
       value: [{ name: "Bobette" }],
-      fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
+      fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
     });
 
     const { Empty } = createEmpty(friends);

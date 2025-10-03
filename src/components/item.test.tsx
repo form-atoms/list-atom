@@ -10,7 +10,7 @@ describe("<Item />", () => {
   it("renders each list item", async () => {
     const friends = listAtom({
       value: [{ name: "Alice" }, { name: "Bob" }],
-      fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
+      fields: () => ({ name: fieldAtom({ value: "" }) }),
     });
 
     const { Item } = createItem(friends);
@@ -28,7 +28,7 @@ describe("<Item />", () => {
     it("removes the respective list item", async () => {
       const friends = listAtom({
         value: [{ name: "Alice" }],
-        fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
+        fields: () => ({ name: fieldAtom({ value: "" }) }),
       });
 
       const { Item } = createItem(friends);

@@ -9,8 +9,8 @@ import { useListActions } from "../use-list-actions";
 describe("useFieldInitialValue()", () => {
   it("reinitializes the field value", async () => {
     const field = listAtom({
-      value: [] as { age: number }[],
-      fields: ({ age }) => ({ age: fieldAtom({ value: age }) }),
+      value: [],
+      fields: () => ({ age: fieldAtom({ value: 0 }) }),
     });
 
     const { result: state } = renderHook(() => useFieldState(field));

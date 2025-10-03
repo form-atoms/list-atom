@@ -1,4 +1,4 @@
-import { FormFields, UseFieldOptions } from "form-atoms";
+import { FormFieldValues, FormFields, UseFieldOptions } from "form-atoms";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useTransition } from "react";
 
@@ -20,10 +20,10 @@ export const useListActions = <Fields extends FormFields, Value>(
     });
   }, []);
 
-  const add = useCallback((before?: ListItem<Fields>, fields?: Fields) => {
+  const add = useCallback((before?: ListItem<Fields>, value?: Value) => {
     dispatchSplitList({
       type: "insert",
-      value: atoms.buildItem(fields),
+      value: atoms.buildItem(value),
       before,
     });
     startTransition(() => {
@@ -50,14 +50,14 @@ export type UseListActions<Fields extends FormFields> = {
   remove: (item: ListItem<Fields>) => void;
   /**
    * Appends a new item to the list by default, when no 'before' position is used.
-   * Optionally the item can be initialized, with the 'fields' argument.
+   * Optionally pass the item value.
    *
    * @param before - An item from the listAtom's splitList array.
-   * @param fields - A custom initialized fieldAtoms matching the Fields shape of the list.
+   * @param value - A custom list item value
    */
   add: (
     before?: ListItem<Fields> | undefined,
-    fields?: Fields | undefined,
+    value?: FormFieldValues<Fields> | undefined,
   ) => void;
   /**
    * Moves the item to the end of the list, or where specified when the 'before' is defined.

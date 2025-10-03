@@ -10,10 +10,9 @@ describe("<Add /> component", () => {
   it("renders 'Add item' label by default", () => {
     const friends = listAtom({
       value: [],
-      fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
+      fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
     });
 
-    // @ts-ignore FIXME empty value array
     const { Add } = createAdd(friends);
 
     render(<Add />);
@@ -27,7 +26,7 @@ describe("<Add /> component", () => {
   it("appends empty item to the list", async () => {
     const friends = listAtom({
       value: [{ name: "Bobek" }],
-      fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
+      fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
     });
 
     const { Add } = createAdd(friends);
@@ -49,7 +48,9 @@ describe("<Add /> component", () => {
   it("adds list item with initialized fields", async () => {
     const friends = listAtom({
       value: [{ name: "Lolek" }],
-      fields: ({ name }) => ({ name: fieldAtom<string>({ value: name }) }),
+      fields: () => ({
+        name: fieldAtom<string>({ value: "" }),
+      }),
     });
 
     const { Add } = createAdd(friends);
@@ -57,10 +58,7 @@ describe("<Add /> component", () => {
     render(
       <Add>
         {({ add }) => (
-          <button
-            type="button"
-            onClick={() => add({ name: fieldAtom({ value: "Bobek" }) })}
-          >
+          <button type="button" onClick={() => add({ name: "Bobek" })}>
             add fren
           </button>
         )}

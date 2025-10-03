@@ -72,7 +72,7 @@ type ListAtomState<Fields extends FormFields, Value> = FieldAtomState<
    * @internal
    */
   _formFields: Atom<Fields[]>;
-  buildItem(fields?: Fields): ListItemForm<Fields>;
+  buildItem(value?: Value): ListItemForm<Fields>;
 };
 
 export type ListAtom<Fields extends FormFields, Value> = Atom<
@@ -83,7 +83,7 @@ export type ListAtomConfig<Fields extends FormFields, Value> = {
   /**
    * A function to initialize the fields for each of the initial values.
    */
-  fields: (value: Value) => Fields;
+  fields: () => Fields;
   /**
    * Error message the listAtom will have, when its items have nested errors.
    * It will be one of errors returned by the `useFieldErrors()` hook.
@@ -97,23 +97,17 @@ export function listAtom<
 >({
   fields,
   ...config
-}: ListAtomConfig<Fields, Value>): ListAtom<Fields, Value> {
+}: ListAtomConfig<Fields, NoInfer<Value>>): ListAtom<Fields, Value> {
   const nameAtom = atomWithReset(config.name);
   const initialValueAtom = atomWithReset<Value[] | undefined>(undefined);
 
-  function formBuilder(): Fields;
-  function formBuilder(values: Value[]): Fields[];
-  function formBuilder(values?: Value[]) {
-    if (values) {
-      return values.map(fields);
-    } else {
-      return fields({} as Value);
-    }
-  }
-
-  function buildItem(fields?: Fields): ListItemForm<Fields> {
+  /**
+   * @param value The item value.
+   */
+  function buildItem(value: Value): ListItemForm<Fields> {
     const itemForm = listItemForm({
-      fields: fields ?? formBuilder(),
+      value,
+      fields: fields(),
       getListNameAtom: (get) => get(self).name,
       formListAtom: _formListAtom,
     });
@@ -130,7 +124,7 @@ export function listAtom<
   }
 
   const makeFormList = (): ListItemForm<Fields>[] =>
-    formBuilder(config.value).map(buildItem);
+    config.value.map(buildItem);
 
   const _initialFormListAtom = atomWithDefault(makeFormList);
   const _formListAtom = atomWithDefault((get) => get(_initialFormListAtom));
@@ -253,7 +247,7 @@ export function listAtom<
           typeof value === "function" ? value(readListValue(get)) : value;
 
         if (Array.isArray(update)) {
-          const updatedFormList = formBuilder(update).map(buildItem);
+          const updatedFormList = update.map(buildItem);
           set(_initialFormListAtom, updatedFormList);
           set(_formListAtom, updatedFormList);
         } else {
