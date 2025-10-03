@@ -19,7 +19,7 @@ describe("<List />", () => {
   });
 
   describe("initialValue prop", () => {
-    it.only("is used as a submit value", async () => {
+    it("is used as a submit value", async () => {
       const friends = listAtom({
         value: [{ name: "Alice" }, { name: "Bob" }],
         fields: () => ({ name: fieldAtom({ value: "will be overriden" }) }),

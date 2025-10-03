@@ -246,8 +246,6 @@ export function listAtom<
         const update =
           typeof value === "function" ? value(readListValue(get)) : value;
 
-        console.log({ update });
-
         if (Array.isArray(update)) {
           const updatedFormList = update.map(buildItem);
           set(_initialFormListAtom, updatedFormList);
