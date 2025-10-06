@@ -22,7 +22,7 @@ export const ButtonCopyToClipboard = ({ text, ...props }: { text: string }) => {
         onClick={onCopy}
         tabIndex={-1}
         aria-label="Copy code"
-        data-tooltip={copied ? "Copied" : undefined}
+        data-tooltip={copied ? "Copied" : "Copy to clipboard"}
         data-placement="left"
       >
         {copied ? (

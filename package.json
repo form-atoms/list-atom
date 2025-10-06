@@ -28,7 +28,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc --build ./tsconfig.build.json --force",
+    "build": "tsc --build ./tsconfig.build.json",
     "test": "vitest",
     "test:cov": "vitest --coverage",
     "storybook": "yarn storybook:styles && storybook dev",

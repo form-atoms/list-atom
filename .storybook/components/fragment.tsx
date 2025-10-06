@@ -1,3 +1,3 @@
-import React from "react";
+import { PropsWithChildren } from "react";
 
-export const Fragment = ({ children }) => <>{children}</>;
+export const Fragment = ({ children }: PropsWithChildren) => <>{children}</>;

@@ -1,3 +1,10 @@
+# [2.2.0-next.1](https://github.com/form-atoms/list-atom/compare/v2.1.1...v2.2.0-next.1) (2025-10-06)
+
+
+### Features
+
+* **item-initialization:** initialize by effect, without builder value ([ed7265e](https://github.com/form-atoms/list-atom/commit/ed7265e3aa3bb023935c5574c554192936449780))
+
 ## [2.1.1](https://github.com/form-atoms/list-atom/compare/v2.1.0...v2.1.1) (2025-10-02)
 
 

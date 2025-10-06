@@ -20,11 +20,13 @@ describe("listAtom()", () => {
   test("can be submitted within formAtom", async () => {
     const nums = listAtom({
       value: [{ age: 20 }, { age: 30 }],
-      fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+      fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
     });
 
     const form = formAtom({ nums });
 
+    // mounts effect
+    renderHook(() => useFieldValue(nums));
     const { result: submit } = renderHook(() => useFormSubmit(form));
 
     const onSubmit = vi.fn();
@@ -38,7 +40,7 @@ describe("listAtom()", () => {
     it("is true when values is empty array", () => {
       const list = listAtom({
         value: [],
-        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
       });
 
       const { result } = renderHook(() =>
@@ -51,7 +53,7 @@ describe("listAtom()", () => {
     it("is false when value contain data", () => {
       const list = listAtom({
         value: [{ age: 3 }],
-        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
       });
 
       const { result } = renderHook(() =>
@@ -65,19 +67,19 @@ describe("listAtom()", () => {
   test("useFieldValue() reads list of value", () => {
     const list = listAtom({
       value: [{ age: 80 }, { age: 70 }],
-      fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+      fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
     });
 
-    const result = renderHook(() => useFieldValue(list));
+    const { result } = renderHook(() => useFieldValue(list));
 
-    expect(result.result.current).toEqual([{ age: 80 }, { age: 70 }]);
+    expect(result.current).toEqual([{ age: 80 }, { age: 70 }]);
   });
 
   describe("useFieldActions(listAtom).setValue", () => {
     test("works with array value", async () => {
       const ages = listAtom({
         value: [{ age: 10 }],
-        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
       });
 
       const { result: fieldActions } = renderHook(() => useFieldActions(ages));
@@ -86,32 +88,35 @@ describe("listAtom()", () => {
         fieldActions.current.setValue([{ age: 20 }, { age: 40 }]),
       );
 
-      const result = renderHook(() => useFieldValue(ages));
+      const { result } = renderHook(() => useFieldValue(ages));
 
-      expect(result.result.current).toEqual([{ age: 20 }, { age: 40 }]);
+      expect(result.current).toEqual([{ age: 20 }, { age: 40 }]);
     });
 
     test("works with a callback function", async () => {
       const ages = listAtom({
         value: [{ age: 10 }],
-        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
       });
 
       const { result: fieldActions } = renderHook(() => useFieldActions(ages));
+
+      // mounts effect
+      renderHook(() => useFieldValue(ages));
 
       await act(async () =>
         fieldActions.current.setValue((ages) => [...ages, { age: 30 }]),
       );
 
-      const result = renderHook(() => useFieldValue(ages));
+      const { result } = renderHook(() => useFieldValue(ages));
 
-      expect(result.result.current).toEqual([{ age: 10 }, { age: 30 }]);
+      expect(result.current).toEqual([{ age: 10 }, { age: 30 }]);
     });
 
     test("throws for non-array value", async () => {
       const ages = listAtom({
         value: [{ age: 10 }],
-        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
       });
 
       const { result: fieldActions } = renderHook(() => useFieldActions(ages));
@@ -125,10 +130,12 @@ describe("listAtom()", () => {
     test("the formActions.reset resets the field value", async () => {
       const ages = listAtom({
         value: [{ age: 10 }],
-        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
       });
       const form = formAtom({ ages });
 
+      // mounts effect
+      renderHook(() => useFieldValue(ages));
       const { result: formActions } = renderHook(() => useFormActions(form));
       const { result: fieldActions } = renderHook(() => useFieldActions(ages));
 
@@ -147,7 +154,7 @@ describe("listAtom()", () => {
     test("the formActions.reset resets the field error", async () => {
       const ages = listAtom({
         value: [{ age: 10 }],
-        fields: ({ age }) => ({ age: fieldAtom<number>({ value: age }) }),
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
         validate: () => ["err"],
       });
       const form = formAtom({ ages });
@@ -170,7 +177,7 @@ describe("listAtom()", () => {
     it("adding item clear the error", async () => {
       const field = listAtom({
         value: [],
-        fields: ({ email }) => ({ email: fieldAtom<string>({ value: email }) }),
+        fields: () => ({ email: fieldAtom<string>({ value: "" }) }),
         validate: ({ value }) => {
           const errors = [];
           if (value.length === 0) {
@@ -198,9 +205,9 @@ describe("listAtom()", () => {
       const field = listAtom({
         value: [{ email: undefined }],
         invalidItemError: "err",
-        fields: ({ email }) => ({
+        fields: () => ({
           email: fieldAtom<string | undefined>({
-            value: email,
+            value: "",
             validate: ({ value }) => (value ? [] : ["required"]),
           }),
         }),
@@ -219,9 +226,9 @@ describe("listAtom()", () => {
     it("can't be submitted with invalid item's field", async () => {
       const field = listAtom({
         value: [{ age: undefined }],
-        fields: ({ age }) => ({
+        fields: () => ({
           age: fieldAtom<number | undefined>({
-            value: age,
+            value: 0,
             validate: ({ value }) => (value ? [] : ["required"]),
           }),
         }),
@@ -240,20 +247,23 @@ describe("listAtom()", () => {
       const field = listAtom({
         name: "users",
         value: [{ accounts: [{ iban: undefined }] }],
-        fields: ({ accounts }) => ({
+        fields: () => ({
           accounts: listAtom({
             name: "bank-accounts",
-            value: accounts,
-            fields: ({ iban }) => ({
+            value: [],
+            fields: () => ({
               iban: fieldAtom<string | undefined>({
                 name: "iban",
-                value: iban,
+                value: undefined,
                 validate: ({ value }) => (value ? [] : ["required"]),
               }),
             }),
           }),
         }),
       });
+
+      // mounts effect
+      renderHook(() => useFieldValue(field));
 
       const form = formAtom({ field });
 
@@ -268,9 +278,9 @@ describe("listAtom()", () => {
       const field = listAtom({
         invalidItemError: "There are some errors",
         value: [{ age: undefined }],
-        fields: ({ age }) => ({
+        fields: () => ({
           age: fieldAtom<number | undefined>({
-            value: age,
+            value: 0,
             validate: ({ value }) => (value ? [] : ["required"]),
           }),
         }),
@@ -289,9 +299,9 @@ describe("listAtom()", () => {
     it("loses invalidItemError, when the nested item error is fixed", async () => {
       const field = listAtom({
         value: [{ age: undefined }],
-        fields: ({ age }) => ({
+        fields: () => ({
           age: fieldAtom<number | undefined>({
-            value: age,
+            value: 0,
             validate: ({ value }) => (value ? [] : ["required"]),
           }),
         }),
@@ -323,8 +333,8 @@ describe("listAtom()", () => {
     it("becomes dirty when an item is removed", async () => {
       const field = listAtom({
         value: [{ age: 42 }],
-        fields: ({ age }) => ({
-          age: fieldAtom<number>({ value: age }),
+        fields: () => ({
+          age: fieldAtom<number>({ value: 0 }),
         }),
       });
 
@@ -342,8 +352,8 @@ describe("listAtom()", () => {
     it("becomes dirty when an item is added", async () => {
       const field = listAtom({
         value: [],
-        fields: ({ age }) => ({
-          age: fieldAtom<number>({ value: age }),
+        fields: () => ({
+          age: fieldAtom<number>({ value: 0 }),
         }),
       });
 
@@ -359,8 +369,8 @@ describe("listAtom()", () => {
     it("becomes dirty when items are reordered", async () => {
       const field = listAtom({
         value: [{ age: 42 }, { age: 84 }],
-        fields: ({ age }) => ({
-          age: fieldAtom<number>({ value: age }),
+        fields: () => ({
+          age: fieldAtom<number>({ value: 3 }),
         }),
       });
 
@@ -378,8 +388,8 @@ describe("listAtom()", () => {
     it("becomes dirty when some item field is edited", async () => {
       const field = listAtom({
         value: [{ age: 21 }],
-        fields: ({ age }) => ({
-          age: fieldAtom<number>({ value: age }),
+        fields: () => ({
+          age: fieldAtom<number>({ value: 0 }),
         }),
       });
 
@@ -403,8 +413,8 @@ describe("listAtom()", () => {
     it("becomes pristine when items are reordered & back", async () => {
       const field = listAtom({
         value: [{ age: 42 }, { age: 84 }],
-        fields: ({ age }) => ({
-          age: fieldAtom<number>({ value: age }),
+        fields: () => ({
+          age: fieldAtom<number>({ value: 0 }),
         }),
       });
 
@@ -427,8 +437,8 @@ describe("listAtom()", () => {
     it("becomes pristine after value is set (the set is usually called by useFieldInitialValue to hydrate the field)", async () => {
       const field = listAtom({
         value: [{ age: 21 }],
-        fields: ({ age }) => ({
-          age: fieldAtom<number>({ value: age }),
+        fields: () => ({
+          age: fieldAtom<number>({ value: 0 }),
         }),
       });
 
@@ -455,8 +465,8 @@ describe("listAtom()", () => {
       const field = listAtom({
         name: "contacts",
         value: [{ email: "foo@bar.com" }, { email: "fizz@buzz.com" }],
-        fields: ({ email }) => ({
-          email: fieldAtom<string>({ value: email, name: "email" }),
+        fields: () => ({
+          email: fieldAtom<string>({ value: "", name: "email" }),
         }),
       });
 
@@ -489,14 +499,14 @@ describe("listAtom()", () => {
               ],
             },
           ],
-          fields: ({ email, addresses = [] }) => ({
-            email: fieldAtom({ value: email, name: "email" }),
+          fields: () => ({
+            email: fieldAtom({ value: "", name: "email" }),
             addresses: listAtom({
               name: "addresses",
-              value: addresses,
-              fields: ({ type, city }) => ({
-                type: fieldAtom({ value: type, name: "type" }),
-                city: fieldAtom({ value: city, name: "city" }),
+              value: [],
+              fields: () => ({
+                type: fieldAtom({ value: "", name: "type" }),
+                city: fieldAtom({ value: "", name: "city" }),
               }),
             }),
           }),

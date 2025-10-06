@@ -9,7 +9,7 @@ describe("<Nested />", () => {
   it("creates the compound components within JSX", () => {
     const friends = listAtom({
       value: [{ name: "Alice" }, { name: "Bob" }],
-      fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
+      fields: () => ({ name: fieldAtom({ value: "" }) }),
     });
 
     render(

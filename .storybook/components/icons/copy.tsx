@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Copy(props: any) {
   return (
     <svg
