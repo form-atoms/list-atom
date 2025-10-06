@@ -5,6 +5,12 @@ export default {
   staticDirs: ["../public"],
   addons: ["@storybook/addon-links", "@storybook/addon-docs"],
 
+  features: {
+    backgrounds: false,
+    outline: false,
+    measure: false,
+  },
+
   framework: {
     name: "@storybook/react-vite",
     options: {},
@@ -12,5 +18,5 @@ export default {
 
   core: {
     disableTelemetry: true,
-  }
+  },
 } satisfies StorybookConfig;
