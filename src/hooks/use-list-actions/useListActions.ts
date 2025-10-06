@@ -1,4 +1,4 @@
-import { FormFieldValues, FormFields, UseFieldOptions } from "form-atoms";
+import { FormFields, UseFieldOptions } from "form-atoms";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useMemo, useTransition } from "react";
 
@@ -7,7 +7,7 @@ import { ListAtom, ListItem } from "../../atoms/list-atom";
 export const useListActions = <Fields extends FormFields, Value>(
   listAtom: ListAtom<Fields, Value>,
   options?: UseFieldOptions<Value[]>,
-): UseListActions<Fields> => {
+): UseListActions<Fields, Value> => {
   const atoms = useAtomValue(listAtom);
   const validate = useSetAtom(atoms.validate, options);
   const dispatchSplitList = useSetAtom(atoms._splitList, options);
@@ -41,7 +41,7 @@ export const useListActions = <Fields extends FormFields, Value>(
   return useMemo(() => ({ remove, add, move }), [remove, add, move]);
 };
 
-export type UseListActions<Fields extends FormFields> = {
+export type UseListActions<Fields extends FormFields, Value> = {
   /**
    * Removes the item from the list.
    *
@@ -57,7 +57,7 @@ export type UseListActions<Fields extends FormFields> = {
    */
   add: (
     before?: ListItem<Fields> | undefined,
-    value?: FormFieldValues<Fields> | undefined,
+    value?: Value | undefined,
   ) => void;
   /**
    * Moves the item to the end of the list, or where specified when the 'before' is defined.

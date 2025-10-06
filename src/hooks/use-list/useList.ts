@@ -8,7 +8,7 @@ import { useListState } from "../use-list-state";
 export const useList = <Fields extends FormFields, Value>(
   listAtom: ListAtom<Fields, Value>,
   options?: UseFieldOptions<Value[]>,
-): UseList<Fields> => {
+): UseList<Fields, Value> => {
   useFieldInitialValue(listAtom, options?.initialValue, options);
   const {
     items: splitItems,
@@ -34,7 +34,10 @@ export const useList = <Fields extends FormFields, Value>(
   return { remove, add, move, isEmpty, items };
 };
 
-export type UseList<Fields extends FormFields> = UseListActions<Fields> & {
+export type UseList<Fields extends FormFields, Value> = UseListActions<
+  Fields,
+  Value
+> & {
   /**
    * Resolved value from the list.empty atom.
    */
