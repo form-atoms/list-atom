@@ -10,8 +10,8 @@ describe("useListAtom()", () => {
     it("removes the item and the list becomes empty", async () => {
       const contacts = listAtom({
         value: [{ email: "foo@bar.com" }],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
       });
       const form = formAtom({ contacts });
@@ -36,8 +36,8 @@ describe("useListAtom()", () => {
           { email: "primary@contact.com" },
           { email: "secondary@contact.com" },
         ],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
       });
       const form = formAtom({ contacts });
@@ -66,8 +66,8 @@ describe("useListAtom()", () => {
           { email: "primary@contact.com" },
           { email: "secondary@contact.com" },
         ],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
       });
       const form = formAtom({ contacts });
@@ -95,8 +95,8 @@ describe("useListAtom()", () => {
             { email: "primary@contact.com" },
             { email: "secondary@contact.com" },
           ],
-          fields: ({ email = "hello@world.com" }) => ({
-            email: fieldAtom({ value: email }),
+          fields: () => ({
+            email: fieldAtom({ value: "" }),
           }),
         });
         const form = formAtom({ contacts });

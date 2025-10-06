@@ -1,5 +1,11 @@
 import { act, renderHook } from "@testing-library/react";
-import { fieldAtom, formAtom, useFieldErrors, useFormSubmit } from "form-atoms";
+import {
+  fieldAtom,
+  formAtom,
+  useFieldErrors,
+  useFieldValue,
+  useFormSubmit,
+} from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
 
 import { useListActions } from "./useListActions";
@@ -11,12 +17,14 @@ describe("useListActions()", () => {
     it("appends a new item to the list", async () => {
       const contacts = listAtom({
         value: [{ email: "foo@bar.com" }],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
       });
       const form = formAtom({ contacts });
 
+      // mounts effect
+      renderHook(() => useFieldValue(contacts));
       const { result: actions } = renderHook(() => useListActions(contacts));
       const { result: formSubmit } = renderHook(() => useFormSubmit(form));
 
@@ -26,15 +34,15 @@ describe("useListActions()", () => {
       await act(() => formSubmit.current(onSubmit)());
 
       expect(onSubmit).toHaveBeenCalledWith({
-        contacts: [{ email: "foo@bar.com" }, { email: "hello@world.com" }],
+        contacts: [{ email: "foo@bar.com" }, { email: "" }],
       });
     });
 
     it("adds the item before a field when specified", async () => {
       const contacts = listAtom({
         value: [{ email: "foo@bar.com" }],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
       });
       const form = formAtom({ contacts });
@@ -49,15 +57,15 @@ describe("useListActions()", () => {
       await act(() => formSubmit.current(onSubmit)());
 
       expect(onSubmit).toHaveBeenCalledWith({
-        contacts: [{ email: "hello@world.com" }, { email: "foo@bar.com" }],
+        contacts: [{ email: "" }, { email: "foo@bar.com" }],
       });
     });
 
     it("validates the field", async () => {
       const contacts = listAtom({
         value: [],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
         validate: ({ value }) => (value.length > 0 ? [] : ["required"]),
       });
@@ -82,8 +90,8 @@ describe("useListActions()", () => {
     it("submits without the removed item", async () => {
       const contacts = listAtom({
         value: [{ email: "foo@bar.com" }],
-        fields: ({ email }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
       });
       const form = formAtom({ contacts });
@@ -109,8 +117,8 @@ describe("useListActions()", () => {
           { email: "secondary@contact.com" },
           { email: "too@many.com" },
         ],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
         validate: ({ value }) =>
           value.length > 2 ? ["at most 2 contacts allowed"] : [],
@@ -141,8 +149,8 @@ describe("useListActions()", () => {
           { email: "primary@contact.com" },
           { email: "secondary@contact.com" },
         ],
-        fields: ({ email = "hello@world.com" }) => ({
-          email: fieldAtom({ value: email }),
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
         }),
       });
       const form = formAtom({ contacts });

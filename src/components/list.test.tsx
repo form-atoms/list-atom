@@ -1,5 +1,5 @@
 import { act, render, renderHook, screen } from "@testing-library/react";
-import { fieldAtom, formAtom, useFormSubmit } from "form-atoms";
+import { fieldAtom, formAtom, InputField, useFormSubmit } from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
 
 import { createList } from "./list";
@@ -9,7 +9,7 @@ describe("<List />", () => {
   it("renders children", () => {
     const friends = listAtom({
       value: [{ name: "Alice" }],
-      fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
+      fields: () => ({ name: fieldAtom({ value: "" }) }),
     });
     const { List } = createList(friends);
 
@@ -22,14 +22,22 @@ describe("<List />", () => {
     it("is used as a submit value", async () => {
       const friends = listAtom({
         value: [{ name: "Alice" }, { name: "Bob" }],
-        fields: ({ name }) => ({ name: fieldAtom({ value: name }) }),
+        fields: () => ({ name: fieldAtom({ value: "will be overriden" }) }),
       });
 
       const form = formAtom({ friends });
       const { result } = renderHook(() => useFormSubmit(form));
       const { List } = createList(friends);
 
-      render(<List initialValue={[{ name: "Mark" }]} />);
+      render(
+        <List initialValue={[{ name: "Mark" }]}>
+          <List.Item>
+            {({ fields }) => (
+              <InputField atom={fields.name} component="input" />
+            )}
+          </List.Item>
+        </List>,
+      );
 
       const onSubmit = vi.fn();
       await act(async () => result.current(onSubmit)());
@@ -38,16 +46,16 @@ describe("<List />", () => {
     });
 
     it("(bugfix #104) initializes with optional input without infine loop caused by perpetual store.set()", () => {
-      type User = { id?: string; name: string };
+      type User = { id: string | undefined; name: string };
       // there is no "id" in initialValue
-      const users: User[] = [{ name: "Alice" }];
+      const users = [{ name: "Alice" }] as User[];
 
       const userList = listAtom({
         value: [],
-        fields: ({ name, id }: User) => ({
+        fields: () => ({
           // the field.value will have "id: undefined" after initialization
-          id: fieldAtom({ value: id }),
-          name: fieldAtom({ value: name }),
+          id: fieldAtom<string | undefined>({ value: undefined }),
+          name: fieldAtom({ value: "" }),
         }),
       });
 

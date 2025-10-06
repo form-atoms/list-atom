@@ -1,4 +1,4 @@
-import type { FormFields } from "form-atoms";
+import type { FormFields, FormFieldValues } from "form-atoms";
 import type { RenderProp } from "react-render-prop-type";
 import type { ListAtom } from "../atoms";
 
@@ -10,12 +10,12 @@ export type AddProps<Fields extends FormFields> = Partial<
      * An action to append a new item to the end of the list.
      * @param fields optionaly set initialized fields.
      */
-    add: (fields?: Fields) => void;
+    add: (value?: FormFieldValues<Fields>) => void;
   }>
 >;
 
 export function createAdd<Fields extends FormFields>(
-  listAtom: ListAtom<Fields, any>,
+  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
 ) {
   function Add({
     children = ({ add }) => (
