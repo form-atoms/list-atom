@@ -53,7 +53,7 @@ export type UseListActions<Fields extends FormFields, Value> = {
    * Optionally pass the item value.
    *
    * @param before - An item from the listAtom's splitList array.
-   * @param value - A custom list item value
+   * @param value - A custom list item value.
    */
   add: (
     before?: ListItem<Fields> | undefined,

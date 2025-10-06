@@ -1,5 +1,4 @@
 import { DevTools } from "jotai-devtools";
-import React from "react";
 import { type Preview } from "@storybook/react-vite";
 
 import { code } from "./components/shiki-code";

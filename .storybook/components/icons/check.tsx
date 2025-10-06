@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Check({
   isAnimated = false,
   strokeWidth = 4,

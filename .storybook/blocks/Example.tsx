@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { Story, Description } from "@storybook/addon-docs/blocks";
 import type { ModuleExport } from "storybook/internal/types";
 import { StoryTitle } from "./StoryTitle";

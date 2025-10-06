@@ -235,7 +235,7 @@ A hook that returns a `add`, `remove` & `move` actions, that can be used to inte
 #### Returns
 
 ```ts
-export type UseListActions<Fields extends FormFields> = {
+export type UseListActions<Fields extends FormFields, Value> = {
   /**
    * Removes the item from the list.
    *
@@ -247,11 +247,11 @@ export type UseListActions<Fields extends FormFields> = {
    * Optionally the item can be initialized, with the 'fields' argument.
    *
    * @param before - An item from the listAtom's splitList array.
-   * @param fields - A custom initialized fieldAtoms matching the Fields shape of the list.
+   * @param value - A custom list item value.
    */
   add: (
     before?: ListItem<Fields> | undefined,
-    fields?: Fields | undefined,
+    value?: Value | undefined,
   ) => void;
   /**
    * Moves the item to the end of the list, or where specified when the 'before' is defined.
@@ -279,7 +279,10 @@ A hook that returns the list `items` ready to be rendred together with the list 
 #### Returns
 
 ```ts
-export type UseList<Fields extends FormFields> = UseListActions<Fields> & {
+export type UseList<Fields extends FormFields, Value> = UseListActions<
+  Fields,
+  Value
+> & {
   /**
    * Resolved value from the list.empty atom.
    */
