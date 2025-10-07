@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/form-atoms/list-atom/compare/v2.2.0...v2.2.1) (2025-10-07)
+
+
+### Bug Fixes
+
+* **types:** list ([4b94f02](https://github.com/form-atoms/list-atom/commit/4b94f0282d2bd340e531214d9ac2bc0c3f32c0d0))
+
 # [2.2.0](https://github.com/form-atoms/list-atom/compare/v2.1.1...v2.2.0) (2025-10-06)
 
 
