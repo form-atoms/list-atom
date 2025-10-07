@@ -1,13 +1,13 @@
 import { useMemo } from "react";
-import type { FormFields } from "form-atoms";
+import type { FormFields, FormFieldValues } from "form-atoms";
 import type { RenderProp } from "react-render-prop-type";
 
 import type { ListAtom } from "../atoms";
-import { type Components, createList } from "./list";
+import { type ListComponents, createList } from "./list";
 
 export type NestedProps<Fields extends FormFields> = {
-  atom: ListAtom<Fields, any>;
-} & RenderProp<Components<Fields>>;
+  atom: ListAtom<Fields, FormFieldValues<Fields>>;
+} & RenderProp<ListComponents<Fields>>;
 
 export function Nested<Fields extends FormFields>({
   atom,
@@ -15,5 +15,5 @@ export function Nested<Fields extends FormFields>({
 }: NestedProps<Fields>) {
   const components = useMemo(() => createList(atom), [atom]);
 
-  return children(components as any);
+  return children(components);
 }

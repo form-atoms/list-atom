@@ -9,11 +9,11 @@ import { type EmptyProps, createEmpty } from "./empty";
 import { type ItemProps, createItem } from "./item";
 import { type NestedProps, Nested } from "./nested";
 
-export type Components<Fields extends FormFields> = {
+export type ListComponents<Fields extends FormFields> = {
   /**
-   * A component to initialize the listAtom.
+   * A component to initialize the listAtom value.
    */
-  List: FunctionComponent<ListProps<Fields>> & {
+  List: FunctionComponent<ListProps<FormFieldValues<Fields>>> & {
     /**
      * A component to iterate and render each of the list items.
      */
@@ -44,8 +44,8 @@ export type ListProps<Value> = PropsWithChildren<{
 }>;
 
 export function createList<Fields extends FormFields>(
-  listAtom: ListAtom<Fields, any>,
-) {
+  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
+): ListComponents<Fields> {
   function List({
     initialValue,
     store,

@@ -337,11 +337,11 @@ const { List } = createList(myListAtom);
 #### Returns
 
 ```ts
-export type Components<Fields extends FormFields> = {
+export type ListComponents<Fields extends FormFields> = {
   /**
-   * A component to initialize the listAtom.
+   * A component to initialize the listAtom value.
    */
-  List: FunctionComponent<ListProps<Fields>> & {
+  List: FunctionComponent<ListProps<FormFieldValues<Fields>>> & {
     /**
      * A component to iterate and render each of the list items.
      */
