@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/form-atoms/list-atom/compare/v2.2.1...v2.2.2) (2025-10-09)
+
+
+### Bug Fixes
+
+* **types:** fix lint errors, add generic types instead of any ([96fc9ac](https://github.com/form-atoms/list-atom/commit/96fc9acf4f70cf0cdfeb4b02896467f6d9267f47))
+
 ## [2.2.1](https://github.com/form-atoms/list-atom/compare/v2.2.0...v2.2.1) (2025-10-07)
 
 
