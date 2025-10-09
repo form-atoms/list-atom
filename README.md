@@ -26,10 +26,10 @@ import { listAtom, createList } from "@form-atoms/list-atom";
 
 const environmentVariables = listAtom({
   name: "environment",
-  value: [{ key: "GITHUB_SECRET", value: "<hash>" }],
-  fields: ({ key, value }) => ({
-    key: fieldAtom({ value: key }),
-    value: fieldAtom({ value }),
+  value: [],
+  fields: () => ({
+    key: fieldAtom({ value: "" }),
+    value: fieldAtom({ value: "" }),
   }),
 });
 
@@ -42,7 +42,7 @@ export const Form = () => {
 
   return (
     <form onSubmit={submit(console.log)}>
-      <List>
+      <List initialValue={[{ key: "GITHUB_SECRET", value: "t0ps3cr3t" }]}>
         <List.Item>
           {({ fields, remove }) => (
             <>
