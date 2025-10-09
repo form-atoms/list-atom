@@ -43,6 +43,7 @@ const { List } = createList(myAtom);
 // List.Item
 // List.Add
 // List.Empty
+// List.Nested
 ```
 
 {/* <ArgTypes of={ListItemStories} /> */}
@@ -60,9 +61,9 @@ const envVars = listAtom({
     { variable: "GITHUB_TOKEN", value: "ff52d09a" },
     { variable: "NPM_TOKEN", value: "deepsecret" },
   ],
-  fields: ({ variable, value }) => ({
-    variable: fieldAtom({ name: "variable", value: variable }),
-    value: fieldAtom({ name: "value", value: value }),
+  fields: () => ({
+    variable: fieldAtom({ name: "variable", value: "" }),
+    value: fieldAtom({ name: "value", value: "" }),
   }),
 });
 
@@ -110,7 +111,7 @@ import { createList, listAtom } from "@form-atoms/list-atom";
 
 const productPros = listAtom({
   value: [{ feature: "quality materials used" }, { feature: "not so heavy" }],
-  fields: ({ feature }) => ({ feature: fieldAtom({ value: feature }) }),
+  fields: () => ({ feature: fieldAtom({ value: "" }) }),
 });
 
 const { List } = createList(productPros);
@@ -165,12 +166,12 @@ const Example = () => (
 
 ```tsx
 import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
-import { List, listAtom } from "@form-atoms/list-atom";
+import { createList, listAtom } from "@form-atoms/list-atom";
 
 const atom = listAtom({
   name: "productFeatures",
   value: [{ feature: "quality materials" }, { feature: "solid build" }],
-  fields: ({ feature }) => ({ feature: fieldAtom({ value: feature }) }),
+  fields: () => ({ feature: fieldAtom({ value: "" }) }),
 });
 
 const { List } = createList(atom);
@@ -231,7 +232,7 @@ import { createList, listAtom } from "@form-atoms/list-atom";
 
 const hobbies = listAtom({
   value: [{ hobby: "quality materials used" }, { hobby: "not so heavy" }],
-  fields: ({ hobby }) => ({ hobby: fieldAtom({ value: hobby }) }),
+  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
 });
 
 const { List } = createList(hobbies);
@@ -275,7 +276,7 @@ import { createList, listAtom } from "@form-atoms/list-atom";
 const hobbies = listAtom({
   value: [],
   name: "hobbies",
-  fields: ({ hobby }) => ({ hobby: fieldAtom({ value: hobby }) }),
+  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
 });
 
 const { List } = createList(hobbies);
@@ -319,7 +320,7 @@ import { createList, listAtom } from "@form-atoms/list-atom";
 const hobbies = listAtom({
   value: [],
   name: "hobbies",
-  fields: ({ hobby }) => ({ hobby: fieldAtom({ value: hobby }) }),
+  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
 });
 
 const { List } = createList(hobbies);
@@ -368,13 +369,13 @@ const users = listAtom({
       accounts: [{ iban: "SK89 7500 0000 0000 1234 5671" }],
     },
   ],
-  fields: ({ name, lastName, accounts = [] }) => ({
-    name: fieldAtom({ value: name }),
-    lastName: fieldAtom({ value: lastName }),
+  fields: () => ({
+    name: fieldAtom({ value: "" }),
+    lastName: fieldAtom({ value: "" }),
     accounts: listAtom({
       name: "accounts",
-      value: accounts,
-      fields: ({ iban }) => ({ iban: fieldAtom({ value: iban }) }),
+      value: [],
+      fields: ({ iban }) => ({ iban: fieldAtom({ value: "" }) }),
     }),
   }),
 });
@@ -493,25 +494,25 @@ const NestedListExample = () => {
 import { fieldAtom, InputField, useFieldActions } from "form-atoms";
 import { listAtom, createList } from "@form-atoms/list-atom";
 
-const environmentListAtom = listAtom({
+const environmentVariablesAtom = listAtom({
   name: "environment",
   value: [
     { variable: "GITHUB_TOKEN", value: "<secret>" },
     { variable: "NPM_TOKEN", value: "<secret>" },
   ],
-  fields: ({ variable, value }) => ({
-    variable: fieldAtom({ name: "variable", value: variable }),
-    value: fieldAtom({ name: "value", value: value }),
+  fields: () => ({
+    variable: fieldAtom({ name: "variable", value: "" }),
+    value: fieldAtom({ name: "value", value: "" }),
   }),
 });
 
-const { List } = createList(environmentListAtom);
+const { List } = createList(environmentVariablesAtom);
 
 const ProgrammaticControls = () => {
   /**
    * listAtom is fieldAtom, so any useField* hooks work:
    */
-  const actions = useFieldActions(environmentListAtom);
+  const actions = useFieldActions(environmentVariablesAtom);
 
   return (
     <>
@@ -612,7 +613,7 @@ import { createList, listAtom } from "@form-atoms/list-atom";
 const levels = listAtom({
   value: [],
   name: "levels",
-  fields: ({ level }) => ({ level: fieldAtom<number>({ value: level }) }),
+  fields: () => ({ level: fieldAtom<number>({ value: 0 }) }),
   validate: ({ value }) => {
     const errors: string[] = [];
 
@@ -668,7 +669,7 @@ const Example = () => (
   </List>
 );
 
-const FieldErrors = ({ atom }: { atom: FieldAtom<any> }) => {
+const FieldErrors = <T,>({ atom }: { atom: FieldAtom<T> }) => {
   const errors = useFieldErrors(atom);
 
   return (
