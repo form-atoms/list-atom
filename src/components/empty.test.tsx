@@ -12,7 +12,6 @@ describe("<Empty /> component", () => {
       fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
     });
 
-    // @ts-ignore FIXME empty value array
     const { Empty } = createEmpty(friends);
 
     it("renders children", () => {

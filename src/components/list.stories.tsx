@@ -1,6 +1,7 @@
 import { StoryObj } from "@storybook/react-vite";
 import {
   type FieldAtom,
+  type FormFieldValues,
   type FormFields,
   InputField,
   fieldAtom,
@@ -12,7 +13,7 @@ import { ListAtom, listAtom } from "../atoms";
 import { PicoFieldErrors } from "../story/PicoFieldErrors";
 import { PicoFieldName } from "../story/PicoFieldName";
 import { StoryForm } from "../story/StoryForm";
-import { createList } from "./list";
+import { createList, ListComponents } from "./list";
 
 const RemoveButton = ({ remove }: { remove: () => void }) => (
   <button type="button" className="outline secondary" onClick={remove}>
@@ -20,16 +21,8 @@ const RemoveButton = ({ remove }: { remove: () => void }) => (
   </button>
 );
 
-type ListArgs<Fields extends FormFields> = {
-  atom: ListAtom<Fields, any>;
-} & RenderProp<
-  ReturnType<typeof createList<NoInfer<Fields>>> & {
-    atom: ListAtom<Fields, any>;
-  }
->;
-
 const meta = {
-  render({ atom, children }: ListArgs<FormFields>) {
+  render<Fields extends FormFields>({ atom, children }: ListStoryArgs<Fields>) {
     const { List } = createList(atom);
 
     return children({ List, atom });
@@ -38,9 +31,17 @@ const meta = {
 
 export default meta;
 
+type ListStoryArgs<Fields extends FormFields> = {
+  atom: ListAtom<Fields, FormFieldValues<Fields>>;
+} & RenderProp<
+  ListComponents<Fields> & {
+    atom: ListAtom<Fields, FormFieldValues<Fields>>;
+  }
+>;
+
 const listStory = <Fields extends FormFields>(
   storyObj: {
-    args: ListArgs<Fields>;
+    args: ListStoryArgs<Fields>;
   } & Omit<StoryObj, "args">,
 ) => ({
   ...storyObj,
@@ -483,7 +484,11 @@ export const NestedList = listStory({
   },
 });
 
-function SetVariables({ atom }: { atom: FieldAtom<any> }) {
+function SetVariables({
+  atom,
+}: {
+  atom: FieldAtom<{ variable: string; value: string }[]>;
+}) {
   const actions = useFieldActions(atom);
 
   return (
@@ -502,7 +507,7 @@ function SetVariables({ atom }: { atom: FieldAtom<any> }) {
   );
 }
 
-function ClearField({ atom }: { atom: FieldAtom<any> }) {
+function ClearField<T>({ atom }: { atom: FieldAtom<T[]> }) {
   const actions = useFieldActions(atom);
 
   return (

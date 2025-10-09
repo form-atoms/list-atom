@@ -10,13 +10,15 @@ export const useHydrateField = <Value>(
   options?: UseAtomOptions,
 ) => {
   const field = useAtomValue(fieldAtom);
+
   useHydrateAtoms(
+    // @ts-expect-error mismatch of empty array
     initialValue
-      ? [
+      ? ([
           [field.value, initialValue],
           [field._initialValue, initialValue],
-        ]
-      : ([] as any),
+        ] as const)
+      : [],
     options,
   );
 };

@@ -1,7 +1,7 @@
 import { action } from "storybook/actions";
 import { Meta, StoryObj } from "@storybook/react";
 import { FormAtom, FormFields, formAtom, useFormActions } from "form-atoms";
-import { useMemo } from "react";
+import { useState } from "react";
 import { RenderProp } from "react-render-prop-type";
 
 type Props<Fields extends FormFields> = {
@@ -20,7 +20,7 @@ export const StoryForm = <Fields extends FormFields>({
   children,
   required = true,
 }: Props<Fields>) => {
-  const form = useMemo(() => formAtom(fields), []);
+  const [form] = useState(() => formAtom(fields));
   const { reset, submit } = useFormActions(form);
 
   return (

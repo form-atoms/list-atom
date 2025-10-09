@@ -2,7 +2,7 @@ import { FieldAtom, useFieldErrors } from "form-atoms";
 
 const style = { color: "var(--pico-color-red-550)" };
 
-export const PicoFieldErrors = ({ atom }: { atom: FieldAtom<any> }) => {
+export const PicoFieldErrors = <T,>({ atom }: { atom: FieldAtom<T> }) => {
   const errors = useFieldErrors(atom);
 
   return (

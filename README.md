@@ -355,9 +355,11 @@ export type ListComponents<Fields extends FormFields> = {
      */
     Empty: FunctionComponent<EmptyProps>;
     /**
-     * A utility to re-create the components bound to list from a prop.
+     * A component to create these ListComponents for a nested listAtom within a <List.Item>
      */
-    Nested: FunctionComponent<NestedListProps<any>>;
+    Nested: <Fields extends FormFields>(
+      props: NestedProps<Fields>,
+    ) => ReactElement | null;
   };
 };
 ```

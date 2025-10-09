@@ -1,4 +1,4 @@
-import type { FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren, ReactElement } from "react";
 import type { AtomStore, FormFieldValues, FormFields } from "form-atoms";
 
 import type { ListAtom } from "../atoms/list-atom";
@@ -27,9 +27,11 @@ export type ListComponents<Fields extends FormFields> = {
      */
     Empty: FunctionComponent<EmptyProps>;
     /**
-     * A utility to re-create the components bound to list from a prop.
+     * A component to create these ListComponents for a nested listAtom within a <List.Item>
      */
-    Nested: FunctionComponent<NestedProps<any>>;
+    Nested: <Fields extends FormFields>(
+      props: NestedProps<Fields>,
+    ) => ReactElement | null;
   };
 };
 

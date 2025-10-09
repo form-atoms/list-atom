@@ -1,6 +1,6 @@
 import { FormFields, UseFieldOptions } from "form-atoms";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useCallback, useMemo, useTransition } from "react";
+import { useCallback, useMemo, startTransition } from "react";
 
 import { ListAtom, ListItem } from "../../atoms/list-atom";
 
@@ -11,31 +11,36 @@ export const useListActions = <Fields extends FormFields, Value>(
   const atoms = useAtomValue(listAtom);
   const validate = useSetAtom(atoms.validate, options);
   const dispatchSplitList = useSetAtom(atoms._splitList, options);
-  const [, startTransition] = useTransition();
 
-  const remove = useCallback((item: ListItem<Fields>) => {
-    dispatchSplitList({ type: "remove", atom: item });
-    startTransition(() => {
-      validate("change");
-    });
-  }, []);
+  const remove = useCallback(
+    (item: ListItem<Fields>) => {
+      dispatchSplitList({ type: "remove", atom: item });
+      startTransition(() => {
+        validate("change");
+      });
+    },
+    [dispatchSplitList, validate],
+  );
 
-  const add = useCallback((before?: ListItem<Fields>, value?: Value) => {
-    dispatchSplitList({
-      type: "insert",
-      value: atoms.buildItem(value),
-      before,
-    });
-    startTransition(() => {
-      validate("change");
-    });
-  }, []);
+  const add = useCallback(
+    (before?: ListItem<Fields>, value?: Value) => {
+      dispatchSplitList({
+        type: "insert",
+        value: atoms.buildItem(value),
+        before,
+      });
+      startTransition(() => {
+        validate("change");
+      });
+    },
+    [dispatchSplitList, validate, atoms],
+  );
 
   const move = useCallback(
     (item: ListItem<Fields>, before?: ListItem<Fields>) => {
       dispatchSplitList({ type: "move", atom: item, before });
     },
-    [],
+    [dispatchSplitList],
   );
 
   return useMemo(() => ({ remove, add, move }), [remove, add, move]);

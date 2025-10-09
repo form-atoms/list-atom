@@ -1,6 +1,7 @@
 import { Atom, Getter, PrimitiveAtom, atom } from "jotai";
 
 export const extendAtom = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends PrimitiveAtom<any>,
   E extends Record<string, unknown>,
 >(

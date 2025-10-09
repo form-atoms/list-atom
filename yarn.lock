@@ -66,7 +66,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.28.0, @babel/core@npm:^7.28.4":
+"@babel/core@npm:^7.24.4, @babel/core@npm:^7.28.0, @babel/core@npm:^7.28.4":
   version: 7.28.4
   resolution: "@babel/core@npm:7.28.4"
   dependencies:
@@ -244,7 +244,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.25.4, @babel/parser@npm:^7.27.2, @babel/parser@npm:^7.28.3, @babel/parser@npm:^7.28.4":
+"@babel/parser@npm:^7.24.4, @babel/parser@npm:^7.25.4, @babel/parser@npm:^7.27.2, @babel/parser@npm:^7.28.3, @babel/parser@npm:^7.28.4":
   version: 7.28.4
   resolution: "@babel/parser@npm:7.28.4"
   dependencies:
@@ -834,6 +834,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:^3.2.4"
     eslint: "npm:9.37.0"
     eslint-config-prettier: "npm:10.1.8"
+    eslint-plugin-react-hooks: "npm:^7.0.0"
     eslint-plugin-storybook: "npm:9.1.10"
     form-atoms: "npm:^3.3.1"
     happy-dom: "npm:^18.0.1"
@@ -845,7 +846,7 @@ __metadata:
     react: "npm:^18.2.0"
     react-copy-to-clipboard: "npm:^5.1.0"
     react-dom: "npm:^18.2.0"
-    react-render-prop-type: "npm:0.1.0"
+    react-render-prop-type: "npm:1.0.0"
     semantic-release: "npm:^24.2.9"
     shiki: "npm:^3.12.2"
     storybook: "npm:^9.1.7"
@@ -4348,6 +4349,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-react-hooks@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "eslint-plugin-react-hooks@npm:7.0.0"
+  dependencies:
+    "@babel/core": "npm:^7.24.4"
+    "@babel/parser": "npm:^7.24.4"
+    hermes-parser: "npm:^0.25.1"
+    zod: "npm:^3.22.4 || ^4.0.0"
+    zod-validation-error: "npm:^3.0.3 || ^4.0.0"
+  peerDependencies:
+    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
+  checksum: 10/756ad90ec6390bafa8037f86ab72d98af55c25e13b69e15bdac634724c8af7a87eb6993b643665e930d67635d52c8aa55b0e7a1d47e3c4e42a3b66950b2069fb
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-storybook@npm:9.1.10":
   version: 9.1.10
   resolution: "eslint-plugin-storybook@npm:9.1.10"
@@ -5228,6 +5244,22 @@ __metadata:
   dependencies:
     "@types/hast": "npm:^3.0.0"
   checksum: 10/8c7e9eeb8131fc18702f3a42623eb6b0b09d470347aa8badacac70e6d91f79657ab8c6b57c4c6fee3658cff405fac30e816d1cdfb3ed1fbf6045d0a4555cf4d4
+  languageName: node
+  linkType: hard
+
+"hermes-estree@npm:0.25.1":
+  version: 0.25.1
+  resolution: "hermes-estree@npm:0.25.1"
+  checksum: 10/7b1eca98b264a25632064cffa5771360d30cf452e77db1e191f9913ee45cf78c292b2dbca707e92fb71b0870abb97e94b506a5ab80abd96ba237fee169b601fe
+  languageName: node
+  linkType: hard
+
+"hermes-parser@npm:^0.25.1":
+  version: 0.25.1
+  resolution: "hermes-parser@npm:0.25.1"
+  dependencies:
+    hermes-estree: "npm:0.25.1"
+  checksum: 10/805efc05691420f236654349872c70731121791fa54de521c7ee51059eae34f84dd19f22ee846741dcb60372f8fb5335719b96b4ecb010d2aed7d872f2eff9cc
   languageName: node
   linkType: hard
 
@@ -8217,12 +8249,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-render-prop-type@npm:0.1.0":
-  version: 0.1.0
-  resolution: "react-render-prop-type@npm:0.1.0"
+"react-render-prop-type@npm:1.0.0":
+  version: 1.0.0
+  resolution: "react-render-prop-type@npm:1.0.0"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10/165460282d60135b1287ce2801f2179b1d0a1e0665200ce8ba0868c0c37149bf93101934a63d5b75249e96bf1bc5d127a26bc6b571d6fcf3985d72515548e6cc
+    react: ">= 18.2.0"
+  checksum: 10/0f801bfe6bf53dd0ff771e3805151e76c2a99e7136dc636d701f02eb7b12ea47b6bde1e7bb9b8c1fad6b4125f47af305effe413fb57eaaee48b53e218ae03411
   languageName: node
   linkType: hard
 
@@ -10359,6 +10391,22 @@ __metadata:
   version: 2.1.2
   resolution: "yoctocolors@npm:2.1.2"
   checksum: 10/6ee42d665a4cc161c7de3f015b2a65d6c65d2808bfe3b99e228bd2b1b784ef1e54d1907415c025fc12b400f26f372bfc1b71966c6c738d998325ca422eb39363
+  languageName: node
+  linkType: hard
+
+"zod-validation-error@npm:^3.0.3 || ^4.0.0":
+  version: 4.0.2
+  resolution: "zod-validation-error@npm:4.0.2"
+  peerDependencies:
+    zod: ^3.25.0 || ^4.0.0
+  checksum: 10/5e35ca8ebb4602dcb526e122d7e9fca695c4a479bd97535f3400a732d49160f24f7213a9ed64986fc9dc3a2e8a6c4e1241ec0c4d8a4e3e69ea91a0328ded2192
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4 || ^4.0.0":
+  version: 4.1.12
+  resolution: "zod@npm:4.1.12"
+  checksum: 10/c5f04e6ac306515c4db6ef73cf7705f521c7a2107c8c8912416a0658d689f361db9bee829b0bf01ef4a22492f1065c5cbcdb523ce532606ac6792fd714f3c326
   languageName: node
   linkType: hard
 

@@ -304,8 +304,9 @@ export function listAtom<
         });
 
         if (isPromise(maybeValidatePromise)) {
-          ptr === get(validateCountAtom) &&
+          if (ptr === get(validateCountAtom)) {
             set(validateResultAtom, "validating");
+          }
           errors = (await maybeValidatePromise) ?? get(_listErrorsAtom);
         } else {
           errors = maybeValidatePromise ?? get(_listErrorsAtom);
@@ -388,8 +389,13 @@ export function listAtom<
   return self;
 }
 
-function isPromise(value: any): value is Promise<any> {
-  return typeof value === "object" && typeof value.then === "function";
+function isPromise(value: unknown): value is PromiseLike<unknown> {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "then" in value &&
+    typeof value.then === "function"
+  );
 }
 
 function arraysShallowEqual(a: unknown[], b: unknown[]) {

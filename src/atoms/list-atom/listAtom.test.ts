@@ -458,7 +458,7 @@ describe("listAtom()", () => {
   });
 
   describe("scoped name of list fields", () => {
-    const useFieldName = (fieldAtom: FieldAtom<any>) =>
+    const useFieldName = <T>(fieldAtom: FieldAtom<T>) =>
       useAtomValue(useAtomValue(fieldAtom).name);
 
     it("field name contains list name, index and field name", async () => {

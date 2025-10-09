@@ -12,7 +12,7 @@ import { useEffect } from "react";
  * @param {UseAtomOptions} options - Options to pass to the underlying `useAtomValue`
  *  and `useSetAtom` hooks.
  */
-export function _useFieldInitialValue<Value>(
+export function useFieldInitialValue_noEqual<Value>(
   fieldAtom: FieldAtom<Value>,
   initialValue?: Value | typeof RESET,
   options?: UseAtomOptions,

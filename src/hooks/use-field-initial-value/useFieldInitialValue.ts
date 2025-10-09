@@ -1,6 +1,6 @@
 import { FieldAtom, RESET, UseAtomOptions } from "form-atoms";
 
-import { _useFieldInitialValue } from "./_useFieldInitialValue";
+import { useFieldInitialValue_noEqual } from "./useFieldInitialValue_noEqual";
 import { useHydrateField } from "../use-hydrate-field";
 
 export function useFieldInitialValue<Value>(
@@ -9,5 +9,5 @@ export function useFieldInitialValue<Value>(
   options?: UseAtomOptions,
 ): void {
   useHydrateField(fieldAtom, initialValue);
-  _useFieldInitialValue(fieldAtom, initialValue, options);
+  useFieldInitialValue_noEqual(fieldAtom, initialValue, options);
 }

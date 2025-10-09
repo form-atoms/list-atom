@@ -123,8 +123,11 @@ export function listItemForm<Fields extends FormFields, Value>({
 
           const val = [...path].reduce(
             (source, key) =>
-              Object.hasOwn(source, key) ? source[key] : undefined,
-            value as unknown as any,
+              typeof source === "object" && key in source
+                ? // @ts-expect-error fine
+                  source[key]
+                : undefined,
+            value,
           );
 
           if (val) {
