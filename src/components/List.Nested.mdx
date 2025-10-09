@@ -1,0 +1,155 @@
+import {
+  Meta,
+  Canvas,
+  Story,
+  ArgTypes,
+  Description,
+} from "@storybook/addon-docs/blocks";
+import { Example } from "../../.storybook/blocks/Example";
+import * as NestedStories from "./nested.stories";
+
+<hgroup>
+
+<p class="category">Components</p>
+
+# List.Nested
+
+Render a nested list within `<List.Item>`.
+
+</hgroup>
+
+## Examples
+
+<Example of={NestedStories.NestedList} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { createList, listAtom } from "@form-atoms/list-atom";
+
+const users = listAtom({
+  name: "users",
+  value: [
+    {
+      name: "Jerry",
+      lastName: "Park",
+      accounts: [{ iban: "SK89 7500 0000 0000 1234 5671" }],
+    },
+  ],
+  fields: () => ({
+    name: fieldAtom({ value: "" }),
+    lastName: fieldAtom({ value: "" }),
+    accounts: listAtom({
+      name: "accounts",
+      value: [],
+      fields: ({ iban }) => ({ iban: fieldAtom({ value: "" }) }),
+    }),
+  }),
+});
+
+const { List } = createList(users);
+
+const NestedListExample = () => {
+  return (
+    <List>
+      <List.Item>
+        {({ fields, index, remove }) => (
+          <article>
+            <header>
+              <nav>
+                <ul>
+                  <li>
+                    <strong>Person #{index + 1}</strong>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <a
+                      href="#"
+                      role="button"
+                      className="outline secondary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        remove();
+                      }}
+                    >
+                      Remove
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </header>
+            <div className="grid">
+              <div>
+                <FieldLabel field={fields.name} label="First Name" />
+                <InputField
+                  atom={fields.name}
+                  render={(props) => <input {...props} placeholder="Name" />}
+                />
+              </div>
+              <div>
+                <FieldLabel field={fields.lastName} label="Last Name" />
+                <InputField
+                  atom={fields.lastName}
+                  render={(props) => (
+                    <input {...props} placeholder="Last Name" />
+                  )}
+                />
+              </div>
+            </div>
+            <List.Nested atom={fields.accounts}>
+              {({ List }) => (
+                <>
+                  <List.Item>
+                    {({ fields, index, remove }) => (
+                      <>
+                        <label>Account #{index + 1}</label>
+                        <div
+                          style={{
+                            display: "grid",
+                            gridGap: 16,
+                            gridTemplateColumns: "auto min-content",
+                          }}
+                        >
+                          <InputField
+                            atom={fields.iban}
+                            render={(props) => (
+                              <input {...props} placeholder="IBAN" />
+                            )}
+                          />
+                          <button
+                            type="button"
+                            className="outline secondary"
+                            onClick={remove}
+                          >
+                            Remove Account
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </List.Item>
+                  <List.Add>
+                    {({ add }) => (
+                      <button type="button" className="outline" onClick={add}>
+                        Add Bank Account
+                      </button>
+                    )}
+                  </List.Add>
+                </>
+              )}
+            </List.Nested>
+          </article>
+        )}
+      </List.Item>
+      <List.Add>
+        {({ add }) => (
+          <button type="button" className="outline" onClick={add}>
+            Add Person
+          </button>
+        )}
+      </List.Add>
+    </List>
+  );
+};
+```
+
+</Example>

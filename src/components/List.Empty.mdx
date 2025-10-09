@@ -1,0 +1,76 @@
+import {
+  Meta,
+  Canvas,
+  Story,
+  ArgTypes,
+  Description,
+} from "@storybook/addon-docs/blocks";
+import { Example } from "../../.storybook/blocks/Example";
+import * as EmptyStories from "./empty.stories";
+
+<hgroup>
+
+<p class="category">Components</p>
+
+# List.Empty
+
+The Empty component renders children when the list has no items.
+
+</hgroup>
+
+## Usage
+
+```tsx
+import { createList } from "@form-atoms/list-atom";
+
+const { List } = createList(myAtom);
+
+function BlankSlate() {
+  return <List.Empty>Visible only when the listAtom has no items</List.Empty>;
+}
+```
+
+## Examples
+
+<Example of={EmptyStories.EmptyList} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { listAtom, createlist } from "@form-atoms/list-atom";
+
+const hobbies = listAtom({
+  name: "hobbies",
+  value: [],
+  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(hobbies);
+
+const Example = () => (
+  <List>
+    <List.Empty>
+      <article>
+        <p style={{ textAlign: "center" }}>
+          You don't have any hobbies in your list. Start by adding your first
+          one.
+        </p>
+      </article>
+    </List.Empty>
+    <List.Item>
+      {({ fields, remove }) => (
+        <fieldset role="group">
+          <InputField
+            atom={fields.hobby}
+            render={(props) => <input autoFocus {...props} />}
+          />
+          <button type="button" className="outline secondary" onClick={remove}>
+            Remove
+          </button>
+        </fieldset>
+      )}
+    </List.Item>
+  </List>
+);
+```
+
+</Example>

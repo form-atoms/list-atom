@@ -1,0 +1,152 @@
+import {
+  Meta,
+  Canvas,
+  Story,
+  ArgTypes,
+  Description,
+} from "@storybook/addon-docs/blocks";
+import { Example } from "../../.storybook/blocks/Example";
+import * as AddStories from "./add.stories";
+
+<hgroup>
+
+<p class="category">Components</p>
+
+# List.Add
+
+The `List.Add` provides an `add()` action as a children prop. It enables appending empty or initialized item by utilizing the `useListActions()`.
+
+</hgroup>
+
+## Usage
+
+```tsx
+import { createList } from "@form-atoms/list-atom";
+
+const { List } = createList(myAtom);
+
+function CustomAddButton() {
+  return (
+    <List.Add>
+      {({ add }) => <button onClick={() => add()}>New item</button>}
+    </List.Add>
+  );
+}
+```
+
+## Examples
+
+<Example of={AddStories.WithValue} >
+
+```tsx
+import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
+import { listAtom, createlist } from "@form-atoms/list-atom";
+
+const productPros = listAtom({
+  value: [{ feature: "quality materials used" }, { feature: "not so heavy" }],
+  fields: () => ({ feature: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(productPros);
+
+const Example = () => (
+  <>
+    <label style={{ marginBottom: 16 }}>
+      What do you like about your shoes?
+    </label>
+    <List>
+      <List.Item>
+        {({ fields, remove }) => (
+          <fieldset role="group">
+            <InputField atom={fields.feature} component="input" />
+            <button
+              type="button"
+              className="outline secondary"
+              onClick={remove}
+            >
+              Remove
+            </button>
+          </fieldset>
+        )}
+      </List.Item>
+      <List.Add>
+        {({ add }) => (
+          <button
+            type="button"
+            className="outline"
+            onClick={() =>
+              add({ feature: fieldAtom({ value: "beautiful colors" }) })
+            }
+          >
+            Add initialized item
+          </button>
+        )}
+      </List.Add>
+    </List>
+  </>
+);
+```
+
+</Example>
+
+<Example of={AddStories.PositioningAddButton} >
+
+```tsx
+import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
+import { listAtom, createlist } from "@form-atoms/list-atom";
+
+const atom = listAtom({
+  name: "productFeatures",
+  value: [{ feature: "quality materials" }, { feature: "solid build" }],
+  fields: () => ({ feature: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(atom);
+
+const Example = () => {
+  return (
+    <List>
+      <List.Empty>
+        <article style={{ textAlign: "center" }}>
+          <p>
+            You don't have any items in your list. Start by adding your first
+            one.
+          </p>
+          <List.Add>
+            {({ add }) => (
+              <button className="outline" onClick={() => add()}>
+                Add first
+              </button>
+            )}
+          </List.Add>
+        </article>
+      </List.Empty>
+      <List.Item>
+        {({ fields, index, count, remove, add }) => (
+          <div
+            style={{
+              display: "grid",
+              gridGap: 16,
+              gridTemplateColumns: "auto min-content min-content",
+            }}
+          >
+            <InputField atom={fields.feature} component="input" />
+            <div style={{ width: 300 }}>
+              {index + 1 === count && (
+                <fieldset role="group">
+                  <button className="outline" onClick={() => add()}>
+                    Add
+                  </button>
+                  <RemoveButton remove={remove} />
+                </fieldset>
+              )}
+            </div>
+          </div>
+        )}
+      </List.Item>
+    </List>
+  );
+};
+```
+
+</Example>

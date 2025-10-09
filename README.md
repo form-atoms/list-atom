@@ -24,46 +24,30 @@ npm install jotai-effect @form-atoms/list-atom
 import { fromAtom, useForm, fieldAtom, InputField } from "form-atoms";
 import { listAtom, createList } from "@form-atoms/list-atom";
 
-const environmentVariables = listAtom({
+const environment = listAtom({
   name: "environment",
   value: [],
   fields: () => ({
-    key: fieldAtom({ value: "" }),
-    value: fieldAtom({ value: "" }),
+    variable: fieldAtom({ name: "variable", value: "" }),
+    value: fieldAtom({ name: "value", value: "" }),
   }),
 });
 
-const form = formAtom({ environmentVariables });
+const form = formAtom({ environment });
 
-const { List } = createList(environmentVariables);
+const { List } = createList(environment);
 
 export const Form = () => {
   const { submit } = useForm(form);
 
   return (
     <form onSubmit={submit(console.log)}>
-      <List initialValue={[{ key: "GITHUB_SECRET", value: "t0ps3cr3t" }]}>
+      <List initialValue={[{ variable: "GITHUB_SECRET", value: "t0ps3cr3t" }]}>
         <List.Item>
           {({ fields, remove }) => (
             <>
-              <InputField
-                atom={fields.key}
-                render={(props) => (
-                  <>
-                    <label>Variable Key</label>
-                    <input {...props} />
-                  </>
-                )}
-              />
-              <InputField
-                atom={fields.value}
-                render={(props) => (
-                  <>
-                    <label>Variable Value</label>
-                    <input {...props} />
-                  </>
-                )}
-              />
+              <InputField atom={fields.variable} component="input" />
+              <InputField atom={fields.value} component="input" />
               <button type="button" onClick={remove}>
                 Remove
               </button>

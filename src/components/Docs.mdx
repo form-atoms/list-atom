@@ -14,14 +14,59 @@ import * as ListStories from "./list.stories";
 
 <p class="category">Components</p>
 
-# List
+# @form-atoms/list-atom
 
-The List component enables you to easily render & manage a `listAtom()`. It is a higher order component, which internally uses the `useList()` hook.
+The Jotai `form-atoms` extension to render performant lists with easy controls.
 
 </hgroup>
 
-```ts
-import { createList } from "@form-atoms/list-atom";
+```tsx
+import { fieldAtom, formAtom, useForm, InputField } from "form-atoms";
+import { listAtom, createList } from "@form-atoms/list-atom";
+
+// Step 1: define your list
+const environment = listAtom({
+  name: "environment",
+  value: [],
+  fields: () => ({
+    variable: fieldAtom({ name: "variable", value: "" }),
+    value: fieldAtom({ name: "value", value: "" }),
+  }),
+});
+
+// Step 2: Attach to form
+const form = formAtom({ environment });
+
+// Step 3: create compound list components
+const { List } = createList(environment);
+
+// Step 4: render your UI controls
+function Example() {
+  const { submit } = useForm(form);
+
+  return (
+    <form onSubmit={submit(console.log)}>
+      <List initialValue={[{ variable: "NPM_TOKEN", value: "deepsecret" }]}>
+        <List.Item>
+          {({ fields, remove }) => (
+            <fieldset role="group">
+              <InputField atom={fields.variable} component="input" />
+              <InputField atom={fields.value} component="input" />
+              <button
+                type="button"
+                className="outline secondary"
+                onClick={remove}
+              >
+                Remove
+              </button>
+            </fieldset>
+          )}
+        </List.Item>
+        <List.Add />
+      </List>
+    </form>
+  );
+}
 ```
 
 ## Features
@@ -33,34 +78,14 @@ import { createList } from "@form-atoms/list-atom";
 - ✅ Scoped field `name` attribute with dynamic index position.
 - ✅ Supports **nesting list within item**.
 
-## Usage
-
-```ts
-import { createList } from "@form-atoms/list-atom";
-
-const { List } = createList(myAtom);
-
-// List.Item
-// List.Add
-// List.Empty
-// List.Nested
-```
-
-{/* <ArgTypes of={ListItemStories} /> */}
-
-## Examples
-
-<Example of={ListStories.ListOfObjects}>
+<Example of={ListStories.FullDemo}>
 
 ```tsx
 import { InputField, fieldAtom } from "form-atoms";
 import { listAtom, createList } from "@form-atoms/list-atom";
 
 const envVars = listAtom({
-  value: [
-    { variable: "GITHUB_TOKEN", value: "ff52d09a" },
-    { variable: "NPM_TOKEN", value: "deepsecret" },
-  ],
+  value: [],
   fields: () => ({
     variable: fieldAtom({ name: "variable", value: "" }),
     value: fieldAtom({ name: "value", value: "" }),
@@ -70,7 +95,7 @@ const envVars = listAtom({
 const { List } = createList(envVars);
 
 const Example = () => (
-  <List>
+  <List initialValue={[{ variable: "NPM_TOKEN", value: "deepsecret" }]}>
     <List.Item>
       {({ fields, remove }) => (
         <div
@@ -96,592 +121,15 @@ const Example = () => (
         </div>
       )}
     </List.Item>
-    <List.Add />
-  </List>
-);
-```
-
-</Example>
-
-<Example of={ListStories.CustomAddButton} >
-
-```tsx
-import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
-import { createList, listAtom } from "@form-atoms/list-atom";
-
-const productPros = listAtom({
-  value: [{ feature: "quality materials used" }, { feature: "not so heavy" }],
-  fields: () => ({ feature: fieldAtom({ value: "" }) }),
-});
-
-const { List } = createList(productPros);
-
-const Example = () => (
-  <>
-    <label style={{ marginBottom: 16 }}>
-      What do you like about your shoes?
-    </label>
-    <List>
-      <List.Item>
-        {({ fields, remove }) => (
-          <div
-            style={{
-              display: "grid",
-              gridGap: 16,
-              gridTemplateColumns: "auto min-content",
-            }}
-          >
-            <InputField atom={fields.feature} component="input" />
-            <button
-              type="button"
-              className="outline secondary"
-              onClick={remove}
-            >
-              Remove
-            </button>
-          </div>
-        )}
-      </List.Item>
-      <List.Add>
-        {({ add }) => (
-          <button
-            type="button"
-            className="outline"
-            onClick={() =>
-              add({ feature: fieldAtom({ value: "beautiful colors" }) })
-            }
-          >
-            Add initialized item
-          </button>
-        )}
-      </List.Add>
-    </List>
-  </>
-);
-```
-
-</Example>
-
-<Example of={ListStories.PositioningAddButton} >
-
-```tsx
-import { type FieldAtom, fieldAtom, InputField } from "form-atoms";
-import { createList, listAtom } from "@form-atoms/list-atom";
-
-const atom = listAtom({
-  name: "productFeatures",
-  value: [{ feature: "quality materials" }, { feature: "solid build" }],
-  fields: () => ({ feature: fieldAtom({ value: "" }) }),
-});
-
-const { List } = createList(atom);
-
-const Example = () => {
-  return (
-    <List>
-      <List.Empty>
-        <article style={{ textAlign: "center" }}>
-          <p>
-            You don't have any items in your list. Start by adding your first
-            one.
-          </p>
-          <List.Add>
-            {({ add }) => (
-              <button className="outline" onClick={() => add()}>
-                Add
-              </button>
-            )}
-          </List.Add>
-        </article>
-      </List.Empty>
-      <List.Item>
-        {({ fields, index, count, remove, add }) => (
-          <div
-            style={{
-              display: "grid",
-              gridGap: 16,
-              gridTemplateColumns: "auto min-content min-content",
-            }}
-          >
-            <InputField atom={fields.feature} component="input" />
-            <div style={{ width: 300 }}>
-              {index + 1 === count && (
-                <fieldset role="group">
-                  <button className="outline" onClick={() => add()}>
-                    Add
-                  </button>
-                  <RemoveButton remove={remove} />
-                </fieldset>
-              )}
-            </div>
-          </div>
-        )}
-      </List.Item>
-    </List>
-  );
-};
-```
-
-</Example>
-
-<Example  of={ListStories.EmptyList} >
-
-```tsx
-import { fieldAtom, InputField } from "form-atoms";
-import { createList, listAtom } from "@form-atoms/list-atom";
-
-const hobbies = listAtom({
-  value: [{ hobby: "quality materials used" }, { hobby: "not so heavy" }],
-  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
-});
-
-const { List } = createList(hobbies);
-
-const Example = () => (
-  <List atom={hobbies}>
-    <List.Empty>
-      <article>
-        <p style={{ textAlign: "center" }}>
-          You don't have any hobbies in your list. Start by adding your first
-          one.
-        </p>
-      </article>
-    </List.Empty>
-    <List.Item>
-      {({ fields, RemoveButton }) => (
-        <div
-          style={{
-            display: "grid",
-            gridGap: 16,
-            gridTemplateColumns: "auto min-content",
-          }}
-        >
-          <InputField atom={fields.hobby} component="input" />
-          <RemoveButton />
-        </div>
+    <List.Add>
+      {({ add }) => (
+        <button type="button" className="outline" onClick={() => add()}>
+          Add variable
+        </button>
       )}
-    </List.Item>
+    </List.Add>
   </List>
 );
-```
-
-</Example>
-
-<Example of={ListStories.OrderingItems} >
-
-```tsx
-import { fieldAtom, InputField } from "form-atoms";
-import { createList, listAtom } from "@form-atoms/list-atom";
-
-const hobbies = listAtom({
-  value: [],
-  name: "hobbies",
-  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
-});
-
-const { List } = createList(hobbies);
-
-const Example = () => (
-  <List
-    initialValue={[
-      { hobby: "coding" },
-      { hobby: "gardening" },
-      { hobby: "mountain bike" },
-    ]}
-  >
-    <List.Item>
-      {({ fields, moveUp, moveDown, remove }) => (
-        <fieldset role="group">
-          <InputField atom={fields.hobby} component="input" />
-          <button type="button" className="outline" onClick={moveUp}>
-            Up
-          </button>
-          <button type="button" className="outline" onClick={moveDown}>
-            Down
-          </button>
-          <button type="button" className="outline secondary" onClick={remove}>
-            Remove
-          </button>
-        </fieldset>
-      )}
-    </List.Item>
-  </List>
-);
-```
-
-</Example>
-
-<Example of={ListStories.Prepend} >
-
-```tsx
-import { fieldAtom, InputField } from "form-atoms";
-import { createList, listAtom } from "@form-atoms/list-atom";
-
-const hobbies = listAtom({
-  value: [],
-  name: "hobbies",
-  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
-});
-
-const { List } = createList(hobbies);
-
-const Example = () => (
-  <List
-    initialValue={[
-      { hobby: "swimming" },
-      { hobby: "gardening" },
-      { hobby: "coding" },
-    ]}
-  >
-    <List.Item>
-      {({ fields, add, item, remove }) => (
-        <fieldset role="group">
-          <InputField atom={fields.hobby} component="input" />
-          <button type="button" className="outline" onClick={() => add(item)}>
-            Prepend
-          </button>
-          <button type="button" className="outline secondary" onClick={remove}>
-            Remove
-          </button>
-        </fieldset>
-      )}
-    </List.Item>
-  </List>
-);
-```
-
-</Example>
-
-## Advanced
-
-<Example of={ListStories.NestedList} >
-
-```tsx
-import { fieldAtom, InputField } from "form-atoms";
-import { createList, listAtom } from "@form-atoms/list-atom";
-
-const users = listAtom({
-  name: "users",
-  value: [
-    {
-      name: "Jerry",
-      lastName: "Park",
-      accounts: [{ iban: "SK89 7500 0000 0000 1234 5671" }],
-    },
-  ],
-  fields: () => ({
-    name: fieldAtom({ value: "" }),
-    lastName: fieldAtom({ value: "" }),
-    accounts: listAtom({
-      name: "accounts",
-      value: [],
-      fields: ({ iban }) => ({ iban: fieldAtom({ value: "" }) }),
-    }),
-  }),
-});
-
-const { List } = createList(users);
-
-const NestedListExample = () => {
-  return (
-    <List>
-      <List.Item>
-        {({ fields, index, remove }) => (
-          <article>
-            <header>
-              <nav>
-                <ul>
-                  <li>
-                    <strong>Person #{index + 1}</strong>
-                  </li>
-                </ul>
-                <ul>
-                  <li>
-                    <a
-                      href="#"
-                      role="button"
-                      className="outline secondary"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        remove();
-                      }}
-                    >
-                      Remove
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </header>
-            <div className="grid">
-              <div>
-                <FieldLabel field={fields.name} label="First Name" />
-                <InputField
-                  atom={fields.name}
-                  render={(props) => <input {...props} placeholder="Name" />}
-                />
-              </div>
-              <div>
-                <FieldLabel field={fields.lastName} label="Last Name" />
-                <InputField
-                  atom={fields.lastName}
-                  render={(props) => (
-                    <input {...props} placeholder="Last Name" />
-                  )}
-                />
-              </div>
-            </div>
-            <List.Nested atom={fields.accounts}>
-              {({ List }) => (
-                <>
-                  <List.Item>
-                    {({ fields, index, remove }) => (
-                      <>
-                        <label>Account #{index + 1}</label>
-                        <div
-                          style={{
-                            display: "grid",
-                            gridGap: 16,
-                            gridTemplateColumns: "auto min-content",
-                          }}
-                        >
-                          <InputField
-                            atom={fields.iban}
-                            render={(props) => (
-                              <input {...props} placeholder="IBAN" />
-                            )}
-                          />
-                          <button
-                            type="button"
-                            className="outline secondary"
-                            onClick={remove}
-                          >
-                            Remove Account
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </List.Item>
-                  <List.Add>
-                    {({ add }) => (
-                      <button type="button" className="outline" onClick={add}>
-                        Add Bank Account
-                      </button>
-                    )}
-                  </List.Add>
-                </>
-              )}
-            </List.Nested>
-          </article>
-        )}
-      </List.Item>
-      <List.Add>
-        {({ add }) => (
-          <button type="button" className="outline" onClick={add}>
-            Add Person
-          </button>
-        )}
-      </List.Add>
-    </List>
-  );
-};
-```
-
-</Example>
-
-<Example of={ListStories.ProgrammaticallySetValue} >
-
-```tsx
-import { fieldAtom, InputField, useFieldActions } from "form-atoms";
-import { listAtom, createList } from "@form-atoms/list-atom";
-
-const environmentVariablesAtom = listAtom({
-  name: "environment",
-  value: [
-    { variable: "GITHUB_TOKEN", value: "<secret>" },
-    { variable: "NPM_TOKEN", value: "<secret>" },
-  ],
-  fields: () => ({
-    variable: fieldAtom({ name: "variable", value: "" }),
-    value: fieldAtom({ name: "value", value: "" }),
-  }),
-});
-
-const { List } = createList(environmentVariablesAtom);
-
-const ProgrammaticControls = () => {
-  /**
-   * listAtom is fieldAtom, so any useField* hooks work:
-   */
-  const actions = useFieldActions(environmentVariablesAtom);
-
-  return (
-    <>
-      <button
-        type="button"
-        className="outline secondary"
-        onClick={() =>
-          // clear the field - remove all items
-          actions.setValue([])
-        }
-      >
-        Clear
-      </button>
-      <button
-        type="button"
-        className="outline contrast"
-        onClick={() =>
-          // set multiple values
-          actions.setValue([
-            { variable: "NPM_TOKEN", value: "secrettoken" },
-            { variable: "NODE_ENV", value: "production" },
-          ])
-        }
-      >
-        Set values from .env file
-      </button>
-    </>
-  );
-};
-
-const ProgrammaticallySetValueExample = () => {
-  return (
-    <List>
-      <List.Item>
-        {({ fields, remove }) => (
-          <div
-            style={{
-              display: "grid",
-              gridGap: 16,
-              gridTemplateColumns: "auto auto min-content",
-            }}
-          >
-            <div>
-              <InputField
-                atom={fields.variable}
-                render={(props) => (
-                  <input {...props} placeholder="Variable Name" />
-                )}
-              />
-            </div>
-            <div>
-              <InputField
-                atom={fields.value}
-                render={(props) => (
-                  <input {...props} placeholder="Variable Value" />
-                )}
-              />
-            </div>
-            <div>
-              <button
-                type="button"
-                className="outline secondary"
-                onClick={remove}
-              >
-                Remove
-              </button>
-            </div>
-          </div>
-        )}
-      </List.Item>
-      <section className="grid">
-        <List.Add>
-          {({ add }) => (
-            <button
-              type="button"
-              className="outline"
-              onClick={() => actions.add()}
-            >
-              New variable
-            </button>
-          )}
-        </List.Add>
-        <ProgrammaticControls />
-      </section>
-    </List>
-  );
-};
-```
-
-</Example>
-
-<Example of={ListStories.ValidateAscendingValues} >
-
-```tsx
-import { fieldAtom, InputField } from "form-atoms";
-import { createList, listAtom } from "@form-atoms/list-atom";
-
-const levels = listAtom({
-  value: [],
-  name: "levels",
-  fields: () => ({ level: fieldAtom<number>({ value: 0 }) }),
-  validate: ({ value }) => {
-    const errors: string[] = [];
-
-    if (1 < value.length) {
-      let [current] = value;
-
-      value.forEach((value, index) => {
-        if (index === 0) {
-          return;
-        }
-
-        if (value.level <= current!.level) {
-          errors.push(
-            `Level at index ${index} must greater than the previous.`,
-          );
-        }
-
-        current = value;
-      });
-    }
-
-    return errors;
-  },
-});
-
-const { List } = createList(levels);
-
-const Example = () => (
-  <List initialValue={[10, 30, 20].map((level) => ({ level }))}>
-    <List.Item>
-      {({ fields, moveUp, moveDown, remove }) => (
-        <div
-          style={{
-            display: "grid",
-            gridGap: 16,
-            gridTemplateColumns: "auto min-content min-content min-content",
-          }}
-        >
-          <InputField atom={fields.level} component="input" />
-          <button type="button" className="outline" onClick={moveUp}>
-            Up
-          </button>
-          <button type="button" className="outline" onClick={moveDown}>
-            Down
-          </button>
-          <button type="button" className="outline secondary" onClick={remove}>
-            Remove
-          </button>
-        </div>
-      )}
-    </List.Item>
-    <FieldErrors atom={levels} />
-  </List>
-);
-
-const FieldErrors = <T,>({ atom }: { atom: FieldAtom<T> }) => {
-  const errors = useFieldErrors(atom);
-
-  return (
-    <>
-      {errors.map((error, index) => (
-        <p key={index} style={{ color: "var(--pico-color-red-550)" }}>
-          {error}
-        </p>
-      ))}
-    </>
-  );
-};
 ```
 
 </Example>

@@ -1,0 +1,133 @@
+import {
+  Meta,
+  Canvas,
+  Story,
+  ArgTypes,
+  Description,
+} from "@storybook/addon-docs/blocks";
+import { Example } from "../../.storybook/blocks/Example";
+import * as ItemStories from "./item.stories";
+
+{/* <Meta of={ListStories} /> */}
+
+<hgroup>
+
+<p class="category">Components</p>
+
+# List.Item
+
+The List.Item uses the `useList()` and helps you render the individual items of your `listAtom`.
+
+</hgroup>
+
+```ts
+import { createList } from "@form-atoms/list-atom";
+```
+
+## Features
+
+- ✅ Handles **adding, removal and ordering** of the list items.
+- ✅ **Reorder items** with pre-configured **`moveUp` & `moveDown` actions.**
+
+## Usage
+
+```tsx
+import { createList } from "@form-atoms/list-atom";
+
+const { List } = createList(myAtom);
+
+function Example() {
+  <List.Item>
+    {({fields, moveUp, moveDown, add, remove, index, count, item }) =>
+      /* render item */
+    }
+  </List.Item>
+}
+```
+
+## Examples
+
+<Example of={ItemStories.OrderingItems} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { createList, listAtom } from "@form-atoms/list-atom";
+
+const hobbies = listAtom({
+  value: [],
+  name: "hobbies",
+  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(hobbies);
+
+const Example = () => (
+  <List
+    initialValue={[
+      { hobby: "coding" },
+      { hobby: "gardening" },
+      { hobby: "mountain bike" },
+    ]}
+  >
+    <List.Item>
+      {({ fields, moveUp, moveDown, remove }) => (
+        <fieldset role="group">
+          <InputField atom={fields.hobby} component="input" />
+          <button type="button" className="outline" onClick={moveUp}>
+            Up
+          </button>
+          <button type="button" className="outline" onClick={moveDown}>
+            Down
+          </button>
+          <button type="button" className="outline secondary" onClick={remove}>
+            Remove
+          </button>
+        </fieldset>
+      )}
+    </List.Item>
+  </List>
+);
+```
+
+</Example>
+
+<Example of={ItemStories.Prepend} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { createList, listAtom } from "@form-atoms/list-atom";
+
+const hobbies = listAtom({
+  value: [],
+  name: "hobbies",
+  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(hobbies);
+
+const Example = () => (
+  <List
+    initialValue={[
+      { hobby: "swimming" },
+      { hobby: "gardening" },
+      { hobby: "coding" },
+    ]}
+  >
+    <List.Item>
+      {({ fields, add, item, remove }) => (
+        <fieldset role="group">
+          <InputField atom={fields.hobby} component="input" />
+          <button type="button" className="outline" onClick={() => add(item)}>
+            Prepend
+          </button>
+          <button type="button" className="outline secondary" onClick={remove}>
+            Remove
+          </button>
+        </fieldset>
+      )}
+    </List.Item>
+  </List>
+);
+```
+
+</Example>

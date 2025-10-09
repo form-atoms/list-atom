@@ -1,79 +1,86 @@
-import { StoryObj } from "@storybook/react-vite";
 import {
   type FieldAtom,
-  type FormFieldValues,
-  type FormFields,
   InputField,
   fieldAtom,
   useFieldActions,
 } from "form-atoms";
-import { RenderProp } from "react-render-prop-type";
 
-import { ListAtom, listAtom } from "../atoms";
+import { listAtom } from "../atoms";
 import { PicoFieldErrors } from "../story/PicoFieldErrors";
 import { PicoFieldName } from "../story/PicoFieldName";
-import { StoryForm } from "../story/StoryForm";
-import { createList, ListComponents } from "./list";
 
-const RemoveButton = ({ remove }: { remove: () => void }) => (
-  <button type="button" className="outline secondary" onClick={remove}>
-    Remove
-  </button>
-);
+import {
+  createListStory,
+  RemoveButton,
+  render,
+} from "../story/createListStory";
 
-const meta = {
-  render<Fields extends FormFields>({ atom, children }: ListStoryArgs<Fields>) {
-    const { List } = createList(atom);
-
-    return children({ List, atom });
-  },
-};
+const meta = { render };
 
 export default meta;
 
-type ListStoryArgs<Fields extends FormFields> = {
-  atom: ListAtom<Fields, FormFieldValues<Fields>>;
-} & RenderProp<
-  ListComponents<Fields> & {
-    atom: ListAtom<Fields, FormFieldValues<Fields>>;
-  }
->;
-
-const listStory = <Fields extends FormFields>(
-  storyObj: {
-    args: ListStoryArgs<Fields>;
-  } & Omit<StoryObj, "args">,
-) => ({
-  ...storyObj,
-  decorators: [
-    (Story: () => JSX.Element) => (
-      <StoryForm fields={{ field: storyObj.args.atom }}>
-        {() => <Story />}
-      </StoryForm>
-    ),
-  ],
-});
-
-export const ListOfObjects = listStory({
+export const Initialized = createListStory({
   parameters: {
     docs: {
       description: {
-        story:
-          "Usually the List is used to capture a list of objects like addresses or environment variables:.",
+        story: "Use the `initialValue` prop to hydrate the listAtom value:",
       },
     },
   },
   args: {
     atom: listAtom({
       name: "environment",
-      value: [{ variable: "GITHUB_TOKEN", value: "<secret>" }],
+      value: [],
+      fields: () => ({
+        variable: fieldAtom({ value: "" }),
+        value: fieldAtom({ value: "" }),
+      }),
+    }),
+    children: ({ List }) => (
+      <List
+        initialValue={[
+          { variable: "NPM_TOKEN", value: "<secret>" },
+          { variable: "APP_URL", value: "https://jotai.org" },
+        ]}
+      >
+        <List.Item>
+          {({ fields }) => (
+            <fieldset role="group">
+              <InputField atom={fields.variable} component="input" />
+              <InputField atom={fields.value} component="input" />
+            </fieldset>
+          )}
+        </List.Item>
+      </List>
+    ),
+  },
+});
+
+export const FullDemo = createListStory({
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Usually the List is used to capture a list of objects like addresses or environment variables:",
+      },
+    },
+  },
+  args: {
+    atom: listAtom({
+      name: "environment",
+      value: [],
       fields: () => ({
         variable: fieldAtom({ name: "variable", value: "" }),
         value: fieldAtom({ name: "value", value: "" }),
       }),
     }),
     children: ({ List }) => (
-      <List initialValue={[{ value: "<secret>", variable: "NPM_TOKEN" }]}>
+      <List
+        initialValue={[
+          { variable: "NPM_TOKEN", value: "<secret>" },
+          { variable: "APP_URL", value: "https://jotai.org" },
+        ]}
+      >
         <List.Item>
           {({ fields, remove }) => (
             <div
@@ -107,375 +114,10 @@ export const ListOfObjects = listStory({
             </div>
           )}
         </List.Item>
-        <List.Add />
-      </List>
-    ),
-  },
-});
-
-export const CustomAddButton = listStory({
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "The `<List.Add>` component allows not only to render a custom button. It also enables you to supply custom `FormFields` object to the `add` action. This is useful when you want to create a customized list item (e.g. with initial value).",
-      },
-    },
-  },
-  args: {
-    atom: listAtom({
-      name: "productFeatures",
-      value: [{ feature: "quality materials" }, { feature: "solid build" }],
-      fields: () => ({ feature: fieldAtom({ value: "" }) }),
-    }),
-    children: ({ List }) => (
-      <List>
-        <List.Item>
-          {({ fields, remove }) => (
-            <fieldset role="group">
-              <InputField atom={fields.feature} component="input" />
-              <RemoveButton remove={remove} />
-            </fieldset>
-          )}
-        </List.Item>
-        <List.Add>
-          {({ add }) => (
-            <button
-              type="button"
-              className="outline"
-              onClick={() => add({ feature: "beautiful colors" })}
-            >
-              Add initialized item
-            </button>
-          )}
-        </List.Add>
-      </List>
-    ),
-  },
-});
-
-export const PositioningAddButton = listStory({
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "You can control the list from outside by the `useListActions` hook. Here we render a button with `add` action only besides the last item in the list.",
-      },
-    },
-  },
-  args: {
-    atom: listAtom({
-      name: "productFeatures",
-      value: [{ feature: "quality materials" }, { feature: "solid build" }],
-      fields: () => ({ feature: fieldAtom({ value: "" }) }),
-    }),
-    children: ({ List }) => {
-      return (
-        <List>
-          <List.Empty>
-            <article style={{ textAlign: "center" }}>
-              <p>
-                You don't have any items in your list. Start by adding your
-                first one.
-              </p>
-              <List.Add>
-                {({ add }) => (
-                  <button className="outline" onClick={() => add()}>
-                    Add
-                  </button>
-                )}
-              </List.Add>
-            </article>
-          </List.Empty>
-          <List.Item>
-            {({ fields, index, count, remove, add }) => (
-              <div
-                style={{
-                  display: "grid",
-                  gridGap: 16,
-                  gridTemplateColumns: "auto min-content min-content",
-                }}
-              >
-                <InputField atom={fields.feature} component="input" />
-                <div style={{ width: 300 }}>
-                  {index + 1 === count && (
-                    <fieldset role="group">
-                      <button className="outline" onClick={() => add()}>
-                        Add
-                      </button>
-                      <RemoveButton remove={remove} />
-                    </fieldset>
-                  )}
-                </div>
-              </div>
-            )}
-          </List.Item>
-        </List>
-      );
-    },
-  },
-});
-
-export const EmptyList = listStory({
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Use the `<List.Empty>` component, to render a blank slate when the list is empty.",
-      },
-    },
-  },
-  args: {
-    atom: listAtom({
-      value: [],
-      fields: () => ({ hobby: fieldAtom<string>({ value: "" }) }),
-    }),
-    children: ({ List }) => (
-      <List>
-        <List.Empty>
-          <article>
-            <p style={{ textAlign: "center" }}>
-              You don't have any hobbies in your list. Start by adding your
-              first one.
-            </p>
-          </article>
-        </List.Empty>
-        <List.Item>
-          {({ fields, remove }) => (
-            <fieldset role="group">
-              <InputField atom={fields.hobby} component="input" />
-              <RemoveButton remove={remove} />
-            </fieldset>
-          )}
-        </List.Item>
         <List.Add>
           {({ add }) => (
             <button type="button" className="outline" onClick={() => add()}>
-              Add hobby
-            </button>
-          )}
-        </List.Add>
-      </List>
-    ),
-  },
-});
-
-export const Prepend = listStory({
-  parameters: {
-    docs: {
-      description: {
-        story: "New list items can be prepended to any of the existing items.",
-      },
-    },
-  },
-  args: {
-    atom: listAtom({
-      name: "hobbies",
-      value: [{ hobby: "gardening" }],
-      fields: () => ({ hobby: fieldAtom({ value: "" }) }),
-    }),
-    children: ({ List }) => (
-      <List
-        initialValue={[
-          { hobby: "swimming" },
-          { hobby: "gardening" },
-          { hobby: "coding" },
-        ]}
-      >
-        <List.Item>
-          {({ fields, remove, add, item }) => (
-            <fieldset role="group">
-              <InputField atom={fields.hobby} component="input" />
-              <button
-                type="button"
-                className="outline"
-                onClick={() => add(item)}
-              >
-                Prepend
-              </button>
-              <RemoveButton remove={remove} />
-            </fieldset>
-          )}
-        </List.Item>
-      </List>
-    ),
-  },
-});
-
-export const OrderingItems = listStory({
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "The list items can be reordered by calling the `moveUp` and `moveDown` actions.",
-      },
-    },
-  },
-  args: {
-    atom: listAtom({
-      name: "hobbies",
-      value: [{ hobby: "gardening" }],
-      fields: () => ({ hobby: fieldAtom({ value: "" }) }),
-    }),
-    children: ({ List }) => (
-      <List
-        initialValue={[
-          { hobby: "coding" },
-          { hobby: "gardening" },
-          { hobby: "mountain bike" },
-        ]}
-      >
-        <List.Item>
-          {({ fields, moveUp, moveDown, remove }) => (
-            <fieldset role="group">
-              <InputField atom={fields.hobby} component="input" />
-              <button type="button" className="outline" onClick={moveUp}>
-                Up
-              </button>
-              <button type="button" className="outline" onClick={moveDown}>
-                Down
-              </button>
-              <RemoveButton remove={remove} />
-            </fieldset>
-          )}
-        </List.Item>
-        <List.Add>
-          {({ add }) => (
-            <button type="button" className="outline" onClick={() => add()}>
-              Add hobby
-            </button>
-          )}
-        </List.Add>
-      </List>
-    ),
-  },
-});
-
-export const NestedList = listStory({
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Since the `listAtom()` supports nesting, we can render `<List.Nested atom={} />` within `<List.Item />`. As an example we capture multiple people with multiple banking accounts:",
-      },
-    },
-  },
-  args: {
-    atom: listAtom({
-      name: "users",
-      value: [
-        {
-          name: "Jerry",
-          lastName: "Park",
-          accounts: [{ iban: "SK89 7500 0000 0000 1234 5671" }],
-        },
-      ],
-      fields: () => ({
-        name: fieldAtom({ value: "", name: "name" }),
-        lastName: fieldAtom({ value: "", name: "lastName" }),
-        accounts: listAtom({
-          name: "accounts",
-          value: [],
-          fields: () => ({
-            iban: fieldAtom({ value: "", name: "iban" }),
-          }),
-        }),
-      }),
-    }),
-
-    children: ({ List }) => (
-      <List>
-        <List.Item>
-          {({ fields, index, remove }) => (
-            <article>
-              <header>
-                <nav>
-                  <ul>
-                    <li>
-                      <strong>Person #{index + 1}</strong>
-                    </li>
-                  </ul>
-                  <ul>
-                    <li>
-                      <a
-                        href="#"
-                        role="button"
-                        className="outline secondary"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          remove();
-                        }}
-                      >
-                        Remove
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </header>
-              <div className="grid">
-                <div>
-                  <label>First Name</label>
-                  <InputField
-                    atom={fields.name}
-                    render={(props) => <input {...props} placeholder="Name" />}
-                  />
-                </div>
-                <div>
-                  <label>Last Name</label>
-                  <InputField
-                    atom={fields.lastName}
-                    render={(props) => (
-                      <input {...props} placeholder="Last Name" />
-                    )}
-                  />
-                </div>
-              </div>
-              <List.Nested atom={fields.accounts}>
-                {({ List }) => (
-                  <>
-                    <List.Item>
-                      {({ fields, index, remove }) => (
-                        <>
-                          <label>Account #{index + 1}</label>
-                          <div
-                            style={{
-                              display: "grid",
-                              gridGap: 16,
-                              gridTemplateColumns: "auto min-content",
-                            }}
-                          >
-                            <InputField
-                              atom={fields.iban}
-                              render={(props) => (
-                                <input {...props} placeholder="IBAN" />
-                              )}
-                            />
-                            <RemoveButton remove={remove} />
-                          </div>
-                        </>
-                      )}
-                    </List.Item>
-                    <List.Add>
-                      {({ add }) => (
-                        <button
-                          type="button"
-                          className="outline"
-                          onClick={() => add()}
-                        >
-                          Add Bank Account
-                        </button>
-                      )}
-                    </List.Add>
-                  </>
-                )}
-              </List.Nested>
-            </article>
-          )}
-        </List.Item>
-        <List.Add>
-          {({ add }) => (
-            <button type="button" className="outline" onClick={() => add()}>
-              Add Person
+              Add variable
             </button>
           )}
         </List.Add>
@@ -521,7 +163,7 @@ function ClearField<T>({ atom }: { atom: FieldAtom<T[]> }) {
   );
 }
 
-export const ProgrammaticallySetValue = listStory({
+export const ProgrammaticallySetValue = createListStory({
   parameters: {
     docs: {
       description: {
@@ -593,7 +235,7 @@ export const ProgrammaticallySetValue = listStory({
   },
 });
 
-export const ValidateAscendingValues = listStory({
+export const ValidateAscendingValues = createListStory({
   parameters: {
     docs: {
       description: {
