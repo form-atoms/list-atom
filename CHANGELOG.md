@@ -1,3 +1,10 @@
+## [2.2.4](https://github.com/form-atoms/list-atom/compare/v2.2.3...v2.2.4) (2025-10-10)
+
+
+### Bug Fixes
+
+* **add:** type the AddChildrenProps, update docs ([e3c0d09](https://github.com/form-atoms/list-atom/commit/e3c0d09be4c8b0b606521b5bf96f86275dab94e6))
+
 ## [2.2.3](https://github.com/form-atoms/list-atom/compare/v2.2.2...v2.2.3) (2025-10-10)
 
 
