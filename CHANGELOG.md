@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/form-atoms/list-atom/compare/v2.2.2...v2.2.3) (2025-10-10)
+
+
+### Bug Fixes
+
+* **types/List.Item:** the `add` action accepts a value ([ee33e14](https://github.com/form-atoms/list-atom/commit/ee33e14cf726c1149d3daf16ea34fa96e88a0f0c))
+
 ## [2.2.2](https://github.com/form-atoms/list-atom/compare/v2.2.1...v2.2.2) (2025-10-09)
 
 
