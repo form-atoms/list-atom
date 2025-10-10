@@ -412,19 +412,19 @@ type ListItemProps<Fields extends FormFields> = {
 
 #### Props
 
-| Name     | Type                               | Required? | Description   |
-| -------- | ---------------------------------- | --------- | ------------- |
-| children | `(props: AddProps) => JSX.Element` | No        | A render prop |
+| Name     | Type                                       | Required? | Description   |
+| -------- | ------------------------------------------ | --------- | ------------- |
+| children | `(props: AddChildrenProps) => JSX.Element` | No        | A render prop |
 
 #### Children Props
 
 ```ts
-type AddProps<Fields extends FormFields> = {
+type AddChildrenProps<Fields extends FormFields> = {
   /**
    * An action to append a new item to the end of the list.
-   * @param fields optionaly set initialized fields.
+   * @param fields optionaly set the items initial value.
    */
-  add: (fields?: Fields) => void;
+  add: (value?: FormFieldValues<Fields>) => void;
 };
 ```
 

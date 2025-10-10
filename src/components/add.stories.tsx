@@ -12,23 +12,28 @@ const meta = { render };
 
 export default meta;
 
-export const WithValue = createListStory({
+export const EmptyOrInitialValue = createListStory({
   parameters: {
     docs: {
       description: {
         story:
-          "The `add()` action accept a custom `Value` which will be used to initialize the added list item.",
+          "By default the `<List.Add>` renders a button to add an empty item. Optionally, the `add()` action accept a custom `Value` which will be used to initialize the added list item.",
       },
     },
   },
   args: {
     atom: listAtom({
       name: "productFeatures",
-      value: [{ feature: "quality materials" }, { feature: "solid build" }],
+      value: [],
       fields: () => ({ feature: fieldAtom({ value: "" }) }),
     }),
     children: ({ List }) => (
-      <List>
+      <List
+        initialValue={[
+          { feature: "quality materials used" },
+          { feature: "not so heavy" },
+        ]}
+      >
         <List.Item>
           {({ fields, remove }) => (
             <fieldset role="group">
@@ -37,17 +42,21 @@ export const WithValue = createListStory({
             </fieldset>
           )}
         </List.Item>
-        <List.Add>
-          {({ add }) => (
-            <button
-              type="button"
-              className="outline"
-              onClick={() => add({ feature: "beautiful colors" })}
-            >
-              Add initialized item
-            </button>
-          )}
-        </List.Add>
+        <div className="grid">
+          <List.Add />
+          <div />
+          <List.Add>
+            {({ add }) => (
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => add({ feature: "beautiful colors" })}
+              >
+                Add initialized item
+              </button>
+            )}
+          </List.Add>
+        </div>
       </List>
     ),
   },
@@ -58,7 +67,7 @@ export const PositioningAddButton = createListStory({
     docs: {
       description: {
         story:
-          "You can position the `<List.Add>` action button freely in your form layouts. Here we use show it when the list is empty.",
+          "You can position the `<List.Add>` action button freely in your form layouts. Here we use show it when the list is empty. Note that the `add` action is also available in the `<List.Item>`.",
       },
     },
   },
@@ -73,10 +82,8 @@ export const PositioningAddButton = createListStory({
         <>
           <List.Empty>
             <article style={{ textAlign: "center" }}>
-              <p>
-                You don't have any items in your list. Start by adding your
-                first one.
-              </p>
+              <h5>You don't have any items in your list.</h5>
+              <p>Start by adding your first one.</p>
               <List.Add>
                 {({ add }) => (
                   <button className="outline" onClick={() => add()}>
