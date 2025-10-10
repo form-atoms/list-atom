@@ -104,6 +104,58 @@ const Example = () => (
 
 </Example>
 
+<Example of={ItemStories.DisableCarouselOrdering} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { createList, listAtom } from "@form-atoms/list-atom";
+
+const hobbies = listAtom({
+  value: [],
+  name: "hobbies",
+  fields: () => ({ hobby: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(hobbies);
+
+const Example = () => (
+  <List
+    initialValue={[
+      { hobby: "coding" },
+      { hobby: "gardening" },
+      { hobby: "mountain bike" },
+    ]}
+  >
+    <List.Item>
+      {({ fields, index, count, moveUp, moveDown, remove }) => (
+        <fieldset role="group">
+          <InputField atom={fields.hobby} component="input" />
+          <button
+            type="button"
+            className="outline"
+            disabled={index === 0}
+            onClick={moveUp}
+          >
+            Up
+          </button>
+          <button
+            type="button"
+            className="outline"
+            disabled={index === count - 1}
+            onClick={moveDown}
+          >
+            Down
+          </button>
+          <RemoveButton remove={remove} />
+        </fieldset>
+      )}
+    </List.Item>
+  </List>
+);
+```
+
+</Example>
+
 <Example of={ItemStories.Prepend} >
 
 ```tsx
@@ -127,7 +179,7 @@ const Example = () => (
     ]}
   >
     <List.Item>
-      {({ fields, add, item, remove }) => (
+      {({ fields, item, add, remove }) => (
         <fieldset role="group">
           <InputField atom={fields.hobby} component="input" />
           <button type="button" className="outline" onClick={() => add(item)}>
