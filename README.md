@@ -371,7 +371,7 @@ export type ListComponents<Fields extends FormFields> = {
 ```ts
 type ListItemProps<Fields extends FormFields> = {
   /**
-   * The fields of current item, as returned from the builder function.
+   * The fields of the current item, as created with the listAtom's `fields` config function.
    */
   fields: Fields;
   /**
@@ -387,22 +387,22 @@ type ListItemProps<Fields extends FormFields> = {
    */
   count: number;
   /**
-   * Append a new item to the end of the list.
-   * When called with current item, it will be prepend with a new item.
+   * Append a new item to the list.
+   * When called with the current item, it will prepend it.
    */
-  add: (before?: ListItem<Fields>) => void;
+  add: (before?: ListItem<Fields>, value?: FormFieldValues<Fields>) => void;
   /**
-   * Removes the current item.
+   * Removes the current item from the list.
    */
   remove: () => void;
   /**
    * Moves the current item one slot up in the list.
-   * When called for the first item, the action is no-op.
+   * Supports carousel - the first item will become the last.
    */
   moveUp: () => void;
   /**
    * Moves the current item one slot down in the list.
-   * When called for the last item, the item moves to the start of the list.
+   * Supports carousel - the last item will become the first.
    */
   moveDown: () => void;
 };

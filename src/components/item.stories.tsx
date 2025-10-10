@@ -35,7 +35,7 @@ export const Prepend = createListStory({
         ]}
       >
         <List.Item>
-          {({ fields, remove, add, item }) => (
+          {({ fields, item, add, remove }) => (
             <fieldset role="group">
               <InputField atom={fields.hobby} component="input" />
               <button

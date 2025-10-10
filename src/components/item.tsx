@@ -7,7 +7,7 @@ import { useList } from "../hooks";
 
 export type ListItemProps<Fields extends FormFields> = {
   /**
-   * The fields of current item, as returned from the builder function.
+   * The fields of the current item, as created with the listAtom's `fields` config function.
    */
   fields: Fields;
   /**
@@ -23,22 +23,22 @@ export type ListItemProps<Fields extends FormFields> = {
    */
   count: number;
   /**
-   * Append a new item to the end of the list.
-   * WHen called with current item, it will be prepend with a new item.
+   * Append a new item to the list.
+   * When called with the current item, it will prepend it.
    */
-  add: (before?: ListItem<Fields>) => void;
+  add: (before?: ListItem<Fields>, value?: FormFieldValues<Fields>) => void;
   /**
-   * Removes the current item.
+   * Removes the current item from the list.
    */
   remove: () => void;
   /**
    * Moves the current item one slot up in the list.
-   * When called for the first item, the action is no-op.
+   * Supports carousel - the first item will become the last.
    */
   moveUp: () => void;
   /**
    * Moves the current item one slot down in the list.
-   * When called for the last item, the item moves to the start of the list.
+   * Supports carousel - the last item will become the first.
    */
   moveDown: () => void;
 };
@@ -47,26 +47,25 @@ export type ItemProps<Fields extends FormFields> = RenderProp<
   ListItemProps<Fields>
 >;
 
-export function createItem<
-  Fields extends FormFields,
-  Value = FormFieldValues<Fields>,
->(listAtom: ListAtom<Fields, Value>) {
+export function createItem<Fields extends FormFields>(
+  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
+) {
   function Item({ children }: ItemProps<Fields>) {
     const { add, items } = useList(listAtom);
 
     return (
       <Fragment>
-        {items.map(({ remove, fields, key, item, moveUp, moveDown }, index) => (
+        {items.map(({ fields, key, item, remove, moveUp, moveDown }, index) => (
           <Fragment key={key}>
             {children({
               item,
               fields,
+              index,
+              count: items.length,
               add,
               remove,
               moveUp,
               moveDown,
-              index,
-              count: items.length,
             })}
           </Fragment>
         ))}
