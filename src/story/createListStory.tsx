@@ -16,6 +16,7 @@ export function render<Fields extends FormFields>({
 }
 
 type ListStoryArgs<Fields extends FormFields> = {
+  hideFormActions?: boolean;
   atom: ListAtom<Fields, FormFieldValues<Fields>>;
 } & RenderProp<
   ListComponents<Fields> & {
@@ -31,7 +32,10 @@ export const createListStory = <Fields extends FormFields>(
   ...storyObj,
   decorators: [
     (Story: () => JSX.Element) => (
-      <StoryForm fields={{ field: storyObj.args.atom }}>
+      <StoryForm
+        fields={{ field: storyObj.args.atom }}
+        hideFormActions={storyObj.args.hideFormActions}
+      >
         {() => <Story />}
       </StoryForm>
     ),

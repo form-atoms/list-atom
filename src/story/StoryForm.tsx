@@ -8,6 +8,7 @@ type Props<Fields extends FormFields> = {
   fields: Fields;
   resettable?: boolean;
   required?: boolean;
+  hideFormActions?: boolean;
 } & RenderProp<{
   form: FormAtom<Fields>;
   fields: Fields;
@@ -19,6 +20,7 @@ export const StoryForm = <Fields extends FormFields>({
   fields,
   children,
   required = true,
+  hideFormActions,
 }: Props<Fields>) => {
   const [form] = useState(() => formAtom(fields));
   const { reset, submit } = useFormActions(form);
@@ -26,14 +28,16 @@ export const StoryForm = <Fields extends FormFields>({
   return (
     <form onSubmit={submit(action("submit"))}>
       {children({ fields, required, form })}
-      <div className="grid">
-        <button type="submit">Submit</button>
-        {resettable && (
-          <button className="secondary" type="button" onClick={reset}>
-            Reset
-          </button>
-        )}
-      </div>
+      {!hideFormActions && (
+        <div className="grid">
+          <button type="submit">Submit</button>
+          {resettable && (
+            <button className="secondary" type="button" onClick={reset}>
+              Reset
+            </button>
+          )}
+        </div>
+      )}
     </form>
   );
 };

@@ -9,6 +9,9 @@ export const Example = ({
 }: PropsWithChildren<{ of: ModuleExport }>) => {
   const { description } = of.parameters.docs;
 
+  // Hides submit & reset form buttons in Docs mode
+  of.args.hideFormActions = true;
+
   return (
     <>
       <StoryTitle of={of} />
