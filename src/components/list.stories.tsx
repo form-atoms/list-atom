@@ -169,7 +169,7 @@ export const ProgrammaticallySetValue = createListStory({
       description: {
         story:
           "The `listAtom` is a regular `fieldAtom`, so it works with the form-atoms field hooks. " +
-          "Here we use the `setValue` action from the `useFieldActions()` hook to clear or initialize the list programmatically.",
+          "Here we use the `setValue` action from the [useFieldActions()](https://github.com/form-atoms/form-atoms#usefieldactions) hook to clear or initialize the list programmatically.",
       },
     },
   },

@@ -352,11 +352,11 @@ export type ListComponents<Fields extends FormFields> = {
 
 #### Props
 
-| Name         | Type        | Required? | Description                                                  |
-| ------------ | ----------- | --------- | ------------------------------------------------------------ |
-| children     | `ReactNode` | Yes       | A react nodes                                                |
-| initialValue | `Value[]`   | No        | A value to (re)initialize the listAtom                       |
-| store        | `AtomStore` | No        | [A Jotai store](https://jotai.org/docs/api/core#createstore) |
+| Name         | Type        | Required? | Description                                                    |
+| ------------ | ----------- | --------- | -------------------------------------------------------------- |
+| children     | `ReactNode` | Yes       | A react nodes                                                  |
+| initialValue | `Value[]`   | No        | A value to initialize the `listAtom`                           |
+| store        | `AtomStore` | No        | [A Jotai store](https://jotai.org/docs/core/store#createstore) |
 
 ### &lt;List.Item&gt;
 

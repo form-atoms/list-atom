@@ -14,7 +14,7 @@ import * as ListStories from "./list.stories";
 
 # List
 
-The List component enables you to easily render & manage a `listAtom()`.
+The List component enables you to easily initialize the `listAtom()`.
 
 </hgroup>
 
@@ -29,6 +29,20 @@ function InitializeList() {
   return <List initialValue={[]} />;
 }
 ```
+
+<blockquote>
+  <strong>💡 Note:</strong>
+  The `<List>` is **not** a ReactContext provider, so all the list components like `<List.Item>` will work without it.
+  This works, because `listAtom` state lives in the JotaiStore. Render the `<List>` only when you want to initialize your list. 
+</blockquote>
+
+## Props
+
+| Name         | Type        | Required? | Description                                                    |
+| ------------ | ----------- | --------- | -------------------------------------------------------------- |
+| children     | `ReactNode` | Yes       | A react nodes                                                  |
+| initialValue | `Value[]`   | No        | A value to initialize the `listAtom`                           |
+| store        | `AtomStore` | No        | [A Jotai store](https://jotai.org/docs/core/store#createstore) |
 
 ## Examples
 
@@ -187,7 +201,7 @@ const ProgrammaticallySetValueExample = () => {
 
 </Example>
 
-<Example of={ListStories.ValidateAscendingValues} >
+<Example of={ListStories.ValidateAscendingValues} hideFormActions={false}>
 
 ```tsx
 import { fieldAtom, InputField } from "form-atoms";

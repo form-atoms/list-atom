@@ -5,12 +5,18 @@ import { StoryTitle } from "./StoryTitle";
 
 export const Example = ({
   of,
+  hideFormActions = true,
   children,
-}: PropsWithChildren<{ of: ModuleExport }>) => {
+}: PropsWithChildren<{
+  of: ModuleExport;
+  /**
+   * Hides submit & reset form buttons in Docs mode
+   */
+  hideFormActions?: boolean;
+}>) => {
   const { description } = of.parameters.docs;
 
-  // Hides submit & reset form buttons in Docs mode
-  of.args.hideFormActions = true;
+  of.args.hideFormActions = hideFormActions;
 
   return (
     <>
