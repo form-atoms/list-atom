@@ -38,12 +38,25 @@ const { List } = createList(myAtom);
 
 function Example() {
   <List.Item>
-    {({fields, moveUp, moveDown, add, remove, index, count, item }) =>
+    {({fields, item, index, count, moveUp, moveDown, add, remove }) =>
       /* render item */
     }
   </List.Item>
 }
 ```
+
+## Children Props
+
+| Name     | Type                                  | Description                                                                                                               |
+| -------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| fields   | `Fields`                              | The fields of current item, as returned from the builder function.                                                        |
+| item     | `ListItem<Fields>`                    | The item from the internal splitList.                                                                                     |
+| index    | `number`                              | The index of the current item.                                                                                            |
+| count    | `number`                              | Total count of items in the list                                                                                          |
+| add      | `(before?: ListItem<Fields>) => void` | Append a new item to the end of the list. WHen called with current item, it will be prepend with a new item.              |
+| remove   | `() => void`                          | Removes the current item.                                                                                                 |
+| moveUp   | `() => void`                          | Moves the current item one slot up in the list. When called for the first item, the action is no-op.                      |
+| moveDown | `() => void`                          | Moves the current item one slot down in the list. When called for the last item, the item moves to the start of the list. |
 
 ## Examples
 

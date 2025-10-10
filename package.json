@@ -81,6 +81,7 @@
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
+    "remark-gfm": "^4.0.1",
     "semantic-release": "^24.2.9",
     "shiki": "^3.13.0",
     "storybook": "^9.1.7",
