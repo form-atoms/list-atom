@@ -1,3 +1,10 @@
+## [2.2.5](https://github.com/form-atoms/list-atom/compare/v2.2.4...v2.2.5) (2025-10-13)
+
+
+### Bug Fixes
+
+* **types:** drop the render-prop as only children prop is used now ([00d08f6](https://github.com/form-atoms/list-atom/commit/00d08f6cbbf78b36fc25fae488670458b5bf68a4))
+
 ## [2.2.4](https://github.com/form-atoms/list-atom/compare/v2.2.3...v2.2.4) (2025-10-10)
 
 
