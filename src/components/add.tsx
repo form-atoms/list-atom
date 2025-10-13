@@ -1,5 +1,4 @@
 import type { FormFields, FormFieldValues } from "form-atoms";
-import type { RenderProp } from "react-render-prop-type";
 
 import type { ListAtom } from "../atoms";
 import { useListActions } from "../hooks";
@@ -12,9 +11,9 @@ type AddChildrenProps<Fields extends FormFields> = {
   add: (value?: FormFieldValues<Fields>) => void;
 };
 
-export type AddProps<Fields extends FormFields> = Partial<
-  RenderProp<AddChildrenProps<Fields>>
->;
+export type AddProps<Fields extends FormFields> = Partial<{
+  children: (props: AddChildrenProps<Fields>) => React.ReactNode;
+}>;
 
 export function createAdd<Fields extends FormFields>(
   listAtom: ListAtom<Fields, FormFieldValues<Fields>>,

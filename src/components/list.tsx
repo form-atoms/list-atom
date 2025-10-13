@@ -1,4 +1,4 @@
-import type { FunctionComponent, PropsWithChildren, ReactElement } from "react";
+import type { FunctionComponent, PropsWithChildren, ReactNode } from "react";
 import type { AtomStore, FormFieldValues, FormFields } from "form-atoms";
 
 import type { ListAtom } from "../atoms/list-atom";
@@ -31,7 +31,7 @@ export type ListComponents<Fields extends FormFields> = {
      */
     Nested: <Fields extends FormFields>(
       props: NestedProps<Fields>,
-    ) => ReactElement | null;
+    ) => ReactNode;
   };
 };
 

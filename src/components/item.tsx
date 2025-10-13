@@ -1,6 +1,5 @@
-import { Fragment } from "react";
+import { Fragment, FunctionComponent } from "react";
 import type { FormFieldValues, FormFields } from "form-atoms";
-import type { RenderProp } from "react-render-prop-type";
 
 import type { ListAtom, ListItem } from "../atoms/list-atom";
 import { useList } from "../hooks";
@@ -43,9 +42,9 @@ export type ListItemProps<Fields extends FormFields> = {
   moveDown: () => void;
 };
 
-export type ItemProps<Fields extends FormFields> = RenderProp<
-  ListItemProps<Fields>
->;
+export type ItemProps<Fields extends FormFields> = {
+  children: (props: ListItemProps<Fields>) => React.ReactNode;
+};
 
 export function createItem<Fields extends FormFields>(
   listAtom: ListAtom<Fields, FormFieldValues<Fields>>,

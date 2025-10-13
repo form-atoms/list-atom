@@ -2,18 +2,18 @@ import { action } from "storybook/actions";
 import { Meta, StoryObj } from "@storybook/react";
 import { FormAtom, FormFields, formAtom, useFormActions } from "form-atoms";
 import { useState } from "react";
-import { RenderProp } from "react-render-prop-type";
 
 type Props<Fields extends FormFields> = {
   fields: Fields;
   resettable?: boolean;
   required?: boolean;
   hideFormActions?: boolean;
-} & RenderProp<{
-  form: FormAtom<Fields>;
-  fields: Fields;
-  required: boolean;
-}>;
+  children: (props: {
+    form: FormAtom<Fields>;
+    fields: Fields;
+    required: boolean;
+  }) => React.ReactNode;
+};
 
 export const StoryForm = <Fields extends FormFields>({
   resettable = true,
