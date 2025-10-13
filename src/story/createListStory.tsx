@@ -29,7 +29,6 @@ export const createListStory = <Fields extends FormFields>(
     args: ListStoryArgs<Fields>;
   } & Omit<StoryObj, "args">,
 ) => ({
-  ...storyObj,
   decorators: [
     (Story: () => JSX.Element) => (
       <StoryForm
@@ -40,6 +39,7 @@ export const createListStory = <Fields extends FormFields>(
       </StoryForm>
     ),
   ],
+  ...storyObj,
 });
 
 export const RemoveButton = ({ remove }: { remove: () => void }) => (
