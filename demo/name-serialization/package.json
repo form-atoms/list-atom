@@ -1,0 +1,32 @@
+{
+  "name": "name-serialization",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@conform-to/react": "^1.12.0",
+    "@conform-to/zod": "^1.12.0",
+    "@form-atoms/list-atom": "^2.2.4",
+    "form-atoms": "^3.3.2",
+    "jotai": "^2.15.0",
+    "jotai-effect": "^2.1.3",
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zod": "^3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.4",
+    "typescript": "^5"
+  }
+}
