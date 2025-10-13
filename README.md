@@ -21,7 +21,7 @@ npm install jotai-effect @form-atoms/list-atom
 ### Quick start
 
 ```tsx
-import { fromAtom, useForm, fieldAtom, InputField } from "form-atoms";
+import { formAtom, useForm, fieldAtom, InputField } from "form-atoms";
 import { listAtom, createList } from "@form-atoms/list-atom";
 
 const environment = listAtom({
@@ -56,7 +56,7 @@ export const Form = () => {
         </List.Item>
         <List.Add>
           {({ add }) => (
-            <button type="button" onClick={add}>
+            <button type="button" onClick={() => add()}>
               Add variable
             </button>
           )}
