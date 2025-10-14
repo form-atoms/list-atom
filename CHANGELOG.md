@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/form-atoms/list-atom/compare/v2.2.5...v2.3.0) (2025-10-14)
+
+
+### Features
+
+* **ListOf:** export Nested as ListOf ([c1bbdcc](https://github.com/form-atoms/list-atom/commit/c1bbdccac17917c56381dec4e9482469086d94f8))
+
 ## [2.2.5](https://github.com/form-atoms/list-atom/compare/v2.2.4...v2.2.5) (2025-10-13)
 
 
