@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent } from "react";
+import { Fragment } from "react";
 import type { FormFieldValues, FormFields } from "form-atoms";
 
 import type { ListAtom, ListItem } from "../atoms/list-atom";

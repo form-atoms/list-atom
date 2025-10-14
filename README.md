@@ -78,13 +78,14 @@ export const Form = () => {
 | [`useListActions()`](#uselistactions) | A hook that returns a `add`, `remove` & `move` actions, that can be used to interact with the list atom state. |
 | [`useList()`](#uselist)               | A hook that returns the list `items` ready to be rendred together with the list actions.                       |
 
-| Components                    | Description                                                     |
-| ----------------------------- | --------------------------------------------------------------- |
-| [`<List>`](#list)             | A component to initialize the listAtom via `initialValue` prop. |
-| [`<List.Add>`](#listadd)      | Adds new or initialized items to the list.                      |
-| [`<List.Item>`](#listitem)    | Iterate and render each of the list items.                      |
-| [`<List.Empty>`](#listempty)  | Render children only when the list has no items.                |
-| [`<List.Nested>`](#listempty) | Helper for nesting list within an `<List.Item>`.                |
+| Components                                    | Description                                                     |
+| --------------------------------------------- | --------------------------------------------------------------- |
+| [`createList(listAtom)`](#createlistlistatom) | A function to create components bound to the listAtom.          |
+| [`<List>`](#list)                             | A component to initialize the listAtom via `initialValue` prop. |
+| [`<List.Add>`](#listadd)                      | Adds new or initialized items to the list.                      |
+| [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      |
+| [`<List.Empty>`](#listempty)                  | Render children only when the list has no items.                |
+| [`<List.Nested>`](#listempty)                 | Helper for nesting list within an `<List.Item>`.                |
 
 ## List atoms
 
