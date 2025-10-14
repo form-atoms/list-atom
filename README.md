@@ -9,13 +9,13 @@ npm install jotai-effect @form-atoms/list-atom
 ```
 
 <a aria-label="Minzipped size" href="https://bundlephobia.com/result?p=%40form-atoms/list-atom">
-  <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/%40form-atoms/list-atom?style=for-the-badge&labelColor=24292e">
+  <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/%40form-atoms/list-atom?style=for-the-badge&labelColor=202632">
 </a>
 <a aria-label="NPM version" href="https://www.npmjs.com/package/%40form-atoms/list-atom">
-  <img alt="NPM Version" src="https://img.shields.io/npm/v/%40form-atoms/list-atom?style=for-the-badge&labelColor=24292e">
+  <img alt="NPM Version" src="https://img.shields.io/npm/v/%40form-atoms/list-atom?style=for-the-badge&labelColor=202632">
 </a>
 <a aria-label="Code coverage report" href="https://codecov.io/gh/form-atoms/list-atom">
-  <img alt="Code coverage" src="https://img.shields.io/codecov/c/gh/form-atoms/list-atom?style=for-the-badge&labelColor=24292e">
+  <img alt="Code coverage" src="https://img.shields.io/codecov/c/gh/form-atoms/list-atom?style=for-the-badge&labelColor=202632">
 </a>
 
 ## Features
