@@ -56,7 +56,7 @@ export const Initialized = createListStory({
   },
 });
 
-export const FullDemo = createListStory({
+export const QuickStartExample = createListStory({
   parameters: {
     docs: {
       description: {
@@ -67,7 +67,7 @@ export const FullDemo = createListStory({
   },
   args: {
     atom: listAtom({
-      name: "environment",
+      name: "envVars",
       value: [],
       fields: () => ({
         variable: fieldAtom({ name: "variable", value: "" }),
@@ -77,7 +77,7 @@ export const FullDemo = createListStory({
     children: ({ List }) => (
       <List
         initialValue={[
-          { variable: "NPM_TOKEN", value: "<secret>" },
+          { variable: "PACKAGE_NAME", value: "form-atoms" },
           { variable: "APP_URL", value: "https://jotai.org" },
         ]}
       >

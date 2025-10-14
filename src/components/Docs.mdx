@@ -73,64 +73,14 @@ The Jotai `form-atoms` extension to render performant lists with easy controls.
 - 🔑 **Scoped field `name`s**. The fields are dynamically indexed enabling serialization to `FormData`.
 - 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Nested>` alias `<ListOf>`.
 
-## Quick start
-
-```tsx
-import { fieldAtom, formAtom, useForm, InputField } from "form-atoms";
-import { listAtom, createList } from "@form-atoms/list-atom";
-
-// Step 1: define your list
-const environment = listAtom({
-  name: "environment",
-  value: [],
-  fields: () => ({
-    variable: fieldAtom({ name: "variable", value: "" }),
-    value: fieldAtom({ name: "value", value: "" }),
-  }),
-});
-
-// Step 2: Attach to form
-const form = formAtom({ environment });
-
-// Step 3: create compound list components
-const { List } = createList(environment);
-
-// Step 4: render your UI controls
-function Example() {
-  const { submit } = useForm(form);
-
-  return (
-    <form onSubmit={submit(console.log)}>
-      <List initialValue={[{ variable: "NPM_TOKEN", value: "deepsecret" }]}>
-        <List.Item>
-          {({ fields, remove }) => (
-            <fieldset role="group">
-              <InputField atom={fields.variable} component="input" />
-              <InputField atom={fields.value} component="input" />
-              <button
-                type="button"
-                className="outline secondary"
-                onClick={remove}
-              >
-                Remove
-              </button>
-            </fieldset>
-          )}
-        </List.Item>
-        <List.Add />
-      </List>
-    </form>
-  );
-}
-```
-
-<Example of={ListStories.FullDemo}>
+<Example of={ListStories.QuickStartExample}>
 
 ```tsx
 import { InputField, fieldAtom } from "form-atoms";
 import { listAtom, createList } from "@form-atoms/list-atom";
 
 const envVars = listAtom({
+  name: "envVars",
   value: [],
   fields: () => ({
     variable: fieldAtom({ name: "variable", value: "" }),
@@ -141,7 +91,12 @@ const envVars = listAtom({
 const { List } = createList(envVars);
 
 const Example = () => (
-  <List initialValue={[{ variable: "NPM_TOKEN", value: "deepsecret" }]}>
+  <List
+    initialValue={[
+      { variable: "PACKAGE_NAME", value: "form-atoms" },
+      { variable: "APP_URL", value: "https://jotai.org" },
+    ]}
+  >
     <List.Item>
       {({ fields, remove }) => (
         <div

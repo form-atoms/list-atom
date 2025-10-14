@@ -26,14 +26,14 @@ npm install jotai-effect @form-atoms/list-atom
 - 🔑 **Scoped field `name`s**. The fields are dynamically indexed enabling serialization to `FormData`.
 - 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Nested>` alias `<ListOf>`.
 
-## Quick start
+## Quick start [🎨 Demo](https://form-atoms.github.io/list-atom/?path=/docs/components-docs--docs#quick-start-example)
 
 ```tsx
 import { formAtom, useForm, fieldAtom, InputField } from "form-atoms";
 import { listAtom, createList } from "@form-atoms/list-atom";
 
-const environment = listAtom({
-  name: "environment",
+const envVars = listAtom({
+  name: "envVars",
   value: [],
   fields: () => ({
     variable: fieldAtom({ name: "variable", value: "" }),
@@ -41,16 +41,21 @@ const environment = listAtom({
   }),
 });
 
-const form = formAtom({ environment });
+const form = formAtom({ envVars });
 
-const { List } = createList(environment);
+const { List } = createList(envVars);
 
 export const Form = () => {
   const { submit } = useForm(form);
 
   return (
     <form onSubmit={submit(console.log)}>
-      <List initialValue={[{ variable: "GITHUB_SECRET", value: "t0ps3cr3t" }]}>
+      <List
+        initialValue={[
+          { variable: "PACKAGE_NAME", value: "form-atoms" },
+          { variable: "APP_URL", value: "https://jotai.org" },
+        ]}
+      >
         <List.Item>
           {({ fields, remove }) => (
             <>
