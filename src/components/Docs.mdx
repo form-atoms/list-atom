@@ -8,17 +8,23 @@ import {
 import { Example } from "../../.storybook/blocks/Example";
 import * as ListStories from "./list.stories";
 
-{/* <Meta of={ListStories} /> */}
-
 <hgroup>
-
-<p className="category">Components</p>
 
 # @form-atoms/list-atom
 
 The Jotai `form-atoms` extension to render performant lists with easy controls.
 
 </hgroup>
+
+## Features
+
+- 🏎️ **Performant rendering**. Each list item is rendered with a stable `key` derived from Jotai atom.
+- 🎮 **Easy controls**. The `<List.Item>` provides `add`, `remove`, `moveUp` and `moveDown` actions for each item.
+- 🧩 **Compound JSX Components**. Use the `<List.Add />`, or `<List.Empty />` instead of manual hooks.
+- 🔑 **Scoped field `name`s**. The fields are dynamically indexed enabling serialization to `FormData`.
+- 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Nested>` alias `<ListOf>`.
+
+## Quick start
 
 ```tsx
 import { fieldAtom, formAtom, useForm, InputField } from "form-atoms";
@@ -68,15 +74,6 @@ function Example() {
   );
 }
 ```
-
-## Features
-
-- ✅ **Performant rendering**. Each list item is rendered with a stable `key` derived from an internal form atom.
-- ✅ Handles **adding, removal and ordering** of the list items.
-- ✅ **Reorder items** with pre-configured **`moveUp` & `moveDown` actions.**
-- ✅ **Blank Slate ready**. Can render a custom `<Empty />` component via render prop when the list is empty.
-- ✅ Scoped field `name` attribute with dynamic index position.
-- ✅ Supports **nesting list within item**.
 
 <Example of={ListStories.FullDemo}>
 

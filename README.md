@@ -18,7 +18,15 @@ npm install jotai-effect @form-atoms/list-atom
   <img alt="Code coverage" src="https://img.shields.io/codecov/c/gh/form-atoms/list-atom?style=for-the-badge&labelColor=24292e">
 </a>
 
-### Quick start
+## Features
+
+- 🏎️ **Performant rendering**. Each list item is rendered with a stable `key` derived from Jotai atom.
+- 🎮 **Easy controls**. The `<List.Item>` provides `add`, `remove`, `moveUp` and `moveDown` actions for each item.
+- 🧩 **Compound JSX Components**. Use the `<List.Add />`, or `<List.Empty />` instead of manual hooks.
+- 🔑 **Scoped field `name`s**. The fields are dynamically indexed enabling serialization to `FormData`.
+- 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Nested>` alias `<ListOf>`.
+
+## Quick start
 
 ```tsx
 import { formAtom, useForm, fieldAtom, InputField } from "form-atoms";
