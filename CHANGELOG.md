@@ -1,3 +1,10 @@
+## [2.3.6](https://github.com/form-atoms/list-atom/compare/v2.3.5...v2.3.6) (2025-10-15)
+
+
+### Bug Fixes
+
+* **scoped-naming:** support intermediary objects (fixes [#18](https://github.com/form-atoms/list-atom/issues/18)) ([255ff7e](https://github.com/form-atoms/list-atom/commit/255ff7e080d426859348722eda9ecf36df3f45f6))
+
 ## [2.3.5](https://github.com/form-atoms/list-atom/compare/v2.3.4...v2.3.5) (2025-10-15)
 
 
