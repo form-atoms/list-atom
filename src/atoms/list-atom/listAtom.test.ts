@@ -7,6 +7,7 @@ import {
   useFieldState,
   useFieldValue,
   useFormActions,
+  useFormErrors,
   useFormSubmit,
 } from "form-atoms";
 import { useAtomValue } from "jotai";
@@ -241,6 +242,34 @@ describe("listAtom()", () => {
       await act(async () => actions.current.validate());
 
       expect(errors.current).toEqual(["missing admin email"]);
+    });
+
+    describe("when form validated", () => {
+      it("runs asynchronous validation", async () => {
+        async function hasAdminEmail(emails: string[]) {
+          return emails.includes("admin@form-atoms.com");
+        }
+
+        const form = formAtom({
+          emails: listAtom({
+            value: [{ email: "admin@form-atoms" }],
+            fields: () => ({
+              email: fieldAtom({ value: "" }),
+            }),
+            validate: async ({ value }) =>
+              (await hasAdminEmail(value.map((value) => value.email)))
+                ? []
+                : ["missing admin email"],
+          }),
+        });
+
+        const { result: actions } = renderHook(() => useFormActions(form));
+
+        await act(async () => actions.current.validate());
+
+        const { result: errors } = renderHook(() => useFormErrors(form));
+        expect(errors.current).toEqual({ emails: ["missing admin email"] });
+      });
     });
   });
 
