@@ -37,4 +37,28 @@ describe("useFieldInitialValue()", () => {
     rerender({ initialValue });
     expect(state.current.dirty).toBe(true);
   });
+
+  it("keeps the default field value, when partial initialValue provided", () => {
+    const users = listAtom({
+      fields: () => ({
+        age: fieldAtom({ value: 0 }),
+        name: fieldAtom({ value: "default" }),
+      }),
+    });
+
+    const { result: state } = renderHook(() => useFieldState(users));
+    renderHook((props) => useFieldInitialValue(users, props.initialValue), {
+      initialProps: {
+        initialValue: [{ age: 1 }, { age: 2 }] as {
+          age: number;
+          name: string;
+        }[],
+      },
+    });
+
+    expect(state.current.value).toEqual([
+      { age: 1, name: "default" },
+      { age: 2, name: "default" },
+    ]);
+  });
 });

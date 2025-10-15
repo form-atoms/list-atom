@@ -108,32 +108,29 @@ export function listItemForm<Fields extends FormFields, Value>({
       // NOTE: patchNames, for an unkonwn reason, must be mounted before the initializeItem, otherwise there is infinite loop in test.
       get(patchNamesEffect);
 
-      const initializeItemEffect = atomEffect((get, set) => {
-        if (!value) {
-          return;
-        }
-        const fields = get(base.fields);
-
-        walkFields(fields, (field, path) => {
-          const atoms = get(field);
-
-          const val = [...path].reduce(
-            (source, key) =>
-              typeof source === "object" && key in source
-                ? // @ts-expect-error fine
-                  source[key]
-                : undefined,
-            value,
-          );
-
-          if (val) {
-            set(atoms._initialValue, val);
-            set(atoms.value, val);
-          }
-        });
-      });
-
       if (value) {
+        const initializeItemEffect = atomEffect((get, set) => {
+          const fields = get(base.fields);
+
+          walkFields(fields, (field, path) => {
+            const atoms = get(field);
+
+            const val = [...path].reduce(
+              (source, key) =>
+                typeof source === "object" && key in source
+                  ? // @ts-expect-error fine
+                    source[key]
+                  : undefined,
+              value,
+            );
+
+            if (val) {
+              set(atoms._initialValue, val);
+              set(atoms.value, val);
+            }
+          });
+        });
+
         get(initializeItemEffect);
       }
 
