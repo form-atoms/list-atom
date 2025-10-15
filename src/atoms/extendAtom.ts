@@ -1,28 +1,21 @@
-import { Atom, Getter, PrimitiveAtom, atom } from "jotai";
+import { Getter, PrimitiveAtom, atom } from "jotai";
 
 export const extendAtom = <
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  T extends PrimitiveAtom<any>,
+  T extends Record<string, unknown>,
   E extends Record<string, unknown>,
 >(
-  baseAtom: T,
-  makeAtoms: (
-    cfg: T extends Atom<infer Config> ? Config : never,
-    get: Getter,
-  ) => E,
+  baseAtom: PrimitiveAtom<T>,
+  makeAtoms: (cfg: T, get: Getter) => E,
 ) => {
   const extended = atom(
     (get) => {
       const base = get(baseAtom);
       return {
         ...base,
-        ...makeAtoms(
-          base as T extends Atom<infer Config> ? Config : never,
-          get,
-        ),
+        ...makeAtoms(base, get),
       };
     },
-    (get, set, update: T extends Atom<infer Config> ? Config : never) => {
+    (get, set, update: T) => {
       set(baseAtom, { ...get(baseAtom), ...update });
     },
   );

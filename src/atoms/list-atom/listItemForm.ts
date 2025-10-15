@@ -7,7 +7,11 @@ import { extendAtom } from "../extendAtom";
 import type { FormAtomState, PrimitiveFormAtom } from "../types";
 
 type NamedFormAtomState<Fields extends FormFields> = FormAtomState<Fields> & {
-  nameAtom: Atom<string>;
+  /**
+   * The name atom of the form, which is automatically scoped by list index.
+   * @example the 2nd item in a list named "users" will have name "users[1]".
+   */
+  name: Atom<string>;
 };
 
 type NamedFormAtom<Fields extends FormFields> = Atom<
