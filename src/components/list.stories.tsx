@@ -55,6 +55,39 @@ export const Initialized = createListStory({
   },
 });
 
+export const PlainObjects = createListStory({
+  parameters: {
+    docs: {
+      description: {
+        story: "Use the `initialValue` prop to hydrate the listAtom value:",
+      },
+    },
+  },
+  args: {
+    atom: listAtom({
+      name: "attractions",
+      fields: () => ({
+        location: {
+          lat: fieldAtom({ name: "lat", value: 0 }),
+          lng: fieldAtom({ name: "lng", value: 0 }),
+        },
+      }),
+    }),
+    children: ({ List }) => (
+      <List initialValue={[{ location: { lat: 7, lng: 11 } }]}>
+        <List.Item>
+          {({ fields }) => (
+            <fieldset role="group">
+              <InputField atom={fields.location.lat} component="input" />
+              <InputField atom={fields.location.lng} component="input" />
+            </fieldset>
+          )}
+        </List.Item>
+      </List>
+    ),
+  },
+});
+
 export const QuickStartExample = createListStory({
   parameters: {
     docs: {

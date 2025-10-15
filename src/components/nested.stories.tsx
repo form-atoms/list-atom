@@ -1,19 +1,20 @@
+import { useActionState, useState } from "react";
 import { InputField, fieldAtom } from "form-atoms";
 import { parseWithZod } from "@conform-to/zod";
 import { z } from "zod";
 import { action } from "storybook/actions";
+
 import { code as Code } from "../../.storybook/components/shiki-code";
-import { listAtom } from "../atoms";
 
 import {
   createListStory,
   RemoveButton,
   render,
 } from "../story/createListStory";
-import { useActionState, useState } from "react";
-import { createList } from "./list";
 import { PicoFieldName } from "../story/PicoFieldName";
 import { PicoError } from "../story/PicoFieldErrors";
+
+import { createList, listAtom } from "../";
 
 const meta = { render };
 
@@ -33,19 +34,16 @@ export const NestedList = createListStory({
     const [{ List }] = useState(() => {
       const atom = listAtom({
         name: "users",
-        value: [
-          {
-            name: "Jerry",
-            lastName: "Park",
-            accounts: [{ iban: "SK89 7500 0000 0000 1234 5671" }],
-          },
-        ],
         fields: () => ({
           name: fieldAtom({ value: "", name: "name" }),
           lastName: fieldAtom({ value: "", name: "lastName" }),
           accounts: listAtom({
             name: "accounts",
             fields: () => ({
+              limits: {
+                card: fieldAtom({ value: 0 }),
+                withdrawal: fieldAtom({ value: 0 }),
+              },
               iban: fieldAtom({ value: "", name: "iban" }),
             }),
           }),
@@ -66,6 +64,10 @@ export const NestedList = createListStory({
                 accounts: z.array(
                   z.object({
                     iban: z.string(),
+                    limits: z.object({
+                      card: z.coerce.number().min(0),
+                      withdrawal: z.coerce.number().min(0),
+                    }),
                   }),
                 ),
               }),
@@ -97,7 +99,12 @@ export const NestedList = createListStory({
             {
               name: "Jerry",
               lastName: "Park",
-              accounts: [{ iban: "SK89 7500 0000 0000 1234 5671" }],
+              accounts: [
+                {
+                  iban: "SK89 7500 0000 0000 1234 5671",
+                  limits: { card: 0, withdrawal: 0 },
+                },
+              ],
             },
           ];
 
@@ -186,17 +193,55 @@ export const NestedList = createListStory({
                         <List.Item>
                           {({ fields, index, remove }) => (
                             <>
-                              <label>Account #{index + 1}</label>
-                              <fieldset role="group">
-                                <InputField
-                                  atom={fields.iban}
-                                  render={(props) => (
-                                    <input {...props} placeholder="IBAN" />
-                                  )}
-                                />
-                                <RemoveButton remove={remove} />
-                              </fieldset>
-                              <PicoFieldName field={fields.iban} />
+                              <div>
+                                <label>Account #{index + 1}</label>
+                                <fieldset role="group">
+                                  <InputField
+                                    atom={fields.iban}
+                                    render={(props) => (
+                                      <input {...props} placeholder="IBAN" />
+                                    )}
+                                  />
+
+                                  <RemoveButton remove={remove} />
+                                </fieldset>
+                                <PicoFieldName field={fields.iban} />
+                              </div>
+
+                              <blockquote>
+                                <label>Spending limits</label>
+
+                                <div className="grid">
+                                  <div>
+                                    <label>Card</label>
+                                    <InputField
+                                      atom={fields.limits.card}
+                                      render={(props) => (
+                                        <input
+                                          {...props}
+                                          placeholder="Card daily limit"
+                                        />
+                                      )}
+                                    />
+                                    <PicoFieldName field={fields.limits.card} />
+                                  </div>
+                                  <div>
+                                    <label>Withdrawal</label>
+                                    <InputField
+                                      atom={fields.limits.withdrawal}
+                                      render={(props) => (
+                                        <input
+                                          {...props}
+                                          placeholder="Withdrawal daily limit"
+                                        />
+                                      )}
+                                    />
+                                    <PicoFieldName
+                                      field={fields.limits.withdrawal}
+                                    />
+                                  </div>
+                                </div>
+                              </blockquote>
                             </>
                           )}
                         </List.Item>

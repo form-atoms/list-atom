@@ -1,5 +1,4 @@
 import type { FieldAtom } from "form-atoms";
-import { useAtomValue } from "jotai";
 
 import { useFieldName } from "../hooks/useFieldName";
 

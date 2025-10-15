@@ -34,7 +34,6 @@ import { listAtom, createList } from "@form-atoms/list-atom";
 
 const envVars = listAtom({
   name: "envVars",
-
   fields: () => ({
     variable: fieldAtom({ name: "variable", value: "" }),
     value: fieldAtom({ name: "value", value: "" }),

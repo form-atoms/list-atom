@@ -527,6 +527,37 @@ describe("listAtom()", () => {
       expect(names.current).toEqual(["contacts[0].email", "contacts[1].email"]);
     });
 
+    it("works with intermediary plain objects", () => {
+      const field = listAtom({
+        name: "cities",
+        value: [
+          { cityHall: { street: "okruzna", location: { lat: 7, lng: 11 } } },
+        ],
+        fields: () => ({
+          cityHall: {
+            street: fieldAtom({ name: "street", value: "" }),
+            location: {
+              lat: fieldAtom({ value: 0 }),
+              // NOTE: explicit name takes precedence over the field key
+              lng: fieldAtom({ name: "longitude", value: 0 }),
+            },
+          },
+        }),
+      });
+
+      const { result: list } = renderHook(() => useList(field));
+
+      const { result: lat } = renderHook(() =>
+        useFieldName(list.current.items[0]!.fields.cityHall.location.lat),
+      );
+      expect(lat.current).toEqual("cities[0].cityHall.location.lat");
+
+      const { result: lng } = renderHook(() =>
+        useFieldName(list.current.items[0]!.fields.cityHall.location.lng),
+      );
+      expect(lng.current).toEqual("cities[0].cityHall.location.longitude");
+    });
+
     describe("nested listAtom", () => {
       it("has prefix of the parent listAtom", async () => {
         const field = listAtom({
@@ -534,13 +565,13 @@ describe("listAtom()", () => {
           value: [
             {
               email: "foo@bar.com",
-              addresses: [{ type: "home", city: "Kezmarok" }],
+              addresses: [{ location: { latLng: "7;11" }, city: "Kezmarok" }],
             },
             {
               email: "fizz@buzz.com",
               addresses: [
-                { type: "home", city: "Humenne" },
-                { type: "work", city: "Nove Zamky" },
+                { location: { latLng: "7;11" }, city: "Humenne" },
+                { location: { latLng: "7;11" }, city: "Nove Zamky" },
               ],
             },
           ],
@@ -549,7 +580,9 @@ describe("listAtom()", () => {
             addresses: listAtom({
               name: "addresses",
               fields: () => ({
-                type: fieldAtom({ value: "", name: "type" }),
+                location: {
+                  latLng: fieldAtom({ value: "" }),
+                },
                 city: fieldAtom({ value: "", name: "city" }),
               }),
             }),
@@ -562,16 +595,20 @@ describe("listAtom()", () => {
         );
 
         const { result: names } = renderHook(() => [
-          useFieldName(secondContactAddresses.current.items[0]!.fields.type),
+          useFieldName(
+            secondContactAddresses.current.items[0]!.fields.location.latLng,
+          ),
           useFieldName(secondContactAddresses.current.items[0]!.fields.city),
-          useFieldName(secondContactAddresses.current.items[1]!.fields.type),
+          useFieldName(
+            secondContactAddresses.current.items[1]!.fields.location.latLng,
+          ),
           useFieldName(secondContactAddresses.current.items[1]!.fields.city),
         ]);
 
         expect(names.current).toEqual([
-          "contacts[1].addresses[0].type",
+          "contacts[1].addresses[0].location.latLng",
           "contacts[1].addresses[0].city",
-          "contacts[1].addresses[1].type",
+          "contacts[1].addresses[1].location.latLng",
           "contacts[1].addresses[1].city",
         ]);
       });

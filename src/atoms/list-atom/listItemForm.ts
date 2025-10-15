@@ -63,12 +63,22 @@ export function listItemForm<Fields extends FormFields, Value>({
       const patchNamesEffect = atomEffect((get, set) => {
         const fields = get(base.fields);
 
-        walkFields(fields, (field) => {
+        walkFields(fields, (field, path) => {
           const { name: _name, ...atoms } = get(field);
 
-          const scopedNameAtom = atom((get) =>
-            [get(nameAtom), get(_name)].filter(Boolean).join("."),
-          );
+          // the path is mutated
+          const pathCopy = [...path];
+          const scopedNameAtom = atom((get) => {
+            const scopedPath = [get(nameAtom), ...pathCopy];
+            const customName = get(_name);
+
+            if (customName) {
+              scopedPath.pop();
+              scopedPath.push(customName);
+            }
+
+            return scopedPath.join(".");
+          });
 
           if (
             typeof process !== "undefined" &&
