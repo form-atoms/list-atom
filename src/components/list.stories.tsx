@@ -30,7 +30,6 @@ export const Initialized = createListStory({
   args: {
     atom: listAtom({
       name: "environment",
-      value: [],
       fields: () => ({
         variable: fieldAtom({ value: "" }),
         value: fieldAtom({ value: "" }),
@@ -68,7 +67,6 @@ export const QuickStartExample = createListStory({
   args: {
     atom: listAtom({
       name: "envVars",
-      value: [],
       fields: () => ({
         variable: fieldAtom({ name: "variable", value: "" }),
         value: fieldAtom({ name: "value", value: "" }),

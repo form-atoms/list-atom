@@ -53,7 +53,6 @@ import { InputField, fieldAtom } from "form-atoms";
 import { listAtom, createList } from "@form-atoms/list-atom";
 
 const envVars = listAtom({
-  value: [],
   fields: () => ({
     variable: fieldAtom({ value: "" }),
     value: fieldAtom({ value: "" }),
@@ -208,7 +207,6 @@ import { fieldAtom, InputField } from "form-atoms";
 import { createList, listAtom } from "@form-atoms/list-atom";
 
 const levels = listAtom({
-  value: [],
   name: "levels",
   fields: () => ({ level: fieldAtom<number>({ value: 0 }) }),
   validate: ({ value }) => {

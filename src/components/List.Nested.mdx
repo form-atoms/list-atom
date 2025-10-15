@@ -76,7 +76,6 @@ const users = listAtom({
     lastName: fieldAtom({ value: "" }),
     accounts: listAtom({
       name: "accounts",
-      value: [],
       fields: ({ iban }) => ({ iban: fieldAtom({ value: "" }) }),
     }),
   }),

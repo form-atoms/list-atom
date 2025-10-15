@@ -81,6 +81,10 @@ export type ListAtom<Fields extends FormFields, Value> = Atom<
 
 export type ListAtomConfig<Fields extends FormFields, Value> = {
   /**
+   * The initial value of the listAtom.
+   */
+  value?: Value[];
+  /**
    * A function to initialize the fields for each of the initial values.
    */
   fields: () => Fields;
@@ -89,13 +93,14 @@ export type ListAtomConfig<Fields extends FormFields, Value> = {
    * It will be one of errors returned by the `useFieldErrors()` hook.
    */
   invalidItemError?: string;
-} & Pick<FieldAtomConfig<Value[]>, "name" | "validate" | "value">;
+} & Pick<FieldAtomConfig<Value[]>, "name" | "validate">;
 
 export function listAtom<
   Fields extends FormFields,
   Value = FormFieldValues<Fields>,
 >({
   fields,
+  value = [],
   ...config
 }: ListAtomConfig<Fields, NoInfer<Value>>): ListAtom<Fields, Value> {
   const nameAtom = atomWithReset(config.name);
@@ -123,8 +128,7 @@ export function listAtom<
     return itemForm;
   }
 
-  const makeFormList = (): ListItemForm<Fields>[] =>
-    config.value.map(buildItem);
+  const makeFormList = (): ListItemForm<Fields>[] => value.map(buildItem);
 
   const _initialFormListAtom = atomWithDefault(makeFormList);
   const _formListAtom = atomWithDefault((get) => get(_initialFormListAtom));

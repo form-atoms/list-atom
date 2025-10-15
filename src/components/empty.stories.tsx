@@ -24,7 +24,6 @@ export const EmptyList = createListStory({
   args: {
     atom: listAtom({
       name: "hobbies",
-      value: [],
       fields: () => ({ hobby: fieldAtom<string>({ value: "" }) }),
     }),
     children: ({ List }) => (

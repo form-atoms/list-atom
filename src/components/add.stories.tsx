@@ -24,7 +24,6 @@ export const EmptyOrInitialValue = createListStory({
   args: {
     atom: listAtom({
       name: "productFeatures",
-      value: [],
       fields: () => ({ feature: fieldAtom({ value: "" }) }),
     }),
     children: ({ List }) => (
@@ -74,7 +73,6 @@ export const PositioningAddButton = createListStory({
   args: {
     atom: listAtom({
       name: "productFeatures",
-      value: [],
       fields: () => ({ feature: fieldAtom({ value: "" }) }),
     }),
     children: ({ List }) => {

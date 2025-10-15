@@ -51,7 +51,6 @@ describe("<List />", () => {
       const users = [{ name: "Alice" }] as User[];
 
       const userList = listAtom({
-        value: [],
         fields: () => ({
           // the field.value will have "id: undefined" after initialization
           id: fieldAtom<string | undefined>({ value: undefined }),

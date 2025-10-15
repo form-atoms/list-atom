@@ -8,7 +8,6 @@ import { listAtom } from "../atoms";
 describe("<Empty /> component", () => {
   describe("when there are no items in the list", () => {
     const friends = listAtom({
-      value: [],
       fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
     });
 

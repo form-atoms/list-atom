@@ -39,7 +39,6 @@ describe("listAtom()", () => {
   describe("empty atom", () => {
     it("is true when values is empty array", () => {
       const list = listAtom({
-        value: [],
         fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
       });
 
@@ -176,7 +175,6 @@ describe("listAtom()", () => {
   describe("validation", () => {
     it("adding item clear the error", async () => {
       const field = listAtom({
-        value: [],
         fields: () => ({ email: fieldAtom<string>({ value: "" }) }),
         validate: ({ value }) => {
           const errors = [];
@@ -250,7 +248,6 @@ describe("listAtom()", () => {
         fields: () => ({
           accounts: listAtom({
             name: "bank-accounts",
-            value: [],
             fields: () => ({
               iban: fieldAtom<string | undefined>({
                 name: "iban",
@@ -351,7 +348,6 @@ describe("listAtom()", () => {
 
     it("becomes dirty when an item is added", async () => {
       const field = listAtom({
-        value: [],
         fields: () => ({
           age: fieldAtom<number>({ value: 0 }),
         }),
@@ -503,7 +499,6 @@ describe("listAtom()", () => {
             email: fieldAtom({ value: "", name: "email" }),
             addresses: listAtom({
               name: "addresses",
-              value: [],
               fields: () => ({
                 type: fieldAtom({ value: "", name: "type" }),
                 city: fieldAtom({ value: "", name: "city" }),

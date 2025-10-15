@@ -9,7 +9,6 @@ import { listAtom } from "../atoms";
 describe("<Add /> component", () => {
   it("renders 'Add item' label by default", () => {
     const friends = listAtom({
-      value: [],
       fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
     });
 

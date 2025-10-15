@@ -63,7 +63,6 @@ describe("useListActions()", () => {
 
     it("validates the field", async () => {
       const contacts = listAtom({
-        value: [],
         fields: () => ({
           email: fieldAtom({ value: "" }),
         }),

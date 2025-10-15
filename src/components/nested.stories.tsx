@@ -45,7 +45,6 @@ export const NestedList = createListStory({
           lastName: fieldAtom({ value: "", name: "lastName" }),
           accounts: listAtom({
             name: "accounts",
-            value: [],
             fields: () => ({
               iban: fieldAtom({ value: "", name: "iban" }),
             }),

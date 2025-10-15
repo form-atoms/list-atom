@@ -9,7 +9,6 @@ import { useListActions } from "../use-list-actions";
 describe("useFieldInitialValue()", () => {
   it("reinitializes the field value", async () => {
     const field = listAtom({
-      value: [],
       fields: () => ({ age: fieldAtom({ value: 0 }) }),
     });
 
