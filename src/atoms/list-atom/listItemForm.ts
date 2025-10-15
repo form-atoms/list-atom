@@ -72,42 +72,34 @@ export function listItemForm<Fields extends FormFields, Value>({
         const fields = get(base.fields);
 
         walkFields(fields, (field) => {
-          const { name: _originalNameAtom, ...atoms } = get(field);
+          const { name: _name, ...atoms } = get(field);
 
-          const scopedNameAtom = atom(
-            (get) => {
-              return [get(nameAtom), get(_originalNameAtom)]
-                .filter(Boolean)
-                .join(".");
-            },
-            (_, set, update: string) => {
-              set(_originalNameAtom, update);
-            },
+          const scopedNameAtom = atom((get) =>
+            [get(nameAtom), get(_name)].filter(Boolean).join("."),
           );
 
           if (
             typeof process !== "undefined" &&
             process.env.NODE_ENV !== "production"
           ) {
-            scopedNameAtom.debugLabel =
-              _originalNameAtom.debugLabel + "/scoped";
+            scopedNameAtom.debugLabel = _name.debugLabel + "/scoped";
           }
 
-          // @ts-expect-error field is PrimitiveAtom
-          set(field, { ...atoms, name: scopedNameAtom, _originalNameAtom });
+          // @ts-expect-error field is typed as PrimitiveAtom, but is writable
+          set(field, { ...atoms, name: scopedNameAtom, _name });
         });
 
         return () => {
           walkFields(fields, (field) => {
             // @ts-expect-error oh yes
-            const { _originalNameAtom, ...atoms } = get(field);
+            const { _name, ...atoms } = get(field);
 
             // @ts-expect-error field is PrimitiveAtom
             set(field, {
               ...atoms,
               // drop the scopedNameAtom, as to not make it original on next mount
-              name: _originalNameAtom,
-              _originalNameAtom: undefined,
+              name: _name,
+              _name: undefined,
             });
           });
         };
