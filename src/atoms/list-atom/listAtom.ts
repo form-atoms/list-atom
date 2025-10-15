@@ -403,8 +403,10 @@ function isPromise(value: unknown): value is PromiseLike<unknown> {
 }
 
 function arraysShallowEqual(a: unknown[], b: unknown[]) {
-  if (Array.isArray(a) && Array.isArray(b)) {
-    return a.length === b.length && a.every((v, i) => Object.is(v, b[i]));
-  }
-  return false;
+  return (
+    Array.isArray(a) &&
+    Array.isArray(b) &&
+    a.length === b.length &&
+    a.every((v, i) => Object.is(v, b[i]))
+  );
 }
