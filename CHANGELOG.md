@@ -1,3 +1,10 @@
+## [2.3.5](https://github.com/form-atoms/list-atom/compare/v2.3.4...v2.3.5) (2025-10-15)
+
+
+### Bug Fixes
+
+* **createList:** split the List from the components creation ([961a737](https://github.com/form-atoms/list-atom/commit/961a7374015b45398921194b064ad70352cdf7f6))
+
 ## [2.3.4](https://github.com/form-atoms/list-atom/compare/v2.3.3...v2.3.4) (2025-10-15)
 
 
