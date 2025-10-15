@@ -1,6 +1,5 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import {
-  FieldAtom,
   fieldAtom,
   formAtom,
   useFieldActions,
@@ -15,6 +14,7 @@ import { describe, expect, it, test, vi } from "vitest";
 
 import { listAtom } from "./listAtom";
 import { useList, useListActions } from "../../hooks";
+import { useFieldName } from "../../hooks/useFieldName";
 
 describe("listAtom()", () => {
   test("can be submitted within formAtom", async () => {
@@ -478,9 +478,6 @@ describe("listAtom()", () => {
   });
 
   describe("scoped name of list fields", () => {
-    const useFieldName = <T>(fieldAtom: FieldAtom<T>) =>
-      useAtomValue(useAtomValue(fieldAtom).name);
-
     it("field name contains list name, index and field name", async () => {
       const field = listAtom({
         name: "contacts",
@@ -502,7 +499,6 @@ describe("listAtom()", () => {
     });
 
     describe("nested listAtom", () => {
-      // passes but throws error
       it("has prefix of the parent listAtom", async () => {
         const field = listAtom({
           name: "contacts",
@@ -542,8 +538,6 @@ describe("listAtom()", () => {
           useFieldName(secondContactAddresses.current.items[1]!.fields.type),
           useFieldName(secondContactAddresses.current.items[1]!.fields.city),
         ]);
-
-        await waitFor(() => Promise.resolve());
 
         expect(names.current).toEqual([
           "contacts[1].addresses[0].type",

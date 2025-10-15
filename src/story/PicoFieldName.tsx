@@ -1,9 +1,7 @@
 import type { FieldAtom } from "form-atoms";
 import { useAtomValue } from "jotai";
 
-function useFieldName<T>(fieldAtom: FieldAtom<T>) {
-  return useAtomValue(useAtomValue(fieldAtom).name);
-}
+import { useFieldName } from "../hooks/useFieldName";
 
 export const PicoFieldName = <T,>({ field }: { field: FieldAtom<T> }) => {
   const name = useFieldName(field);
