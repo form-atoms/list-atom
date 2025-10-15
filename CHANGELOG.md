@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/form-atoms/list-atom/compare/v2.3.1...v2.3.2) (2025-10-15)
+
+
+### Bug Fixes
+
+* **listItemForm:** the item name is in the `name` atom ([0bebdcd](https://github.com/form-atoms/list-atom/commit/0bebdcd2c617ee48311f95de6af98c6040fec4ab))
+
 ## [2.3.1](https://github.com/form-atoms/list-atom/compare/v2.3.0...v2.3.1) (2025-10-15)
 
 
