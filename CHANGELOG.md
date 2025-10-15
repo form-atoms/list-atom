@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/form-atoms/list-atom/compare/v2.3.2...v2.3.3) (2025-10-15)
+
+
+### Bug Fixes
+
+* **list-item:** disable proxy write to original field name ([cf9fdff](https://github.com/form-atoms/list-atom/commit/cf9fdfff69f62b304cb33b94e1cb63254a7495d2))
+
 ## [2.3.2](https://github.com/form-atoms/list-atom/compare/v2.3.1...v2.3.2) (2025-10-15)
 
 
