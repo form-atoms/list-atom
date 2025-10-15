@@ -218,6 +218,30 @@ describe("listAtom()", () => {
 
       expect(errors.current).toEqual(["err"]);
     });
+
+    it("runs asynchronous validation", async () => {
+      async function hasAdminEmail(emails: string[]) {
+        return emails.includes("admin@form-atoms.com");
+      }
+
+      const field = listAtom({
+        value: [{ email: "foo" }],
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
+        }),
+        validate: async ({ value }) =>
+          (await hasAdminEmail(value.map((value) => value.email)))
+            ? []
+            : ["missing admin email"],
+      });
+
+      const { result: actions } = renderHook(() => useFieldActions(field));
+      const { result: errors } = renderHook(() => useFieldErrors(field));
+
+      await act(async () => actions.current.validate());
+
+      expect(errors.current).toEqual(["missing admin email"]);
+    });
   });
 
   describe("nested validation", () => {
