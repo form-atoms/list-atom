@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { FormFields, FormFieldValues } from "form-atoms";
 
 import type { ListAtom } from "../atoms";
-import { type ListComponents, createList } from "./list";
+import { type ListComponents, createList } from "./index";
 
 export type NestedProps<Fields extends FormFields> = {
   atom: ListAtom<Fields, FormFieldValues<Fields>>;

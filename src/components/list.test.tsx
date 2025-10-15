@@ -1,5 +1,5 @@
 import { act, render, renderHook, screen } from "@testing-library/react";
-import { fieldAtom, formAtom, InputField, useFormSubmit } from "form-atoms";
+import { fieldAtom, formAtom, useFieldValue, useFormSubmit } from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
 
 import { createList } from "./list";
@@ -8,7 +8,6 @@ import { listAtom } from "../atoms";
 describe("<List />", () => {
   it("renders children", () => {
     const friends = listAtom({
-      value: [{ name: "Alice" }],
       fields: () => ({ name: fieldAtom({ value: "" }) }),
     });
     const { List } = createList(friends);
@@ -29,15 +28,10 @@ describe("<List />", () => {
       const { result } = renderHook(() => useFormSubmit(form));
       const { List } = createList(friends);
 
-      render(
-        <List initialValue={[{ name: "Mark" }]}>
-          <List.Item>
-            {({ fields }) => (
-              <InputField atom={fields.name} component="input" />
-            )}
-          </List.Item>
-        </List>,
-      );
+      render(<List initialValue={[{ name: "Mark" }]}></List>);
+
+      // mounts effect
+      renderHook(() => useFieldValue(friends));
 
       const onSubmit = vi.fn();
       await act(async () => result.current(onSubmit)());
