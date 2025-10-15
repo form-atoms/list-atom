@@ -1,3 +1,11 @@
+## [2.3.4](https://github.com/form-atoms/list-atom/compare/v2.3.3...v2.3.4) (2025-10-15)
+
+
+### Bug Fixes
+
+* **initialization:** add effect only when a value is present ([1f0c7fe](https://github.com/form-atoms/list-atom/commit/1f0c7fed86cf4d60fe583c1e3eba1662f2d7045a))
+* **list-item:** simplify parent list name ([392bc02](https://github.com/form-atoms/list-atom/commit/392bc02a75835796621a296086f4f0d310592ff7))
+
 ## [2.3.3](https://github.com/form-atoms/list-atom/compare/v2.3.2...v2.3.3) (2025-10-15)
 
 
