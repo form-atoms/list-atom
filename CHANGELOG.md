@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/form-atoms/list-atom/compare/v2.3.0...v2.3.1) (2025-10-15)
+
+
+### Bug Fixes
+
+* **listAtom:** provide empty value as default config value ([12af0f5](https://github.com/form-atoms/list-atom/commit/12af0f5e9f5b936ef1b5340cc4ecb8de82f7a108))
+
 # [2.3.0](https://github.com/form-atoms/list-atom/compare/v2.2.5...v2.3.0) (2025-10-14)
 
 
