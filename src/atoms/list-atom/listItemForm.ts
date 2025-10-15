@@ -39,33 +39,25 @@ type ListItemFormConfig<Fields extends FormFields, Value> = {
     void
   >;
   /**
-   * The nameAtom of the parent listAtom.
+   * The name of the parent listAtom.
    */
-  getListNameAtom: (
-    get: Getter,
-  ) =>
-    | Atom<string>
-    | WritableAtom<
-        string | undefined,
-        [string | undefined | typeof RESET],
-        void
-      >;
+  getListName: (get: Getter) => string | undefined;
 };
 
 export function listItemForm<Fields extends FormFields, Value>({
   value,
   fields,
   formListAtom,
-  getListNameAtom,
+  getListName,
 }: ListItemFormConfig<Fields, Value>) {
   const itemFormAtom: ListItemForm<Fields> = extendAtom(
     formAtom(fields) as unknown as PrimitiveFormAtom<Fields>,
     (base, get) => {
       const nameAtom = atom((get) => {
-        const list: ListItemForm<Fields>[] = get(formListAtom);
-        const listName = get(getListNameAtom(get));
+        const list = get(formListAtom);
+        const listName = getListName(get) ?? "";
 
-        return `${listName ?? ""}[${list.indexOf(itemFormAtom)}]`;
+        return `${listName}[${list.indexOf(itemFormAtom)}]`;
       });
 
       const patchNamesEffect = atomEffect((get, set) => {

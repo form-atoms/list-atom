@@ -113,8 +113,8 @@ export function listAtom<
     const itemForm = listItemForm({
       value,
       fields: fields(),
-      getListNameAtom: (get) => get(self).name,
       formListAtom: _formListAtom,
+      getListName: (get) => get(get(self).name),
     });
 
     if (
