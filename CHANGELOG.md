@@ -1,3 +1,10 @@
+## [2.3.7](https://github.com/form-atoms/list-atom/compare/v2.3.6...v2.3.7) (2025-10-16)
+
+
+### Bug Fixes
+
+* **list-atom:** drop the Value generic param, derive from Fields ([8a469cd](https://github.com/form-atoms/list-atom/commit/8a469cd136d04675c0718091c076fec1abcb03f7))
+
 ## [2.3.6](https://github.com/form-atoms/list-atom/compare/v2.3.5...v2.3.6) (2025-10-15)
 
 
