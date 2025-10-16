@@ -508,7 +508,7 @@ describe("listAtom()", () => {
   });
 
   describe("scoped name of list fields", () => {
-    it("works with extended fieldAtom (bugfix infinite loop)", async () => {
+    it("works with extended fieldAtom (bugfix: infinite loop by patchNameEffect dependencies)", async () => {
       const extendedField = () =>
         extendAtom(fieldAtom({ value: "" }), () => ({ some: "value" }));
 
