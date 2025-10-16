@@ -21,7 +21,8 @@ export default {
     },
     options: {
       storySort: {
-        order: ["*", "Changelog"],
+        method: "alphabetical",
+        order: ["Intro", "*", "Changelog"],
       },
     },
     docs: {

@@ -1,12 +1,5 @@
-import {
-  Meta,
-  Canvas,
-  Story,
-  ArgTypes,
-  Description,
-} from "@storybook/addon-docs/blocks";
-import { Example } from "../../.storybook/blocks/Example";
-import * as ListStories from "./list.stories";
+import { Example } from "../.storybook/blocks/Example";
+import { QuickStartExample } from "./components/list.stories";
 
 <hgroup>
 
@@ -73,7 +66,7 @@ The Jotai `form-atoms` extension to render performant lists with easy controls.
 - 🔑 **Scoped field `name`s**. The fields are dynamically indexed enabling serialization to `FormData`.
 - 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Nested>` alias `<ListOf>`.
 
-<Example of={ListStories.QuickStartExample}>
+<Example of={QuickStartExample}>
 
 ```tsx
 import { InputField, fieldAtom } from "form-atoms";
