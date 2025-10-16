@@ -116,153 +116,160 @@ export const NestedList = createListStory({
           <List.Item>
             {({ fields, index, moveUp, moveDown, remove }) => (
               <article>
-                <header>
-                  <nav>
-                    <ul>
-                      <li>
-                        <strong>Person #{index + 1}</strong>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <a
-                          href="#"
-                          role="button"
-                          className="outline secondary"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            moveUp();
-                          }}
-                        >
-                          Up
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          role="button"
-                          className="outline secondary"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            moveDown();
-                          }}
-                        >
-                          Down
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          role="button"
-                          className="outline secondary"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            remove();
-                          }}
-                        >
-                          Remove
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </header>
-                <div className="grid">
-                  <div>
-                    <label>First Name</label>
-                    <InputField
-                      atom={fields.name}
-                      render={(props) => (
-                        <input {...props} placeholder="Name" />
-                      )}
-                    />
-                    <PicoFieldName field={fields.name} />
-                  </div>
-                  <div>
-                    <label>Last Name</label>
-                    <InputField
-                      atom={fields.lastName}
-                      render={(props) => (
-                        <input {...props} placeholder="Last Name" />
-                      )}
-                    />
-                    <PicoFieldName field={fields.lastName} />
-                  </div>
-                </div>
-                <blockquote>
-                  <List.Nested atom={fields.accounts}>
-                    {({ List }) => (
-                      <>
-                        <List.Item>
-                          {({ fields, index, remove }) => (
-                            <>
-                              <div>
-                                <label>Account #{index + 1}</label>
-                                <fieldset role="group">
-                                  <InputField
-                                    atom={fields.iban}
-                                    render={(props) => (
-                                      <input {...props} placeholder="IBAN" />
-                                    )}
-                                  />
-
-                                  <RemoveButton remove={remove} />
-                                </fieldset>
-                                <PicoFieldName field={fields.iban} />
-                              </div>
-
-                              <blockquote>
-                                <label>Spending limits</label>
-
-                                <div className="grid">
-                                  <div>
-                                    <label>Card</label>
-                                    <InputField
-                                      atom={fields.limits.card}
-                                      render={(props) => (
-                                        <input
-                                          {...props}
-                                          placeholder="Card daily limit"
-                                        />
-                                      )}
-                                    />
-                                    <PicoFieldName field={fields.limits.card} />
-                                  </div>
-                                  <div>
-                                    <label>Withdrawal</label>
-                                    <InputField
-                                      atom={fields.limits.withdrawal}
-                                      render={(props) => (
-                                        <input
-                                          {...props}
-                                          placeholder="Withdrawal daily limit"
-                                        />
-                                      )}
-                                    />
-                                    <PicoFieldName
-                                      field={fields.limits.withdrawal}
-                                    />
-                                  </div>
-                                </div>
-                              </blockquote>
-                            </>
-                          )}
-                        </List.Item>
-                        <List.Add>
-                          {({ add }) => (
-                            <button
-                              type="button"
-                              className="outline"
-                              style={{ margin: 0 }}
-                              onClick={() => add()}
+                <details style={{ margin: 0 }}>
+                  <summary style={{ display: "flex", alignItems: "center" }}>
+                    <header style={{ width: "100%" }}>
+                      <nav>
+                        <ul>
+                          <li>
+                            <strong>Person #{index + 1}</strong>
+                          </li>
+                        </ul>
+                        <ul>
+                          <li>
+                            <a
+                              href="#"
+                              role="button"
+                              className="outline secondary"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                moveUp();
+                              }}
                             >
-                              Add Bank Account
-                            </button>
-                          )}
-                        </List.Add>
-                      </>
-                    )}
-                  </List.Nested>
-                </blockquote>
+                              Up
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="#"
+                              role="button"
+                              className="outline secondary"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                moveDown();
+                              }}
+                            >
+                              Down
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="#"
+                              role="button"
+                              className="outline secondary"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                remove();
+                              }}
+                            >
+                              Remove
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </header>
+                  </summary>
+
+                  <div className="grid">
+                    <div>
+                      <label>First Name</label>
+                      <InputField
+                        atom={fields.name}
+                        render={(props) => (
+                          <input {...props} placeholder="Name" />
+                        )}
+                      />
+                      <PicoFieldName field={fields.name} />
+                    </div>
+                    <div>
+                      <label>Last Name</label>
+                      <InputField
+                        atom={fields.lastName}
+                        render={(props) => (
+                          <input {...props} placeholder="Last Name" />
+                        )}
+                      />
+                      <PicoFieldName field={fields.lastName} />
+                    </div>
+                  </div>
+                  <blockquote>
+                    <List.Nested atom={fields.accounts}>
+                      {({ List }) => (
+                        <>
+                          <List.Item>
+                            {({ fields, index, remove }) => (
+                              <>
+                                <div>
+                                  <label>Account #{index + 1}</label>
+                                  <fieldset role="group">
+                                    <InputField
+                                      atom={fields.iban}
+                                      render={(props) => (
+                                        <input {...props} placeholder="IBAN" />
+                                      )}
+                                    />
+
+                                    <RemoveButton remove={remove} />
+                                  </fieldset>
+                                  <PicoFieldName field={fields.iban} />
+                                </div>
+
+                                <blockquote>
+                                  <label>Spending limits</label>
+
+                                  <div className="grid">
+                                    <div>
+                                      <label>Card</label>
+                                      <InputField
+                                        atom={fields.limits.card}
+                                        render={(props) => (
+                                          <input
+                                            {...props}
+                                            placeholder="Card daily limit"
+                                          />
+                                        )}
+                                      />
+                                      <PicoFieldName
+                                        field={fields.limits.card}
+                                      />
+                                    </div>
+                                    <div>
+                                      <label>Withdrawal</label>
+                                      <InputField
+                                        atom={fields.limits.withdrawal}
+                                        render={(props) => (
+                                          <input
+                                            {...props}
+                                            placeholder="Withdrawal daily limit"
+                                          />
+                                        )}
+                                      />
+                                      <PicoFieldName
+                                        field={fields.limits.withdrawal}
+                                      />
+                                    </div>
+                                  </div>
+                                </blockquote>
+                              </>
+                            )}
+                          </List.Item>
+                          <List.Add>
+                            {({ add }) => (
+                              <button
+                                type="button"
+                                className="outline"
+                                style={{ margin: 0 }}
+                                onClick={() => add()}
+                              >
+                                Add Bank Account
+                              </button>
+                            )}
+                          </List.Add>
+                        </>
+                      )}
+                    </List.Nested>
+                  </blockquote>
+                </details>
               </article>
             )}
           </List.Item>
