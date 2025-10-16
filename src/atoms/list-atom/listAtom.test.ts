@@ -10,7 +10,7 @@ import {
   useFormErrors,
   useFormSubmit,
 } from "form-atoms";
-import { PrimitiveAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { describe, expect, it, test, vi } from "vitest";
 
 import { listAtom } from "./listAtom";

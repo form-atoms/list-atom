@@ -4,7 +4,7 @@ import { atom } from "jotai";
 import { atomEffect } from "jotai-effect";
 
 import { extendAtom } from "../extendAtom";
-import type { FormAtomState, PrimitiveFormAtom } from "../types";
+import type { FormAtomState } from "../types";
 
 type NamedFormAtomState<Fields extends FormFields> = FormAtomState<Fields> & {
   /**
@@ -51,7 +51,7 @@ export function listItemForm<Fields extends FormFields, Value>({
   getListName,
 }: ListItemFormConfig<Fields, Value>) {
   const itemFormAtom: ListItemForm<Fields> = extendAtom(
-    formAtom(fields) as unknown as PrimitiveFormAtom<Fields>,
+    formAtom(fields),
     (base, get) => {
       const nameAtom = atom((get) => {
         const list = get(formListAtom);

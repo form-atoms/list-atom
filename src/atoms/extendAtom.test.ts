@@ -11,7 +11,7 @@ describe("extendAtom()", () => {
     one: "one",
   }));
 
-  it.only("can set the extended field", () => {
+  it("can set the extended field", () => {
     const { result } = renderHook(() => useAtom(field));
 
     act(() => {
