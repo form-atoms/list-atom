@@ -10,12 +10,13 @@ import {
   useFormErrors,
   useFormSubmit,
 } from "form-atoms";
-import { useAtomValue } from "jotai";
+import { PrimitiveAtom, useAtomValue } from "jotai";
 import { describe, expect, it, test, vi } from "vitest";
 
 import { listAtom } from "./listAtom";
 import { useList, useListActions } from "../../hooks";
 import { useFieldName } from "../../hooks/useFieldName";
+import { extendAtom } from "../extendAtom";
 
 describe("listAtom()", () => {
   test("can be submitted within formAtom", async () => {
@@ -507,6 +508,28 @@ describe("listAtom()", () => {
   });
 
   describe("scoped name of list fields", () => {
+    it("works with extended fieldAtom (bugfix infinite loop)", async () => {
+      const extendedField = () =>
+        extendAtom(fieldAtom({ value: "" }), () => ({ some: "value" }));
+
+      const field = listAtom({
+        name: "list",
+        value: [{ field: "" }],
+        fields: () => ({
+          field: extendedField(),
+        }),
+      });
+
+      const { result: list } = renderHook(() => useList(field));
+      const { result: name } = renderHook(() =>
+        useFieldName(list.current.items[0]!.fields.field),
+      );
+
+      await waitFor(() => Promise.resolve());
+
+      expect(name.current).toEqual("list[0].field");
+    });
+
     it("field name contains list name, index and field name", async () => {
       const field = listAtom({
         name: "contacts",
