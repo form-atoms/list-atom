@@ -1,3 +1,11 @@
+## [2.3.9](https://github.com/form-atoms/list-atom/compare/v2.3.8...v2.3.9) (2025-10-16)
+
+
+### Bug Fixes
+
+* **extend-atom:** extend with default, instead of RW atom ([e6b51c5](https://github.com/form-atoms/list-atom/commit/e6b51c5671835ce7b53469b89f21cb87bed55ee5))
+* type & test ([7d2f08f](https://github.com/form-atoms/list-atom/commit/7d2f08f76f15e8a878ac64ccd127c862f1c7908d))
+
 ## [2.3.8](https://github.com/form-atoms/list-atom/compare/v2.3.7...v2.3.8) (2025-10-16)
 
 
