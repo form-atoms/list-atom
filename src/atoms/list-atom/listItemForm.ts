@@ -61,10 +61,10 @@ export function listItemForm<Fields extends FormFields, Value>({
       });
 
       const patchNamesEffect = atomEffect((get, set) => {
-        const fields = get(base.fields);
+        const fields = get.peek(base.fields);
 
         walkFields(fields, (field, path) => {
-          const { name: _name, ...atoms } = get(field);
+          const { name: _name, ...atoms } = get.peek(field);
 
           // the path is mutated
           const pathCopy = [...path];
