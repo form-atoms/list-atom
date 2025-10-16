@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import type { FormFields, FormFieldValues } from "form-atoms";
+import type { FormFields } from "form-atoms";
 import type { ListAtom } from "../atoms";
 
 import { useListState } from "../hooks/use-list-state";
@@ -7,7 +7,7 @@ import { useListState } from "../hooks/use-list-state";
 export type EmptyProps = PropsWithChildren;
 
 export function createEmpty<Fields extends FormFields>(
-  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
+  listAtom: ListAtom<Fields>,
 ) {
   function Empty({ children }: EmptyProps) {
     const { isEmpty } = useListState(listAtom);

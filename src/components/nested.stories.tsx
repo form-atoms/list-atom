@@ -31,6 +31,7 @@ export const NestedList = createListStory({
   },
   decorators: [],
   render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [{ List }] = useState(() => {
       const atom = listAtom({
         name: "users",
@@ -53,6 +54,7 @@ export const NestedList = createListStory({
       return createList(atom);
     });
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [state, formAction] = useActionState(
       (_, formData: FormData) => {
         const result = parseWithZod(formData, {

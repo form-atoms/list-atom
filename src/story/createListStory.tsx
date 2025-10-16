@@ -1,5 +1,5 @@
 import { type StoryObj } from "@storybook/react-vite";
-import { type FormFieldValues, type FormFields } from "form-atoms";
+import { type FormFields } from "form-atoms";
 
 import { StoryForm } from "./StoryForm";
 import { type ListAtom, type ListComponents, createList } from "../";
@@ -15,10 +15,10 @@ export function render<Fields extends FormFields>({
 
 type ListStoryArgs<Fields extends FormFields> = {
   hideFormActions?: boolean;
-  atom: ListAtom<Fields, FormFieldValues<Fields>>;
+  atom: ListAtom<Fields>;
   children: (
     props: ListComponents<Fields> & {
-      atom: ListAtom<Fields, FormFieldValues<Fields>>;
+      atom: ListAtom<Fields>;
     },
   ) => React.ReactNode;
 };

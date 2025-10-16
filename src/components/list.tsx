@@ -15,7 +15,7 @@ export type ListProps<Fields extends FormFields> = PropsWithChildren<{
 }>;
 
 export function createList<Fields extends FormFields>(
-  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
+  listAtom: ListAtom<Fields>,
 ) {
   function List({ initialValue, store, children }: ListProps<Fields>) {
     useFieldInitialValue(listAtom, initialValue, { store });

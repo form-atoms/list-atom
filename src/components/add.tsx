@@ -16,7 +16,7 @@ export type AddProps<Fields extends FormFields> = Partial<{
 }>;
 
 export function createAdd<Fields extends FormFields>(
-  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
+  listAtom: ListAtom<Fields>,
 ) {
   function Add({
     children = ({ add }) => (

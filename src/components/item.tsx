@@ -47,7 +47,7 @@ export type ItemProps<Fields extends FormFields> = {
 };
 
 export function createItem<Fields extends FormFields>(
-  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
+  listAtom: ListAtom<Fields>,
 ) {
   function Item({ children }: ItemProps<Fields>) {
     const { add, items } = useList(listAtom);

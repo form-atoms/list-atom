@@ -1,5 +1,5 @@
 import type { FunctionComponent, ReactNode } from "react";
-import type { FormFieldValues, FormFields } from "form-atoms";
+import type { FormFields } from "form-atoms";
 
 import type { ListAtom } from "../atoms/list-atom";
 
@@ -36,7 +36,7 @@ export type ListComponents<Fields extends FormFields> = {
 };
 
 export function createList<Fields extends FormFields>(
-  listAtom: ListAtom<Fields, FormFieldValues<Fields>>,
+  listAtom: ListAtom<Fields>,
 ): ListComponents<Fields> {
   const root = createRoot(listAtom);
 

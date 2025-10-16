@@ -41,8 +41,8 @@ type SplitAtomAction<Item> =
       before?: PrimitiveAtom<Item>;
     };
 
-type ListAtomState<Fields extends FormFields, Value> = FieldAtomState<
-  Value[]
+type ListAtomState<Fields extends FormFields> = FieldAtomState<
+  FormFieldValues<Fields>[]
 > & {
   /**
    * An atom indicating whether the list is empty.
@@ -72,18 +72,12 @@ type ListAtomState<Fields extends FormFields, Value> = FieldAtomState<
    * @internal
    */
   _formFields: Atom<Fields[]>;
-  buildItem(value?: Value): ListItemForm<Fields>;
+  buildItem(value?: FormFieldValues<Fields>): ListItemForm<Fields>;
 };
 
-export type ListAtom<Fields extends FormFields, Value> = Atom<
-  ListAtomState<Fields, Value>
->;
+export type ListAtom<Fields extends FormFields> = Atom<ListAtomState<Fields>>;
 
-export type ListAtomConfig<Fields extends FormFields, Value> = {
-  /**
-   * The initial value of the listAtom.
-   */
-  value?: Value[];
+export type ListAtomConfig<Fields extends FormFields> = {
   /**
    * A function to initialize the fields for each of the initial values.
    */
@@ -93,16 +87,20 @@ export type ListAtomConfig<Fields extends FormFields, Value> = {
    * It will be one of errors returned by the `useFieldErrors()` hook.
    */
   invalidItemError?: string;
-} & Pick<FieldAtomConfig<Value[]>, "name" | "validate">;
+} & Partial<
+  Pick<
+    FieldAtomConfig<FormFieldValues<Fields>[]>,
+    "value" | "name" | "validate"
+  >
+>;
 
-export function listAtom<
-  Fields extends FormFields,
-  Value = FormFieldValues<Fields>,
->({
+export function listAtom<Fields extends FormFields>({
   fields,
   value = [],
   ...config
-}: ListAtomConfig<Fields, NoInfer<Value>>): ListAtom<Fields, Value> {
+}: ListAtomConfig<Fields>): ListAtom<Fields> {
+  type Value = FormFieldValues<Fields>;
+
   const nameAtom = atomWithReset(config.name);
   const initialValueAtom = atomWithReset<Value[] | undefined>(undefined);
 

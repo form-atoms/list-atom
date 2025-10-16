@@ -1,12 +1,12 @@
-import type { FormFields, UseFieldOptions } from "form-atoms";
-import { useAtomValue } from "jotai";
 import { useMemo } from "react";
+import { useAtomValue } from "jotai";
+import type { FormFields, UseAtomOptions } from "form-atoms";
 
-import { type ListAtom } from "../../atoms/list-atom";
+import { type ListAtom } from "../../atoms";
 
-export const useListState = <Fields extends FormFields, Value>(
-  listAtom: ListAtom<Fields, Value>,
-  options?: UseFieldOptions<Value[]>,
+export const useListState = <Fields extends FormFields>(
+  listAtom: ListAtom<Fields>,
+  options?: UseAtomOptions,
 ) => {
   const atoms = useAtomValue(listAtom, options);
   const items = useAtomValue(atoms._splitList, options);
