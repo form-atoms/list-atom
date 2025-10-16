@@ -1,3 +1,10 @@
+## [2.3.8](https://github.com/form-atoms/list-atom/compare/v2.3.7...v2.3.8) (2025-10-16)
+
+
+### Bug Fixes
+
+* **list-item:** peek the field names, no need to subscribe ([e3e5995](https://github.com/form-atoms/list-atom/commit/e3e5995e644acb2398a049c9d88e7c9a0df263e1))
+
 ## [2.3.7](https://github.com/form-atoms/list-atom/compare/v2.3.6...v2.3.7) (2025-10-16)
 
 
