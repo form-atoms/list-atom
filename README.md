@@ -26,7 +26,7 @@ npm install jotai-effect @form-atoms/list-atom
 - 🔑 **Scoped field `name`s**. The fields are dynamically indexed enabling serialization to `FormData`.
 - 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Nested>` alias `<ListOf>`.
 
-## Quick start [🎨 Demo](https://form-atoms.github.io/list-atom/?path=/docs/components-docs--docs#quick-start-example)
+## Quick start [🎨 Demo](https://form-atoms.github.io/list-atom/?path=/docs/intro--docs#quick-start-example)
 
 ```tsx
 import { formAtom, useForm, fieldAtom, InputField } from "form-atoms";
