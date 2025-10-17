@@ -114,9 +114,13 @@ export const NestedList = createListStory({
       <form action={formAction}>
         <List initialValue={initialValue}>
           <List.Item>
-            {({ fields, index, moveUp, moveDown, remove }) => (
+            {({ fields, index, count, moveUp, moveDown, remove }) => (
               <article>
-                <details style={{ margin: 0 }}>
+                <details
+                  open={index === count - 1}
+                  name="only-one-open"
+                  style={{ margin: 0 }}
+                >
                   <summary style={{ display: "flex", alignItems: "center" }}>
                     <header style={{ width: "100%" }}>
                       <nav>
