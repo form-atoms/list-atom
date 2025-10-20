@@ -1,11 +1,13 @@
 <div align="center">
   <img height="300" style="margin: 32px" src="./public/form-atoms-banner-transparent.png#gh-dark-mode-only">
   <img width="180" style="margin: 32px" src="./public/form-atoms-field.svg#gh-light-mode-only">
-  <h1>list-atom extension for the <a href="https://github.com/form-atoms/form-atoms" target="_blank">form-atoms</a></h1>
+  <h1>@form-atoms/list-atom</h1>
 </div>
 
+<p>The Jotai 👻 <a href="https://github.com/form-atoms/form-atoms" target="_blank">form-atoms</a> list extension.</p>
+
 ```sh
-npm install jotai-effect @form-atoms/list-atom
+npm install @form-atoms/list-atom jotai-effect
 ```
 
 <a aria-label="Minzipped size" href="https://bundlephobia.com/result?p=%40form-atoms/list-atom">
@@ -90,14 +92,14 @@ export const Form = () => {
 | [`useListActions()`](#uselistactions) | A hook that returns a `add`, `remove` & `move` actions, that can be used to interact with the list atom state. |
 | [`useList()`](#uselist)               | A hook that returns the list `items` ready to be rendred together with the list actions.                       |
 
-| Components                                    | Description                                                     | Demo                                                                                           |
-| --------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| [`createList(listAtom)`](#createlistlistatom) | A function to create components bound to the listAtom.          |                                                                                                |
-| [`<List>`](#list)                             | A component to initialize the listAtom via `initialValue` prop. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list--docs#examples)        |
-| [`<List.Add>`](#listadd)                      | Adds new or initialized items to the list.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)    |
-| [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)   |
-| [`<List.Empty>`](#listempty)                  | Render children only when the list has no items.                | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples)  |
-| [`<List.Nested>`](#listempty)                 | Helper for nesting list within an `<List.Item>`.                | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-nested--docs#examples) |
+| Components                                    | Description                                                     | Demo                                                                                          |
+| --------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [`createList(listAtom)`](#createlistlistatom) | A function to create components bound to the listAtom.          |                                                                                               |
+| [`<List>`](#list)                             | A component to initialize the listAtom via `initialValue` prop. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list--docs#examples)       |
+| [`<List.Add>`](#listadd)                      | Adds new or initialized items to the list.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)   |
+| [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)  |
+| [`<List.Empty>`](#listempty)                  | Render children only when the list has no items.                | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples) |
+| [`<List.Of>`](#listof)                        | Render a nested list within a `<List.Item>`.                    | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples)    |
 
 ## List atoms
 
@@ -328,7 +330,7 @@ const { List } = createList(myListAtom);
 // List.Add
 // List.Empty
 // List.Item
-// List.Nested
+// List.Of
 ```
 
 #### Returns
@@ -340,10 +342,6 @@ export type ListComponents<Fields extends FormFields> = {
    */
   List: FunctionComponent<ListProps<FormFieldValues<Fields>>> & {
     /**
-     * A component to iterate and render each of the list items.
-     */
-    Item: FunctionComponent<ItemProps<Fields>>;
-    /**
      * A component to control adding new or initialized items to the list.
      */
     Add: FunctionComponent<AddButtonProps<Fields>>;
@@ -352,11 +350,13 @@ export type ListComponents<Fields extends FormFields> = {
      */
     Empty: FunctionComponent<EmptyProps>;
     /**
+     * A component to iterate and render each of the list items.
+     */
+    Item: FunctionComponent<ItemProps<Fields>>;
+    /**
      * A component to create these ListComponents for a nested listAtom within a <List.Item>
      */
-    Nested: <Fields extends FormFields>(
-      props: NestedProps<Fields>,
-    ) => ReactElement | null;
+    Of: <Fields extends FormFields>(props: ListOfProps<Fields>) => ReactNode;
   };
 };
 ```
@@ -457,9 +457,9 @@ type AddChildrenProps<Fields extends FormFields> = {
 | -------- | ----------- | --------- | ---------------------------------------- |
 | children | `ReactNode` | No        | Content to render when the list is empty |
 
-### &lt;List.Nested&gt;
+### &lt;List.Of&gt;
 
-[🎨 Storybook](https://form-atoms.github.io/list-atom/?path=/docs/components-list-nested--docs#examples)
+[🎨 Storybook](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples)
 
 #### Props
 
