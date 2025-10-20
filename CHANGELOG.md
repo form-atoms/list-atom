@@ -1,3 +1,10 @@
+## [2.3.10](https://github.com/form-atoms/list-atom/compare/v2.3.9...v2.3.10) (2025-10-20)
+
+
+### Bug Fixes
+
+* **ListOf:** rename Nested to Of, deprecate the Nested ([0b09a01](https://github.com/form-atoms/list-atom/commit/0b09a014d29077a37433411bdbbe132c8b0de25e))
+
 ## [2.3.9](https://github.com/form-atoms/list-atom/compare/v2.3.8...v2.3.9) (2025-10-16)
 
 
