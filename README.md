@@ -24,7 +24,7 @@ npm install jotai-effect @form-atoms/list-atom
 - 🎮 **Easy controls**. The `<List.Item>` provides `add`, `remove`, `moveUp` and `moveDown` actions for each item.
 - 🧩 **Compound JSX Components**. Use the `<List.Add />`, or `<List.Empty />` instead of manual hooks.
 - 🔑 **Scoped field `name`s**. The fields are dynamically indexed enabling serialization to `FormData`.
-- 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Nested>` alias `<ListOf>`.
+- 🐢 **Lists all the way down**. Render lists <sup>within lists <sup>within lists...</sup></sup> with the `<List.Of>`.
 
 ## Quick start [🎨 Demo](https://form-atoms.github.io/list-atom/?path=/docs/intro--docs#quick-start-example)
 

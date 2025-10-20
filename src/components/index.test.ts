@@ -16,6 +16,7 @@ describe("createList()", () => {
     expect(result.List.Add).toBeDefined();
     expect(result.List.Empty).toBeDefined();
     expect(result.List.Item).toBeDefined();
-    expect(result.List.Nested).toBeDefined();
+    expect(result.List.Of).toBeDefined();
+    expect(result.List.Nested).toBeDefined(); // deprecated
   });
 });

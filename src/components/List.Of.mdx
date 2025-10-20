@@ -1,12 +1,12 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 import { Example } from "../../.storybook/blocks/Example";
-import * as NestedStories from "./nested.stories";
+import * as NestedStories from "./list-of.stories";
 
 <hgroup>
 
 <p className="category">Components</p>
 
-# List.Nested
+# List.Of
 
 Render a nested list within `<List.Item>`.
 
@@ -14,7 +14,7 @@ Render a nested list within `<List.Item>`.
 
 ## Usage
 
-When using a listAtom within a listAtom, you can use the `List.Nested` component to render the nested list. The `atom` prop is required and should be set to the nested list atom.
+When using a listAtom within a listAtom, you can use the `List.Of` component to render the nested list. The `atom` prop is required and should be set to the nested list atom.
 
 ```tsx
 import { createList } from "@form-atoms/list-atom";
@@ -25,9 +25,9 @@ function Example() {
   return (
     <List.Item>
       {({ fields }) => (
-        <List.Nested atom={fields.yourNestedListAtom}>
+        <List.Of atom={fields.yourNestedListAtom}>
           {({ List }) => <>{/* Use the List.Item, List.Add ...  */}</>}
-        </List.Nested>
+        </List.Of>
       )}
     </List.Item>
   );
@@ -125,7 +125,7 @@ const NestedListExample = () => {
                 />
               </div>
             </div>
-            <List.Nested atom={fields.accounts}>
+            <List.Of atom={fields.accounts}>
               {({ List }) => (
                 <>
                   <List.Item>
@@ -165,7 +165,7 @@ const NestedListExample = () => {
                   </List.Add>
                 </>
               )}
-            </List.Nested>
+            </List.Of>
           </article>
         )}
       </List.Item>

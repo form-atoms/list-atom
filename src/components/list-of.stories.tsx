@@ -14,7 +14,7 @@ import {
 import { PicoFieldName } from "../story/PicoFieldName";
 import { PicoError } from "../story/PicoFieldErrors";
 
-import { createList, listAtom } from "../";
+import { createList, listAtom } from "..";
 
 const meta = { render };
 
@@ -25,7 +25,7 @@ export const NestedList = createListStory({
     docs: {
       description: {
         story:
-          "Since the `listAtom()` supports nesting, we can render `<List.Nested atom={} />` within a `<List.Item />`. As an example we capture multiple people with multiple banking accounts:",
+          "Since the `listAtom()` supports nesting, we can render `<List.Of atom={} />` within a `<List.Item />`. As an example we capture multiple people with multiple banking accounts:",
       },
     },
   },
@@ -197,7 +197,7 @@ export const NestedList = createListStory({
                     </div>
                   </div>
                   <blockquote>
-                    <List.Nested atom={fields.accounts}>
+                    <List.Of atom={fields.accounts}>
                       {({ List }) => (
                         <>
                           <List.Item>
@@ -271,7 +271,7 @@ export const NestedList = createListStory({
                           </List.Add>
                         </>
                       )}
-                    </List.Nested>
+                    </List.Of>
                   </blockquote>
                 </details>
               </article>

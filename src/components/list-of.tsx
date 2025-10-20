@@ -4,14 +4,14 @@ import type { FormFields } from "form-atoms";
 import type { ListAtom } from "../atoms";
 import { type ListComponents, createList } from "./index";
 
-export type NestedProps<Fields extends FormFields> = {
+export type ListOfProps<Fields extends FormFields> = {
   atom: ListAtom<Fields>;
 } & { children: (props: ListComponents<Fields>) => React.ReactNode };
 
-export function Nested<Fields extends FormFields>({
+export function ListOf<Fields extends FormFields>({
   atom,
   children,
-}: NestedProps<Fields>) {
+}: ListOfProps<Fields>) {
   const components = useMemo(() => createList(atom), [atom]);
 
   return children(components);

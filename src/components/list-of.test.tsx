@@ -2,10 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { InputField, fieldAtom } from "form-atoms";
 import { describe, expect, it } from "vitest";
 
-import { Nested } from "./nested";
+import { ListOf } from "./list-of";
 import { listAtom } from "../atoms";
 
-describe("<Nested />", () => {
+describe("<ListOf />", () => {
   it("creates the compound components within JSX", () => {
     const friends = listAtom({
       value: [{ name: "Alice" }, { name: "Bob" }],
@@ -13,7 +13,7 @@ describe("<Nested />", () => {
     });
 
     render(
-      <Nested atom={friends}>
+      <ListOf atom={friends}>
         {({ List }) => (
           <List.Item>
             {({ fields }) => (
@@ -21,7 +21,7 @@ describe("<Nested />", () => {
             )}
           </List.Item>
         )}
-      </Nested>,
+      </ListOf>,
     );
 
     expect(screen.getByDisplayValue("Bob")).toBeInTheDocument();
