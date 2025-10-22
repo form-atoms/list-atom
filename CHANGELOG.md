@@ -1,3 +1,10 @@
+## [2.3.11](https://github.com/form-atoms/list-atom/compare/v2.3.10...v2.3.11) (2025-10-22)
+
+
+### Bug Fixes
+
+* **add-action:** return the created item ([547a83c](https://github.com/form-atoms/list-atom/commit/547a83cada866cccb311fb71df8722737919b5e1))
+
 ## [2.3.10](https://github.com/form-atoms/list-atom/compare/v2.3.9...v2.3.10) (2025-10-20)
 
 
