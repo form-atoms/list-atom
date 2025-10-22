@@ -97,9 +97,10 @@ export const Form = () => {
 | [`createList(listAtom)`](#createlistlistatom) | A function to create components bound to the listAtom.          |                                                                                               |
 | [`<List>`](#list)                             | A component to initialize the listAtom via `initialValue` prop. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list--docs#examples)       |
 | [`<List.Add>`](#listadd)                      | Adds new or initialized items to the list.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)   |
-| [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)  |
 | [`<List.Empty>`](#listempty)                  | Render children only when the list has no items.                | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples) |
-| [`<List.Of>`](#listof)                        | Render a nested list within a `<List.Item>`.                    | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples)    |
+| [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)  |
+
+| [`<List.Of>`](#listof) | Render a nested list within a `<List.Item>`. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples) |
 
 ## List atoms
 
@@ -247,11 +248,12 @@ export type UseListActions<Fields extends FormFields, Value> = {
    *
    * @param before - An item from the listAtom's splitList array.
    * @param value - A custom list item value.
+   * @returns The created ListItemForm<Fields>
    */
   add: (
     before?: ListItem<Fields> | undefined,
     value?: Value | undefined,
-  ) => void;
+  ) => ListItemForm<Fields>;
   /**
    * Moves the item to the end of the list, or where specified when the 'before' is defined.
    *
@@ -373,6 +375,39 @@ export type ListComponents<Fields extends FormFields> = {
 | initialValue | `Value[]`   | No        | A value to initialize the `listAtom`                           |
 | store        | `AtomStore` | No        | [A Jotai store](https://jotai.org/docs/core/store#createstore) |
 
+### &lt;List.Add&gt;
+
+[🎨 Storybook](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)
+
+#### Props
+
+| Name     | Type                                       | Required? | Description   |
+| -------- | ------------------------------------------ | --------- | ------------- |
+| children | `(props: AddChildrenProps) => JSX.Element` | No        | A render prop |
+
+#### Children Props
+
+```ts
+type AddChildrenProps<Fields extends FormFields> = {
+  /**
+   * An action to append a new item to the end of the list.
+   * @param fields optionaly set the items initial value.
+   * @returns The created ListItemForm<Fields>
+   */
+  add: (value?: FormFieldValues<Fields>) => ListItemForm<Fields>;
+};
+```
+
+### &lt;List.Empty&gt;
+
+[🎨 Storybook](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples)
+
+#### Props
+
+| Name     | Type        | Required? | Description                              |
+| -------- | ----------- | --------- | ---------------------------------------- |
+| children | `ReactNode` | No        | Content to render when the list is empty |
+
 ### &lt;List.Item&gt;
 
 [🎨 Storybook](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)
@@ -406,8 +441,12 @@ type ListItemProps<Fields extends FormFields> = {
   /**
    * Append a new item to the list.
    * When called with the current item, it will prepend it.
+   * @returns The created ListItemForm<Fields>
    */
-  add: (before?: ListItem<Fields>, value?: FormFieldValues<Fields>) => void;
+  add: (
+    before?: ListItem<Fields>,
+    value?: FormFieldValues<Fields>,
+  ) => ListItemForm<Fields>;
   /**
    * Removes the current item from the list.
    */
@@ -424,38 +463,6 @@ type ListItemProps<Fields extends FormFields> = {
   moveDown: () => void;
 };
 ```
-
-### &lt;List.Add&gt;
-
-[🎨 Storybook](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)
-
-#### Props
-
-| Name     | Type                                       | Required? | Description   |
-| -------- | ------------------------------------------ | --------- | ------------- |
-| children | `(props: AddChildrenProps) => JSX.Element` | No        | A render prop |
-
-#### Children Props
-
-```ts
-type AddChildrenProps<Fields extends FormFields> = {
-  /**
-   * An action to append a new item to the end of the list.
-   * @param fields optionaly set the items initial value.
-   */
-  add: (value?: FormFieldValues<Fields>) => void;
-};
-```
-
-### &lt;List.Empty&gt;
-
-[🎨 Storybook](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples)
-
-#### Props
-
-| Name     | Type        | Required? | Description                              |
-| -------- | ----------- | --------- | ---------------------------------------- |
-| children | `ReactNode` | No        | Content to render when the list is empty |
 
 ### &lt;List.Of&gt;
 

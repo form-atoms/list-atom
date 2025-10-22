@@ -5,6 +5,7 @@ import {
   useFieldErrors,
   useFieldValue,
   useFormSubmit,
+  useFormValues,
 } from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
 
@@ -36,6 +37,26 @@ describe("useListActions()", () => {
       expect(onSubmit).toHaveBeenCalledWith({
         contacts: [{ email: "foo@bar.com" }, { email: "" }],
       });
+    });
+
+    it("returns the created & initialized item which is a formAtom", async () => {
+      const contacts = listAtom({
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
+        }),
+      });
+
+      const { result: actions } = renderHook(() => useListActions(contacts));
+
+      const item = await act(() =>
+        actions.current.add(undefined, {
+          email: "initial@value.test",
+        }),
+      );
+
+      const { result: itemFormValues } = renderHook(() => useFormValues(item));
+
+      expect(itemFormValues.current).toEqual({ email: "initial@value.test" });
     });
 
     it("adds the item before a field when specified", async () => {

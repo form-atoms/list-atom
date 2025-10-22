@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import type { FormFieldValues, FormFields } from "form-atoms";
 
+import type { ListItemForm } from "../atoms/list-atom/listItemForm";
 import type { ListAtom, ListItem } from "../atoms/list-atom";
 import { useList } from "../hooks";
 
@@ -24,8 +25,12 @@ export type ListItemProps<Fields extends FormFields> = {
   /**
    * Append a new item to the list.
    * When called with the current item, it will prepend it.
+   * @returns The created ListItemForm<Fields>
    */
-  add: (before?: ListItem<Fields>, value?: FormFieldValues<Fields>) => void;
+  add: (
+    before?: ListItem<Fields>,
+    value?: FormFieldValues<Fields>,
+  ) => ListItemForm<Fields>;
   /**
    * Removes the current item from the list.
    */
