@@ -77,6 +77,12 @@ type ListAtomState<Fields extends FormFields> = FieldAtomState<
 
 export type ListAtom<Fields extends FormFields> = Atom<ListAtomState<Fields>>;
 
+export type ListItem<T> =
+  T extends ListAtom<infer Fields> ? ListItemForm<Fields> : never;
+
+export type ListValue<T> =
+  T extends ListAtom<infer Fields> ? FormFieldValues<Fields>[] : never;
+
 export type ListAtomConfig<Fields extends FormFields> = {
   /**
    * A function to initialize the fields for each of the initial values.
