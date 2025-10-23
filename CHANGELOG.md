@@ -1,3 +1,10 @@
+## [2.3.13](https://github.com/form-atoms/list-atom/compare/v2.3.12...v2.3.13) (2025-10-23)
+
+
+### Bug Fixes
+
+* **types:** add ListItem and ListValue helper types ([66f61eb](https://github.com/form-atoms/list-atom/commit/66f61ebf5222d939855048389ddcfa59fc7f605a))
+
 ## [2.3.12](https://github.com/form-atoms/list-atom/compare/v2.3.11...v2.3.12) (2025-10-23)
 
 
