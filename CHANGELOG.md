@@ -1,3 +1,10 @@
+## [2.3.12](https://github.com/form-atoms/list-atom/compare/v2.3.11...v2.3.12) (2025-10-23)
+
+
+### Bug Fixes
+
+* **types:** rename ListItem to SplitListItem ([31d41a0](https://github.com/form-atoms/list-atom/commit/31d41a08610a930b681259b7d3f061124e0135fb))
+
 ## [2.3.11](https://github.com/form-atoms/list-atom/compare/v2.3.10...v2.3.11) (2025-10-22)
 
 
