@@ -47,7 +47,7 @@ jobs:
         run: yarn test:cov
 
       - name: 📊 Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: form-atoms/list-atom
