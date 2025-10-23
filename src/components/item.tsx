@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import type { FormFieldValues, FormFields } from "form-atoms";
 
 import type { ListItemForm } from "../atoms/list-atom/listItemForm";
-import type { ListAtom, ListItem } from "../atoms/list-atom";
+import type { ListAtom, SplitListItem } from "../atoms/list-atom";
 import { useList } from "../hooks";
 
 export type ListItemProps<Fields extends FormFields> = {
@@ -13,7 +13,7 @@ export type ListItemProps<Fields extends FormFields> = {
   /**
    * The item from the internal splitList.
    */
-  item: ListItem<Fields>;
+  item: SplitListItem<Fields>;
   /**
    * The index of the current item.
    */
@@ -28,7 +28,7 @@ export type ListItemProps<Fields extends FormFields> = {
    * @returns The created ListItemForm<Fields>
    */
   add: (
-    before?: ListItem<Fields>,
+    before?: SplitListItem<Fields>,
     value?: FormFieldValues<Fields>,
   ) => ListItemForm<Fields>;
   /**

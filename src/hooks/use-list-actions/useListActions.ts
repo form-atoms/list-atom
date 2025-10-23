@@ -2,7 +2,7 @@ import { useCallback, useMemo, startTransition } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import type { FormFields, FormFieldValues, UseAtomOptions } from "form-atoms";
 
-import type { ListAtom, ListItem } from "../../atoms/list-atom";
+import type { ListAtom, SplitListItem } from "../../atoms/list-atom";
 import type { ListItemForm } from "../../atoms/list-atom/listItemForm";
 
 export const useListActions = <Fields extends FormFields>(
@@ -14,7 +14,7 @@ export const useListActions = <Fields extends FormFields>(
   const dispatchSplitList = useSetAtom(atoms._splitList, options);
 
   const remove = useCallback(
-    (item: ListItem<Fields>) => {
+    (item: SplitListItem<Fields>) => {
       dispatchSplitList({ type: "remove", atom: item });
       startTransition(() => {
         validate("change");
@@ -24,7 +24,7 @@ export const useListActions = <Fields extends FormFields>(
   );
 
   const add = useCallback(
-    (before?: ListItem<Fields>, value?: FormFieldValues<Fields>) => {
+    (before?: SplitListItem<Fields>, value?: FormFieldValues<Fields>) => {
       const item = atoms.buildItem(value);
 
       dispatchSplitList({
@@ -42,7 +42,7 @@ export const useListActions = <Fields extends FormFields>(
   );
 
   const move = useCallback(
-    (item: ListItem<Fields>, before?: ListItem<Fields>) => {
+    (item: SplitListItem<Fields>, before?: SplitListItem<Fields>) => {
       dispatchSplitList({ type: "move", atom: item, before });
     },
     [dispatchSplitList],
@@ -57,7 +57,7 @@ export type UseListActions<Fields extends FormFields> = {
    *
    * @param item - An item from the listAtom's splitList array.
    */
-  remove: (item: ListItem<Fields>) => void;
+  remove: (item: SplitListItem<Fields>) => void;
   /**
    * Appends a new item to the list by default, when no 'before' position is used.
    * Optionally pass the item value.
@@ -67,7 +67,7 @@ export type UseListActions<Fields extends FormFields> = {
    * @returns The created ListItemForm<Fields>
    */
   add: (
-    before?: ListItem<Fields> | undefined,
+    before?: SplitListItem<Fields> | undefined,
     value?: FormFieldValues<Fields> | undefined,
   ) => ListItemForm<Fields>;
   /**
@@ -76,5 +76,8 @@ export type UseListActions<Fields extends FormFields> = {
    * @param item - A splitList item to be moved.
    * @param before - A splitList item before which to place the moved item.
    */
-  move: (item: ListItem<Fields>, before?: ListItem<Fields> | undefined) => void;
+  move: (
+    item: SplitListItem<Fields>,
+    before?: SplitListItem<Fields> | undefined,
+  ) => void;
 };

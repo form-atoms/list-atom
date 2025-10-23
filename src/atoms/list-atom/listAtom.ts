@@ -20,7 +20,7 @@ import { RESET, atomWithDefault, atomWithReset, splitAtom } from "jotai/utils";
 import { type ListItemForm, listItemForm } from "./listItemForm";
 import type { FieldAtomState } from "../types";
 
-export type ListItem<Fields extends FormFields> = PrimitiveAtom<
+export type SplitListItem<Fields extends FormFields> = PrimitiveAtom<
   ListItemForm<Fields>
 >;
 
@@ -54,7 +54,7 @@ type ListAtomState<Fields extends FormFields> = FieldAtomState<
    * @internal
    */
   _splitList: WritableAtom<
-    PrimitiveAtom<ListItemForm<Fields>>[],
+    SplitListItem<Fields>[],
     [SplitAtomAction<ListItemForm<Fields>>],
     void
   >;

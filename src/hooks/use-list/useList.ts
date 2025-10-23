@@ -1,6 +1,6 @@
 import type { FormFields, FormFieldValues, UseFieldOptions } from "form-atoms";
 
-import { type ListAtom, type ListItem } from "../../atoms/list-atom";
+import type { ListAtom, SplitListItem } from "../../atoms/list-atom";
 import { useFieldInitialValue } from "../use-field-initial-value";
 import { type UseListActions, useListActions } from "../use-list-actions";
 import { useListState } from "../use-list-state";
@@ -47,7 +47,7 @@ export type UseList<Fields extends FormFields> = UseListActions<Fields> & {
     /**
      * The item from the internal splitList.
      */
-    item: ListItem<Fields>;
+    item: SplitListItem<Fields>;
     /**
      * Stable React key prop derived from atom id.
      */

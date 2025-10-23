@@ -30,16 +30,16 @@ function Example() {
 
 ## Children Props
 
-| Name     | Type                                                                                   | Description                                                                                                |
-| -------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| fields   | `Fields`                                                                               | The fields of the current item, as created with the listAtom's `fields` config function.                   |
-| item     | `ListItem<Fields>`                                                                     | The item from the internal splitList.                                                                      |
-| index    | `number`                                                                               | The index of the current item.                                                                             |
-| count    | `number`                                                                               | Total count of items in the list                                                                           |
-| add      | `(before?: ListItem<Fields>, value?: FormFieldValues<Fields>) => ListItemForm<Fields>` | Append a new item to the list. When called with the current item, it will prepend it.                      |
-| remove   | `() => void`                                                                           | Removes the current item from the list.                                                                    |
-| moveUp   | `() => void`                                                                           | Moves the current item one slot up in the list. Supports carousel - the first item will become the last.   |
-| moveDown | `() => void`                                                                           | Moves the current item one slot down in the list. Supports carousel - the last item will become the first. |
+| Name     | Type                                                                                        | Description                                                                                                |
+| -------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| fields   | `Fields`                                                                                    | The fields of the current item, as created with the listAtom's `fields` config function.                   |
+| item     | `SplitListItem<Fields>`                                                                     | The item from the internal splitList.                                                                      |
+| index    | `number`                                                                                    | The index of the current item.                                                                             |
+| count    | `number`                                                                                    | Total count of items in the list                                                                           |
+| add      | `(before?: SplitListItem<Fields>, value?: FormFieldValues<Fields>) => ListItemForm<Fields>` | Append a new item to the list. When called with the current item, it will prepend it.                      |
+| remove   | `() => void`                                                                                | Removes the current item from the list.                                                                    |
+| moveUp   | `() => void`                                                                                | Moves the current item one slot up in the list. Supports carousel - the first item will become the last.   |
+| moveDown | `() => void`                                                                                | Moves the current item one slot down in the list. Supports carousel - the last item will become the first. |
 
 ## Examples
 

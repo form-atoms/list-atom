@@ -194,7 +194,7 @@ export type ListAtom<Fields extends FormFields, Value> = ExtendFieldAtom<
      * @internal
      */
     _splitList: WritableAtom<
-      PrimitiveAtom<ListItemForm<Fields>>[],
+      SplitListItem<Fields>[],
       [SplitAtomAction<ListItemForm<Fields>>],
       void
     >;
@@ -241,7 +241,7 @@ export type UseListActions<Fields extends FormFields, Value> = {
    *
    * @param item - An item from the listAtom's splitList array.
    */
-  remove: (item: ListItem<Fields>) => void;
+  remove: (item: SplitListItem<Fields>) => void;
   /**
    * Appends a new item to the list by default, when no 'before' position is used.
    * Optionally the item can be initialized, with the 'fields' argument.
@@ -251,7 +251,7 @@ export type UseListActions<Fields extends FormFields, Value> = {
    * @returns The created ListItemForm<Fields>
    */
   add: (
-    before?: ListItem<Fields> | undefined,
+    before?: SplitListItem<Fields> | undefined,
     value?: Value | undefined,
   ) => ListItemForm<Fields>;
   /**
@@ -260,7 +260,10 @@ export type UseListActions<Fields extends FormFields, Value> = {
    * @param item - A splitList item to be moved.
    * @param before - A splitList item before which to place the moved item.
    */
-  move: (item: ListItem<Fields>, before?: ListItem<Fields> | undefined) => void;
+  move: (
+    item: SplitListItem<Fields>,
+    before?: SplitListItem<Fields> | undefined,
+  ) => void;
 };
 ```
 
@@ -292,7 +295,7 @@ export type UseList<Fields extends FormFields, Value> = UseListActions<
     /**
      * The item from the internal splitList.
      */
-    item: ListItem<Fields>;
+    item: SplitListItem<Fields>;
     /**
      * Stable React key prop derived from atom id.
      */
@@ -429,7 +432,7 @@ type ListItemProps<Fields extends FormFields> = {
   /**
    * The item from the internal splitList.
    */
-  item: ListItem<Fields>;
+  item: SplitListItem<Fields>;
   /**
    * The index of the current item.
    */
@@ -444,7 +447,7 @@ type ListItemProps<Fields extends FormFields> = {
    * @returns The created ListItemForm<Fields>
    */
   add: (
-    before?: ListItem<Fields>,
+    before?: SplitListItem<Fields>,
     value?: FormFieldValues<Fields>,
   ) => ListItemForm<Fields>;
   /**
