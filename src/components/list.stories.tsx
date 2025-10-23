@@ -1,9 +1,4 @@
-import {
-  type FieldAtom,
-  InputField,
-  fieldAtom,
-  useFieldActions,
-} from "form-atoms";
+import { InputField, fieldAtom, useFieldActions } from "form-atoms";
 
 import { listAtom } from "../atoms";
 import { PicoFieldErrors } from "../story/PicoFieldErrors";
@@ -88,6 +83,14 @@ export const PlainObjects = createListStory({
   },
 });
 
+const envVars = listAtom({
+  name: "envVars",
+  fields: () => ({
+    variable: fieldAtom({ name: "variable", value: "" }),
+    value: fieldAtom({ name: "value", value: "" }),
+  }),
+});
+
 export const QuickStartExample = createListStory({
   parameters: {
     docs: {
@@ -98,13 +101,7 @@ export const QuickStartExample = createListStory({
     },
   },
   args: {
-    atom: listAtom({
-      name: "envVars",
-      fields: () => ({
-        variable: fieldAtom({ name: "variable", value: "" }),
-        value: fieldAtom({ name: "value", value: "" }),
-      }),
-    }),
+    atom: envVars,
     children: ({ List }) => (
       <List
         initialValue={[
@@ -157,11 +154,7 @@ export const QuickStartExample = createListStory({
   },
 });
 
-function SetVariables({
-  atom,
-}: {
-  atom: FieldAtom<{ variable: string; value: string }[]>;
-}) {
+function SetVariables({ atom }: { atom: typeof envVars }) {
   const actions = useFieldActions(atom);
 
   return (
@@ -180,7 +173,7 @@ function SetVariables({
   );
 }
 
-function ClearField<T>({ atom }: { atom: FieldAtom<T[]> }) {
+function ClearField<T>({ atom }: { atom: typeof envVars }) {
   const actions = useFieldActions(atom);
 
   return (
