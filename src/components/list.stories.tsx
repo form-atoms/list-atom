@@ -1,6 +1,15 @@
-import { InputField, fieldAtom, useFieldActions } from "form-atoms";
+import { useCallback, useEffect } from "react";
+import { useAtomCallback } from "jotai/utils";
+import { atom, useSetAtom } from "jotai";
+import {
+  type FieldAtom,
+  InputField,
+  fieldAtom,
+  useFieldActions,
+  useFieldValue,
+} from "form-atoms";
 
-import { listAtom } from "../atoms";
+import { ListAtom, listAtom, ListItem } from "../atoms";
 import { PicoFieldErrors } from "../story/PicoFieldErrors";
 import { PicoFieldName } from "../story/PicoFieldName";
 
@@ -9,6 +18,7 @@ import {
   RemoveButton,
   render,
 } from "../story/createListStory";
+import { useListState } from "../hooks/use-list-state";
 
 const meta = { render };
 
@@ -317,3 +327,162 @@ export const ValidateAscendingValues = createListStory({
     ),
   },
 });
+
+/**
+ * A reference to the primary 2FA item from the list.
+ */
+const primary2FA = atom<FieldAtom<string> | null>(null);
+
+const phones = listAtom({
+  name: "phones",
+  validate: ({ value }) => {
+    const hasPrimary = value.some((item) => item.isPrimary);
+
+    if (!hasPrimary && value.length > 0) {
+      return ["Please select a primary 2FA method."];
+    }
+
+    return [];
+  },
+  fields: () => {
+    const phone = fieldAtom<string>({ value: "" });
+
+    return {
+      phone,
+      isPrimary: fieldAtom<boolean>({
+        /**
+         * The initial value is false by default.
+         * So when there is no primary2FA choosen, all items will have isPrimary=false, to prompt the user to select one.
+         */
+        value: false,
+        preprocess: (value, get) => {
+          const primaryPhone = get(primary2FA);
+
+          if (!primaryPhone) {
+            // The form is being initialized, so use the initialValue
+            return value;
+          }
+
+          /**
+           * when the primary item is selected, the isPrimary will be computed
+           * by comparing the current phone with the primary2FA reference.
+           */
+          return primaryPhone === phone;
+        },
+      }),
+    };
+  },
+});
+
+export const WithComputedField = createListStory({
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Here the `isPrimary` is not a controlled input, but a computed field. It has derived value based on the `primary2FA` reference atom.",
+      },
+    },
+  },
+  args: {
+    atom: phones,
+    children: ({ List, atom }) => (
+      <List
+        initialValue={[
+          { phone: "+420 123 456 789", isPrimary: true },
+          { phone: "+421 987 654 321", isPrimary: false },
+          { phone: "+421 999 333 777", isPrimary: false },
+        ]}
+      >
+        <List.Item>
+          {({ fields, remove }) => (
+            <article>
+              <fieldset role="group">
+                <InputField atom={fields.phone} component="input" type="tel" />
+                <RemoveButton remove={remove} />
+              </fieldset>
+              <PrimaryRadio {...fields} />
+            </article>
+          )}
+        </List.Item>
+        <List.Add>
+          {({ add }) => {
+            const { isEmpty } = useListState(phones);
+            const { validate } = useFieldActions(phones);
+
+            const setFirstAsPrimary = useAtomCallback(
+              useCallback((get, set, form: ListItem<typeof phones>) => {
+                const fields = get(get(form).fields);
+
+                set(primary2FA, fields.phone);
+              }, []),
+            );
+
+            return (
+              <button
+                type="button"
+                className="outline"
+                onClick={() => {
+                  const form = add();
+                  if (isEmpty) {
+                    setFirstAsPrimary(form);
+                    validate();
+                  }
+                }}
+              >
+                Add 2FA method
+              </button>
+            );
+          }}
+        </List.Add>
+        <List.Empty>
+          <ClearPrimaryPhone />
+        </List.Empty>
+        <PicoFieldErrors atom={atom} />
+      </List>
+    ),
+  },
+});
+
+type ListFields<T> = T extends ListAtom<infer Fields> ? Fields : never;
+
+function PrimaryRadio({ phone, isPrimary }: ListFields<typeof phones>) {
+  /**
+   * The field is computed, and we treat it as read-only.
+   */
+  const checked = useFieldValue(isPrimary);
+  const setPrimary = useSetAtom(primary2FA);
+  /**
+   * We need to validate the list when the primary item is changed.
+   * Otherwise the list might stay in an invalid state.
+   */
+  const { validate } = useFieldActions(phones);
+
+  return (
+    <label>
+      <input
+        type="radio"
+        name="primary2FA"
+        checked={checked}
+        onChange={() => {
+          setPrimary(phone);
+          validate();
+        }}
+      />
+      This is my primary 2FA method
+    </label>
+  );
+}
+
+/**
+ * When items are removed from the list, we need to clear the primary2FA reference.
+ */
+function ClearPrimaryPhone() {
+  const setPrimary = useSetAtom(primary2FA);
+
+  useEffect(() => {
+    console.log("Clearing primary 2FA reference");
+    setPrimary(null);
+  }, [setPrimary]);
+
+  return null;
+}

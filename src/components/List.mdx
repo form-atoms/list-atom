@@ -274,3 +274,138 @@ const FieldErrors = <T,>({ atom }: { atom: FieldAtom<T> }) => {
 ```
 
 </Example>
+
+<Example of={ListStories.WithComputedField} hideFormActions={false}>
+
+```tsx
+import { useCallback, useEffect } from "react";
+import { useAtomCallback } from "jotai/utils";
+import {
+  useFieldValue,
+  useFieldActions,
+  fieldAtom,
+  InputField,
+} from "form-atoms";
+import { createList, listAtom } from "@form-atoms/list-atom";
+
+/**
+ * A reference to the primary 2FA item from the list.
+ */
+const primary2FA = atom<FieldAtom<string> | null>(null);
+
+const phones = listAtom({
+  name: "phones",
+  validate: ({ value }) => {
+    const hasPrimary = value.some((item) => item.isPrimary);
+
+    if (!hasPrimary && value.length > 0) {
+      return ["Please select a primary 2FA method."];
+    }
+
+    return [];
+  },
+  fields: () => {
+    const phone = fieldAtom<string>({ value: "" });
+
+    return {
+      phone,
+      isPrimary: fieldAtom<boolean>({
+        /**
+         * The initial value is false by default.
+         * So when there is no primary2FA choosen, all items will have isPrimary=false, to prompt the user to select one.
+         */
+        value: false,
+        preprocess: (value, get) => {
+          const primaryPhone = get(primary2FA);
+
+          if (!primaryPhone) {
+            // The form is being initialized, so use the initialValue
+            return value;
+          }
+
+          /**
+           * when the primary item is selected, the isPrimary will be computed
+           * by comparing the current phone with the primary2FA reference.
+           */
+          return primaryPhone === phone;
+        },
+      }),
+    };
+  },
+});
+
+const { List } = createList(twofactor);
+
+const Example = () => (
+  <List
+    initialValue={[
+      { phone: "+420 123 456 789", isPrimary: true },
+      { phone: "+421 987 654 321", isPrimary: false },
+      { phone: "+421 999 333 777", isPrimary: false },
+    ]}
+  >
+    <List.Item>
+      {({ fields, remove }) => (
+        <article>
+          <fieldset role="group">
+            <InputField atom={fields.phone} component="input" type="tel" />
+            <RemoveButton remove={remove} />
+          </fieldset>
+          <PrimaryRadio phone={fields.phone} isPrimary={fields.isPrimary} />
+        </article>
+      )}
+    </List.Item>
+    <FieldErrors atom={levels} />
+  </List>
+);
+
+function PrimaryRadio({
+  phone,
+  isPrimary,
+}: {
+  phone: FieldAtom<string>;
+  isPrimary: FieldAtom<boolean>;
+}) {
+  /**
+   * The field is computed, and we treat it as read-only.
+   */
+  const checked = useFieldValue(isPrimary);
+  const setPrimary = useSetAtom(primary2FA);
+  /**
+   * We need to validate the list when the primary item is changed.
+   * Otherwise the list might stay in an invalid state.
+   */
+  const { validate } = useFieldActions(phones);
+
+  return (
+    <label>
+      <input
+        type="radio"
+        name="primary2FA"
+        checked={checked}
+        onChange={() => {
+          setPrimary(phone);
+          validate();
+        }}
+      />
+      This is my primary 2FA method
+    </label>
+  );
+}
+
+/**
+ * When items are removed from the list, we need to clear the primary2FA reference.
+ */
+function ClearPrimary() {
+  const setPrimary = useSetAtom(primary2FA);
+
+  useEffect(() => {
+    console.log("Clearing primary 2FA reference");
+    setPrimary(null);
+  }, [setPrimary]);
+
+  return null;
+}
+```
+
+</Example>

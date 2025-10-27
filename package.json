@@ -1,6 +1,6 @@
 {
   "name": "@form-atoms/list-atom",
-  "packageManager": "yarn@4.10.2",
+  "packageManager": "yarn@4.10.3",
   "version": "0.0.0-semantic-release",
   "author": "Miroslav Petrik <miroslavpetrik@outlook.com>",
   "homepage": "https://github.com/form-atoms/list-atom#readme",
@@ -67,12 +67,12 @@
     "@types/react-dom": "^19.2.2",
     "@types/semantic-release": "^21.1.0",
     "@vitejs/plugin-react": "^5.0.4",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/coverage-v8": "^4.0.3",
     "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-storybook": "9.1.13",
-    "form-atoms": "^3.3.2",
+    "form-atoms": "^3.3.3",
     "happy-dom": "^20.0.8",
     "jotai": "2.15.0",
     "jotai-devtools": "0.8.0",
@@ -89,7 +89,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.2",
     "vite": "^7.1.11",
-    "vitest": "^3.2.4",
+    "vitest": "^4.0.3",
     "zod": "^3.25.76"
   },
   "publishConfig": {
