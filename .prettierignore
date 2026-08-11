@@ -1,0 +1,6 @@
+demo
+dist
+coverage
+storybook-static
+node_modules
+CHANGELOG.md

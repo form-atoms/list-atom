@@ -99,8 +99,7 @@ export const Form = () => {
 | [`<List.Add>`](#listadd)                      | Adds new or initialized items to the list.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)   |
 | [`<List.Empty>`](#listempty)                  | Render children only when the list has no items.                | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples) |
 | [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)  |
-
-| [`<List.Of>`](#listof) | Render a nested list within a `<List.Item>`. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples) |
+| [`<List.Of>`](#listof)                        | Render a nested list within a `<List.Item>`.                    | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples)    |
 
 ## List atoms
 
