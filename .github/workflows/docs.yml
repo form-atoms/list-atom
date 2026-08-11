@@ -28,22 +28,16 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
+        run: npm install
 
       - name: Build Package
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build
+        run: npm run build
 
       - name: Build Storybook Docs
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: storybook:build
+        run: npm run storybook:build
 
       - name: Upload Storybook
         uses: actions/upload-pages-artifact@v4
