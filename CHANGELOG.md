@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/form-atoms/list-atom/compare/v2.4.0...v2.4.1) (2026-09-09)
+
+
+### Bug Fixes
+
+* **list-atom:** build labels in forEach ([c0995d4](https://github.com/form-atoms/list-atom/commit/c0995d4dbe3e03fcf95f9e14c533aacb3f7c855a))
+
 # [2.4.0](https://github.com/form-atoms/list-atom/compare/v2.3.13...v2.4.0) (2026-09-09)
 
 
