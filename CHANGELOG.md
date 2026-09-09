@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/form-atoms/list-atom/compare/v2.3.13...v2.4.0) (2026-09-09)
+
+
+### Features
+
+* **lint:** use biome ([240d77f](https://github.com/form-atoms/list-atom/commit/240d77f8c124feef6ffc10e0d108dbde19f7c9d5))
+
 ## [2.3.13](https://github.com/form-atoms/list-atom/compare/v2.3.12...v2.3.13) (2025-10-23)
 
 
