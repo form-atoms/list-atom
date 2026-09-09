@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/form-atoms/list-atom/compare/v2.4.2...v2.4.3) (2026-09-09)
+
+
+### Bug Fixes
+
+* use react-jsx transform in tsconfig ([f576c4c](https://github.com/form-atoms/list-atom/commit/f576c4c3dd958edc13f02e6993e98b810947e019))
+
 ## [2.4.2](https://github.com/form-atoms/list-atom/compare/v2.4.1...v2.4.2) (2026-09-09)
 
 
