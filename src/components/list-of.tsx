@@ -1,8 +1,8 @@
-import { useMemo } from "react";
 import type { FormFields } from "form-atoms";
+import { useMemo } from "react";
 
 import type { ListAtom } from "../atoms";
-import { type ListComponents, createList } from "./index";
+import { createList, type ListComponents } from "./index";
 
 export type ListOfProps<Fields extends FormFields> = {
   atom: ListAtom<Fields>;

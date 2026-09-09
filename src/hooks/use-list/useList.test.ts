@@ -1,9 +1,8 @@
 import { act, renderHook } from "@testing-library/react";
 import { fieldAtom, formAtom, useFormSubmit } from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
-
-import { useList } from "./useList";
 import { listAtom } from "../../atoms";
+import { useList } from "./useList";
 
 describe("useListAtom()", () => {
   describe("item.remove() with a single item", () => {

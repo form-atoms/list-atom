@@ -1,8 +1,7 @@
+import type { FormFields, FormFieldValues } from "form-atoms";
 import { Fragment } from "react";
-import type { FormFieldValues, FormFields } from "form-atoms";
-
-import type { ListItemForm } from "../atoms/list-atom/listItemForm";
 import type { ListAtom, SplitListItem } from "../atoms/list-atom";
+import type { ListItemForm } from "../atoms/list-atom/listItemForm";
 import { useList } from "../hooks";
 
 export type ListItemProps<Fields extends FormFields> = {

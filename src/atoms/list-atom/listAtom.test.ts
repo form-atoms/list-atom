@@ -12,11 +12,10 @@ import {
 } from "form-atoms";
 import { useAtomValue } from "jotai";
 import { describe, expect, it, test, vi } from "vitest";
-
-import { listAtom } from "./listAtom";
 import { useList, useListActions } from "../../hooks";
 import { useFieldName } from "../../hooks/useFieldName";
 import { extendAtom } from "../extendAtom";
+import { listAtom } from "./listAtom";
 
 describe("listAtom()", () => {
   test("can be submitted within formAtom", async () => {

@@ -1,9 +1,8 @@
-import { DevTools } from "jotai-devtools";
 import { type Preview } from "@storybook/react-vite";
-
-import { code } from "./components/shiki-code";
-import { PicoContainer } from "./components/pico-container";
+import { DevTools } from "jotai-devtools";
 import { Fragment } from "./components/fragment";
+import { PicoContainer } from "./components/pico-container";
+import { code } from "./components/shiki-code";
 
 import "@picocss/pico";
 import "@picocss/pico/css/pico.colors.min.css";

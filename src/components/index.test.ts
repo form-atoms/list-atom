@@ -1,8 +1,7 @@
 import { fieldAtom } from "form-atoms";
 import { describe, expect, it } from "vitest";
-
-import { createList } from "./index";
 import { listAtom } from "../atoms";
+import { createList } from "./index";
 
 describe("createList()", () => {
   it("composes the compound components pattern", () => {

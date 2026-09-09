@@ -1,10 +1,9 @@
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { InputField, fieldAtom } from "form-atoms";
+import { fieldAtom, InputField } from "form-atoms";
 import { describe, expect, it } from "vitest";
-
-import { createItem } from "./item";
 import { listAtom } from "../atoms";
+import { createItem } from "./item";
 
 describe("<Item />", () => {
   it("renders each list item", async () => {

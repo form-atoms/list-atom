@@ -1,9 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { fieldAtom } from "form-atoms";
 import { describe, expect, it } from "vitest";
-
-import { createEmpty } from "./empty";
 import { listAtom } from "../atoms";
+import { createEmpty } from "./empty";
 
 describe("<Empty /> component", () => {
   describe("when there are no items in the list", () => {

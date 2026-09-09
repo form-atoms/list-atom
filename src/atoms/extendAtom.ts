@@ -1,4 +1,4 @@
-import type { Getter, Atom } from "jotai";
+import type { Atom, Getter } from "jotai";
 import { atomWithDefault } from "jotai/utils";
 
 export const extendAtom = <

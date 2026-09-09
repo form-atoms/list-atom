@@ -1,5 +1,5 @@
+import { Markdown, Story } from "@storybook/addon-docs/blocks";
 import { type PropsWithChildren } from "react";
-import { Story, Markdown } from "@storybook/addon-docs/blocks";
 import type { ModuleExport } from "storybook/internal/types";
 import { StoryTitle } from "./StoryTitle";
 

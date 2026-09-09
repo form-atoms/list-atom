@@ -1,10 +1,8 @@
 import { act, renderHook } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-
 import { fieldAtom } from "form-atoms";
-import { extendAtom } from "./extendAtom";
-
 import { useAtom } from "jotai";
+import { describe, expect, it } from "vitest";
+import { extendAtom } from "./extendAtom";
 
 describe("extendAtom()", () => {
   const field = extendAtom(fieldAtom({ value: "" }), () => ({

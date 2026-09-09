@@ -1,5 +1,5 @@
+import type { AtomStore, FormFields, FormFieldValues } from "form-atoms";
 import type { PropsWithChildren } from "react";
-import type { AtomStore, FormFieldValues, FormFields } from "form-atoms";
 
 import type { ListAtom } from "../atoms/list-atom";
 import { useFieldInitialValue } from "../hooks";

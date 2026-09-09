@@ -8,10 +8,9 @@ import {
   useFormValues,
 } from "form-atoms";
 import { describe, expect, it, vi } from "vitest";
-
-import { useListActions } from "./useListActions";
 import { listAtom } from "../../atoms";
 import { useListState } from "../use-list-state";
+import { useListActions } from "./useListActions";
 
 describe("useListActions()", () => {
   describe("add()", () => {

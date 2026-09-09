@@ -1,9 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { InputField, fieldAtom } from "form-atoms";
+import { fieldAtom, InputField } from "form-atoms";
 import { describe, expect, it } from "vitest";
-
-import { ListOf } from "./list-of";
 import { listAtom } from "../atoms";
+import { ListOf } from "./list-of";
 
 describe("<ListOf />", () => {
   it("creates the compound components within JSX", () => {

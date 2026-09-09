@@ -2,9 +2,8 @@ import { act, render, renderHook, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { fieldAtom, useFieldValue } from "form-atoms";
 import { describe, expect, it } from "vitest";
-
-import { createAdd } from "./add";
 import { listAtom } from "../atoms";
+import { createAdd } from "./add";
 
 describe("<Add /> component", () => {
   it("renders 'Add item' label by default", () => {

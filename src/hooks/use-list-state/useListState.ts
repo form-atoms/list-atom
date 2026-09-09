@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { useAtomValue } from "jotai";
 import type { FormFields, UseAtomOptions } from "form-atoms";
+import { useAtomValue } from "jotai";
+import { useMemo } from "react";
 
 import type { ListAtom } from "../../atoms";
 

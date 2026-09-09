@@ -1,8 +1,7 @@
 import type { StoryObj } from "@storybook/react-vite";
 import type { FormFields } from "form-atoms";
-
+import { createList, type ListAtom, type ListComponents } from "../";
 import { StoryForm } from "./StoryForm";
-import { type ListAtom, type ListComponents, createList } from "../";
 
 export function render<Fields extends FormFields>({
   atom,

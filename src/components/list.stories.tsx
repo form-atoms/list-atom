@@ -1,24 +1,23 @@
-import { useCallback, useEffect } from "react";
-import { useAtomCallback } from "jotai/utils";
-import { atom, useSetAtom } from "jotai";
 import {
   type FieldAtom,
-  InputField,
   fieldAtom,
+  InputField,
   useFieldActions,
   useFieldValue,
 } from "form-atoms";
+import { atom, useSetAtom } from "jotai";
+import { useAtomCallback } from "jotai/utils";
+import { useCallback, useEffect } from "react";
 
-import { type ListAtom, listAtom, type ListItem } from "../atoms";
-import { PicoFieldErrors } from "../story/PicoFieldErrors";
-import { PicoFieldName } from "../story/PicoFieldName";
-
+import { type ListAtom, type ListItem, listAtom } from "../atoms";
+import { useListState } from "../hooks/use-list-state";
 import {
   createListStory,
   RemoveButton,
   render,
 } from "../story/createListStory";
-import { useListState } from "../hooks/use-list-state";
+import { PicoFieldErrors } from "../story/PicoFieldErrors";
+import { PicoFieldName } from "../story/PicoFieldName";
 
 const meta = { render };
 

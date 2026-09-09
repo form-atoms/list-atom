@@ -1,14 +1,14 @@
 // TODO: remove after fix merged
 // https://github.com/storybookjs/storybook/pull/26168
 
-import type { FC, PropsWithChildren, ReactNode } from "react";
-import { useEffect } from "react";
-import { global } from "@storybook/global";
-import type { ThemeVars } from "storybook/theming";
-import { ThemeProvider, ensure as ensureTheme } from "storybook/theming";
-import type { Renderer } from "storybook/internal/types";
 import type { DocsContextProps } from "@storybook/addon-docs/blocks";
 import { DocsContext, SourceContainer } from "@storybook/addon-docs/blocks";
+import { global } from "@storybook/global";
+import type { FC, PropsWithChildren, ReactNode } from "react";
+import { useEffect } from "react";
+import type { Renderer } from "storybook/internal/types";
+import type { ThemeVars } from "storybook/theming";
+import { ensure as ensureTheme, ThemeProvider } from "storybook/theming";
 
 import { Footer } from "../blocks/Footer";
 

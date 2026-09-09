@@ -1,10 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 import { fieldAtom, useFieldState } from "form-atoms";
 import { describe, expect, it } from "vitest";
-
-import { useFieldInitialValue } from "./useFieldInitialValue";
 import { listAtom } from "../../atoms";
 import { useListActions } from "../use-list-actions";
+import { useFieldInitialValue } from "./useFieldInitialValue";
 
 describe("useFieldInitialValue()", () => {
   it("reinitializes the field value", async () => {

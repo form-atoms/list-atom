@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import Copy from "./icons/copy";
 import Check from "./icons/check";
+import Copy from "./icons/copy";
 
 // Source https://github.com/picocss/picocss.com/blob/7fc423b65955df4a216247333839de34f2fe2b01/app/components/Code.jsx#L44
 export const ButtonCopyToClipboard = ({ text, ...props }: { text: string }) => {

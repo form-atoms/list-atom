@@ -1,4 +1,4 @@
-import { InputField, fieldAtom } from "form-atoms";
+import { fieldAtom, InputField } from "form-atoms";
 
 import { listAtom } from "../atoms";
 

@@ -1,9 +1,8 @@
 "use client";
 
 import { useActionState } from "react";
-
-import { Form } from "./form";
 import { deserialize } from "./action";
+import { Form } from "./form";
 
 export default function Home() {
   const [state, formAction] = useActionState(deserialize, {

@@ -1,8 +1,8 @@
 "use client";
 
-import { fieldAtom, InputField } from "form-atoms";
-import { listAtom, createList } from "@form-atoms/list-atom";
+import { createList, listAtom } from "@form-atoms/list-atom";
 import type { FormFieldValues } from "form-atoms";
+import { fieldAtom, InputField } from "form-atoms";
 import { FieldName } from "./field-name";
 
 const environment = listAtom({

@@ -1,7 +1,7 @@
 import type {
   FieldAtomConfig,
-  FormFieldValues,
   FormFields,
+  FormFieldValues,
   Validate,
   ValidateOn,
   ValidateStatus,
@@ -16,10 +16,9 @@ import type {
   WritableAtom,
 } from "jotai";
 import { atom } from "jotai";
-import { RESET, atomWithDefault, atomWithReset, splitAtom } from "jotai/utils";
-
-import { type ListItemForm, listItemForm } from "./listItemForm";
+import { atomWithDefault, atomWithReset, RESET, splitAtom } from "jotai/utils";
 import type { FieldAtomState } from "../types";
+import { type ListItemForm, listItemForm } from "./listItemForm";
 
 export type SplitListItem<Fields extends FormFields> = PrimitiveAtom<
   ListItemForm<Fields>

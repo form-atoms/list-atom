@@ -1,4 +1,4 @@
-import { type FormFields, type RESET, formAtom, walkFields } from "form-atoms";
+import { type FormFields, formAtom, type RESET, walkFields } from "form-atoms";
 import type { Atom, Getter, SetStateAction, WritableAtom } from "jotai";
 import { atom } from "jotai";
 import { atomEffect } from "jotai-effect";

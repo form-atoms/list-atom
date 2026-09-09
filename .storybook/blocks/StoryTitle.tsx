@@ -1,5 +1,5 @@
-import React from "react";
 import { Markdown, useOf } from "@storybook/addon-docs/blocks";
+import React from "react";
 import type { ModuleExport } from "storybook/internal/types";
 
 export const StoryTitle = ({ of }: { of: ModuleExport }) => {

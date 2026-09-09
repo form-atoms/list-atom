@@ -1,12 +1,10 @@
-import { InputField, fieldAtom } from "form-atoms";
-
+import { fieldAtom, InputField } from "form-atoms";
+import { listAtom } from "../atoms";
 import {
   createListStory,
   RemoveButton,
   render,
 } from "../story/createListStory";
-
-import { listAtom } from "../atoms";
 
 const meta = { render };
 
