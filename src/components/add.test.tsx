@@ -73,6 +73,6 @@ describe("<Add /> component", () => {
     await act(() => userEvent.click(AddFren));
 
     expect(result.current).toHaveLength(2);
-    expect(result.current[1]!.name).toBe("Bobek");
+    expect(result.current[1]?.name).toBe("Bobek");
   });
 });

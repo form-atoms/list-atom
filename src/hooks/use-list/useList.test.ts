@@ -19,7 +19,7 @@ describe("useListAtom()", () => {
       const { result: list } = renderHook(() => useList(contacts));
       const { result: formSubmit } = renderHook(() => useFormSubmit(form));
 
-      await act(async () => list.current.items[0]!.remove());
+      await act(async () => list.current.items[0]?.remove());
 
       const onSubmit = vi.fn();
       await act(async () => formSubmit.current(onSubmit)());
@@ -45,7 +45,7 @@ describe("useListAtom()", () => {
       const { result: list } = renderHook(() => useList(contacts));
       const { result: formSubmit } = renderHook(() => useFormSubmit(form));
 
-      await act(() => list.current.items[1]!.moveUp());
+      await act(() => list.current.items[1]?.moveUp());
 
       const onSubmit = vi.fn();
       await act(() => formSubmit.current(onSubmit)());
@@ -75,7 +75,7 @@ describe("useListAtom()", () => {
       const { result: list } = renderHook(() => useList(contacts));
       const { result: formSubmit } = renderHook(() => useFormSubmit(form));
 
-      await act(() => list.current.items[0]!.moveDown());
+      await act(() => list.current.items[0]?.moveDown());
 
       const onSubmit = vi.fn();
       await act(() => formSubmit.current(onSubmit)());
@@ -104,7 +104,7 @@ describe("useListAtom()", () => {
         const { result: list } = renderHook(() => useList(contacts));
         const { result: formSubmit } = renderHook(() => useFormSubmit(form));
 
-        await act(() => list.current.items.at(-1)!.moveDown());
+        await act(() => list.current.items.at(-1)?.moveDown());
 
         const onSubmit = vi.fn();
         await act(() => formSubmit.current(onSubmit)());

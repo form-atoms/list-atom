@@ -266,7 +266,7 @@ export function listAtom<Fields extends FormFields>({
     },
   );
 
-  const resetAtom = atom<null, [void], void>(null, (get, set) => {
+  const resetAtom = atom<null, [undefined], void>(null, (get, set) => {
     set(errorsAtom, []);
     set(_listErrorsAtom, []);
     set(touchedAtom, RESET);

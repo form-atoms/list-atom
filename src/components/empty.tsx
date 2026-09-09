@@ -12,7 +12,7 @@ export function createEmpty<Fields extends FormFields>(
   function Empty({ children }: EmptyProps) {
     const { isEmpty } = useListState(listAtom);
 
-    return isEmpty ? <>{children}</> : null;
+    return isEmpty ? children : null;
   }
 
   return { Empty };

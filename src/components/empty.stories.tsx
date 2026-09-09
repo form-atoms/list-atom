@@ -41,7 +41,7 @@ export const EmptyList = createListStory({
             <fieldset role="group">
               <InputField
                 atom={fields.hobby}
-                render={(props) => <input autoFocus {...props} />}
+                render={(props) => <input {...props} />}
               />
               <RemoveButton remove={remove} />
             </fieldset>

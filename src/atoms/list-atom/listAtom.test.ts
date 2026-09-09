@@ -367,7 +367,7 @@ describe("listAtom()", () => {
       );
 
       const { result: inputActions } = renderHook(() =>
-        useFieldActions(formFields.current[0]!.age),
+        useFieldActions(formFields.current[0]?.age),
       );
 
       expect(fieldErrors.current).toEqual([]);
@@ -448,7 +448,7 @@ describe("listAtom()", () => {
         useAtomValue(useAtomValue(field)._formFields),
       );
       const { result: inputActions } = renderHook(() =>
-        useFieldActions(formFields.current[0]!.age),
+        useFieldActions(formFields.current[0]?.age),
       );
 
       expect(fieldState.current.dirty).toBe(false);
@@ -522,7 +522,7 @@ describe("listAtom()", () => {
 
       const { result: list } = renderHook(() => useList(field));
       const { result: name } = renderHook(() =>
-        useFieldName(list.current.items[0]!.fields.field),
+        useFieldName(list.current.items[0]?.fields.field),
       );
 
       await waitFor(() => Promise.resolve());
@@ -541,8 +541,8 @@ describe("listAtom()", () => {
 
       const { result: list } = renderHook(() => useList(field));
       const { result: names } = renderHook(() => [
-        useFieldName(list.current.items[0]!.fields.email),
-        useFieldName(list.current.items[1]!.fields.email),
+        useFieldName(list.current.items[0]?.fields.email),
+        useFieldName(list.current.items[1]?.fields.email),
       ]);
 
       await waitFor(() => Promise.resolve());
@@ -571,12 +571,12 @@ describe("listAtom()", () => {
       const { result: list } = renderHook(() => useList(field));
 
       const { result: lat } = renderHook(() =>
-        useFieldName(list.current.items[0]!.fields.cityHall.location.lat),
+        useFieldName(list.current.items[0]?.fields.cityHall.location.lat),
       );
       expect(lat.current).toEqual("cities[0].cityHall.location.lat");
 
       const { result: lng } = renderHook(() =>
-        useFieldName(list.current.items[0]!.fields.cityHall.location.lng),
+        useFieldName(list.current.items[0]?.fields.cityHall.location.lng),
       );
       expect(lng.current).toEqual("cities[0].cityHall.location.longitude");
     });
@@ -614,18 +614,18 @@ describe("listAtom()", () => {
 
         const { result: list } = renderHook(() => useList(field));
         const { result: secondContactAddresses } = renderHook(() =>
-          useList(list.current.items[1]!.fields.addresses),
+          useList(list.current.items[1]?.fields.addresses),
         );
 
         const { result: names } = renderHook(() => [
           useFieldName(
-            secondContactAddresses.current.items[0]!.fields.location.latLng,
+            secondContactAddresses.current.items[0]?.fields.location.latLng,
           ),
-          useFieldName(secondContactAddresses.current.items[0]!.fields.city),
+          useFieldName(secondContactAddresses.current.items[0]?.fields.city),
           useFieldName(
-            secondContactAddresses.current.items[1]!.fields.location.latLng,
+            secondContactAddresses.current.items[1]?.fields.location.latLng,
           ),
-          useFieldName(secondContactAddresses.current.items[1]!.fields.city),
+          useFieldName(secondContactAddresses.current.items[1]?.fields.city),
         ]);
 
         expect(names.current).toEqual([

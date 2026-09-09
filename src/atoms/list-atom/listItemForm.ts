@@ -84,7 +84,7 @@ export function listItemForm<Fields extends FormFields, Value>({
             typeof process !== "undefined" &&
             process.env.NODE_ENV !== "production"
           ) {
-            scopedNameAtom.debugLabel = _name.debugLabel + "/scoped";
+            scopedNameAtom.debugLabel = `${_name.debugLabel}/scoped`;
           }
 
           // @ts-expect-error field is typed as PrimitiveAtom, but is writable
