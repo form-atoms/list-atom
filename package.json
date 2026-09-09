@@ -120,5 +120,13 @@
     "jotai": "^2",
     "jotai-effect": "^2",
     "react": ">=16.8"
+  },
+  "overrides": {
+    "jotai-effect": {
+      "jotai": "$jotai"
+    },
+    "form-atoms": {
+      "jotai": "$jotai"
+    }
   }
 }
