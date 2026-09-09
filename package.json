@@ -27,7 +27,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc --build ./tsconfig.build.json",
+    "build": "tsdown src/index.ts --minify",
     "test": "vitest",
     "test:cov": "vitest --coverage",
     "storybook": "npm run storybook:styles && storybook dev",
@@ -80,7 +80,8 @@
     "semantic-release": "^25.0.9",
     "shiki": "^4.4.3",
     "storybook": "10.5.7",
-    "typescript": "5.9.3",
+    "tsdown": "^0.23.0",
+    "typescript": "7.0.2",
     "vite": "^8.2.2",
     "vitest": "^5.0.0",
     "zod": "^3.25.76"
