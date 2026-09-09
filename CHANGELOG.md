@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/form-atoms/list-atom/compare/v2.4.1...v2.4.2) (2026-09-09)
+
+
+### Bug Fixes
+
+* **build:** module ([8aa2cc6](https://github.com/form-atoms/list-atom/commit/8aa2cc6f7806ab97b5579de37940d510aa90d0d8))
+
 ## [2.4.1](https://github.com/form-atoms/list-atom/compare/v2.4.0...v2.4.1) (2026-09-09)
 
 
