@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useAtomValue } from "jotai";
 import type { FormFields, UseAtomOptions } from "form-atoms";
 
-import { type ListAtom } from "../../atoms";
+import type { ListAtom } from "../../atoms";
 
 export const useListState = <Fields extends FormFields>(
   listAtom: ListAtom<Fields>,

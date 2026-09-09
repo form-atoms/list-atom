@@ -15,7 +15,7 @@ import {
 import { PicoFieldName } from "../story/PicoFieldName";
 import { PicoError } from "../story/PicoFieldErrors";
 
-import { createList, listAtom, ListValue } from "..";
+import { createList, listAtom, type ListValue } from "..";
 
 const meta = { render };
 

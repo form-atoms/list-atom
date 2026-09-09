@@ -1,4 +1,4 @@
-import { FieldAtom } from "form-atoms";
+import type { FieldAtom } from "form-atoms";
 import { useAtomValue } from "jotai";
 
 /**

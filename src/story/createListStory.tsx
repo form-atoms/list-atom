@@ -1,5 +1,5 @@
-import { type StoryObj } from "@storybook/react-vite";
-import { type FormFields } from "form-atoms";
+import type { StoryObj } from "@storybook/react-vite";
+import type { FormFields } from "form-atoms";
 
 import { StoryForm } from "./StoryForm";
 import { type ListAtom, type ListComponents, createList } from "../";

@@ -1,4 +1,4 @@
-import { FieldAtom, useFieldErrors } from "form-atoms";
+import { type FieldAtom, useFieldErrors } from "form-atoms";
 
 const style = { color: "var(--pico-color-red-550)" };
 

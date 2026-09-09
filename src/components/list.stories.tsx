@@ -9,7 +9,7 @@ import {
   useFieldValue,
 } from "form-atoms";
 
-import { ListAtom, listAtom, ListItem } from "../atoms";
+import { type ListAtom, listAtom, type ListItem } from "../atoms";
 import { PicoFieldErrors } from "../story/PicoFieldErrors";
 import { PicoFieldName } from "../story/PicoFieldName";
 

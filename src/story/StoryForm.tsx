@@ -1,6 +1,6 @@
 import { action } from "storybook/actions";
-import { Meta, StoryObj } from "@storybook/react";
-import { FormAtom, FormFields, formAtom, useFormActions } from "form-atoms";
+import type { Meta, StoryObj } from "@storybook/react";
+import { type FormAtom, type FormFields, formAtom, useFormActions } from "form-atoms";
 import { useState } from "react";
 
 type Props<Fields extends FormFields> = {

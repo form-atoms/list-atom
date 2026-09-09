@@ -1,4 +1,4 @@
-import { FieldAtom, RESET, UseAtomOptions } from "form-atoms";
+import type { FieldAtom, RESET, UseAtomOptions } from "form-atoms";
 import { useAtomValue, useStore } from "jotai";
 import { useEffect } from "react";
 
