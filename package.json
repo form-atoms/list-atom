@@ -124,7 +124,7 @@
   },
   "peerDependencies": {
     "form-atoms": "^3",
-    "jotai": "^2",
+    "jotai": ">=2",
     "jotai-effect": "^2",
     "react": ">=16.8"
   },
