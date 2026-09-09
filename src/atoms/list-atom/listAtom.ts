@@ -381,7 +381,7 @@ export function listAtom<Fields extends FormFields>({
   });
 
   if (typeof process !== "undefined" && process.env.NODE_ENV !== "production") {
-    Object.entries(listAtoms).map(([atomName, atom]) => {
+    Object.entries(listAtoms).forEach(([atomName, atom]) => {
       atom.debugLabel = `list/${atomName}/${config.name ?? self}`;
     });
 
