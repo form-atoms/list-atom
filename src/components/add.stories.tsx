@@ -84,7 +84,11 @@ export const PositioningAddButton = createListStory({
               <p>Start by adding your first one.</p>
               <List.Add>
                 {({ add }) => (
-                  <button className="outline" onClick={() => add()}>
+                  <button
+                    type="button"
+                    className="outline"
+                    onClick={() => add()}
+                  >
                     Add first
                   </button>
                 )}
@@ -104,7 +108,11 @@ export const PositioningAddButton = createListStory({
                 <div style={{ width: 300 }}>
                   {index + 1 === count && (
                     <fieldset role="group">
-                      <button className="outline" onClick={() => add()}>
+                      <button
+                        type="button"
+                        className="outline"
+                        onClick={() => add()}
+                      >
                         Add
                       </button>
                       <RemoveButton remove={remove} />

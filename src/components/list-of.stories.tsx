@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/a11y/noRedundantRoles: Pico CSS */
 /** biome-ignore-all lint/a11y/useSemanticElements: Pico CSS */
 /** biome-ignore-all lint/a11y/useValidAnchor: Pico CSS */
 import { parseWithZod } from "@conform-to/zod";

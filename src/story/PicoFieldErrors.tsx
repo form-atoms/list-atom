@@ -11,8 +11,8 @@ export const PicoFieldErrors = <T,>({ atom }: { atom: FieldAtom<T> }) => {
 
   return (
     <>
-      {errors.map((error, index) => (
-        <PicoError key={index}>{error}</PicoError>
+      {errors.map((error) => (
+        <PicoError key={error}>{error}</PicoError>
       ))}
     </>
   );
