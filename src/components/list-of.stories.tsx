@@ -1,3 +1,6 @@
+/** biome-ignore-all lint/a11y/noRedundantRoles: Pico CSS */
+/** biome-ignore-all lint/a11y/useSemanticElements: Pico CSS */
+/** biome-ignore-all lint/a11y/useValidAnchor: Pico CSS */
 import { parseWithZod } from "@conform-to/zod";
 import { fieldAtom, InputField } from "form-atoms";
 import { useActionState } from "react";
@@ -64,7 +67,7 @@ export const NestedList = createListStory({
   render: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [state, formAction] = useActionState(
-      (_, formData: FormData) => {
+      (_: unknown, formData: FormData) => {
         const result = parseWithZod(formData, {
           schema: z.object({
             users: z.array(
@@ -174,21 +177,31 @@ export const NestedList = createListStory({
 
                       <div className="grid">
                         <div>
-                          <label>First Name</label>
+                          <label htmlFor={`${fields.name}`}>First Name</label>
                           <InputField
                             atom={fields.name}
                             render={(props) => (
-                              <input {...props} placeholder="Name" />
+                              <input
+                                {...props}
+                                id={`${fields.name}`}
+                                placeholder="Name"
+                              />
                             )}
                           />
                           <PicoFieldName field={fields.name} />
                         </div>
                         <div>
-                          <label>Last Name</label>
+                          <label htmlFor={`${fields.lastName}`}>
+                            Last Name
+                          </label>
                           <InputField
                             atom={fields.lastName}
                             render={(props) => (
-                              <input {...props} placeholder="Last Name" />
+                              <input
+                                {...props}
+                                id={`${fields.lastName}`}
+                                placeholder="Last Name"
+                              />
                             )}
                           />
                           <PicoFieldName field={fields.lastName} />
@@ -202,13 +215,16 @@ export const NestedList = createListStory({
                                 {({ fields, index, remove }) => (
                                   <>
                                     <div>
-                                      <label>Account #{index + 1}</label>
+                                      <label htmlFor={`${fields.iban}`}>
+                                        Account #{index + 1}
+                                      </label>
                                       <fieldset role="group">
                                         <InputField
                                           atom={fields.iban}
                                           render={(props) => (
                                             <input
                                               {...props}
+                                              id={`${fields.iban}`}
                                               placeholder="IBAN"
                                             />
                                           )}
@@ -220,16 +236,20 @@ export const NestedList = createListStory({
                                     </div>
 
                                     <blockquote>
-                                      <label>Spending limits</label>
-
+                                      <p>Spending limits</p>
                                       <div className="grid">
                                         <div>
-                                          <label>Card</label>
+                                          <label
+                                            htmlFor={`${fields.limits.card}`}
+                                          >
+                                            Card
+                                          </label>
                                           <InputField
                                             atom={fields.limits.card}
                                             render={(props) => (
                                               <input
                                                 {...props}
+                                                id={`${fields.limits.card}`}
                                                 placeholder="Card daily limit"
                                               />
                                             )}
@@ -239,12 +259,17 @@ export const NestedList = createListStory({
                                           />
                                         </div>
                                         <div>
-                                          <label>Withdrawal</label>
+                                          <label
+                                            htmlFor={`${fields.limits.withdrawal}`}
+                                          >
+                                            Withdrawal
+                                          </label>
                                           <InputField
                                             atom={fields.limits.withdrawal}
                                             render={(props) => (
                                               <input
                                                 {...props}
+                                                id={`${fields.limits.withdrawal}`}
                                                 placeholder="Withdrawal daily limit"
                                               />
                                             )}
