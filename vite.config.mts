@@ -13,7 +13,7 @@ export default defineConfig({
     setupFiles: ["./setup.ts"],
     coverage: {
       provider: "v8",
-      include: ["src/@(atoms|components|hooks)"],
+      include: ["src/@(atoms|components|hooks)/**"],
       exclude: ["**/*.@(mock|stories|test-d).@(ts|tsx)"],
     },
   },
