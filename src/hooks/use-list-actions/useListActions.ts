@@ -1,7 +1,7 @@
 import type { FormFields, FormFieldValues, UseAtomOptions } from "form-atoms";
 import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomCallback } from "jotai/utils";
 import { startTransition, useCallback, useMemo } from "react";
-
 import type { ListAtom, SplitListItem } from "../../atoms/list-atom";
 import type { ListItemForm } from "../../atoms/list-atom/listItemForm";
 
@@ -48,7 +48,17 @@ export const useListActions = <Fields extends FormFields>(
     [dispatchSplitList],
   );
 
-  return useMemo(() => ({ remove, add, move }), [remove, add, move]);
+  const getItemFields = useAtomCallback(
+    useCallback(
+      (get, _, listItem: ListItemForm<Fields>) => get(get(listItem).fields),
+      [],
+    ),
+  );
+
+  return useMemo(
+    () => ({ remove, add, move, getItemFields }),
+    [remove, add, move, getItemFields],
+  );
 };
 
 export type UseListActions<Fields extends FormFields> = {
@@ -80,4 +90,11 @@ export type UseListActions<Fields extends FormFields> = {
     item: SplitListItem<Fields>,
     before?: SplitListItem<Fields> | undefined,
   ) => void;
+  /**
+   * Retrieves the fields of a given list item form.
+   *
+   * @param listItem - A list item form from which to get the fields.
+   * @returns The fields of the specified list item form.
+   */
+  getItemFields: (listItem: ListItemForm<Fields>) => Fields;
 };

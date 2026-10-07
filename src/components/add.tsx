@@ -10,6 +10,13 @@ type AddChildrenProps<Fields extends FormFields> = {
    * @returns The created ListItemForm<Fields>
    */
   add: (value?: FormFieldValues<Fields>) => ListItemForm<Fields>;
+  /**
+   * Retrieves the fields of a given list item form.
+   *
+   * @param listItem - A list item form from which to get the fields.
+   * @returns The fields of the specified list item form.
+   */
+  getItemFields: (listItem: ListItemForm<Fields>) => Fields;
 };
 
 export type AddProps<Fields extends FormFields> = Partial<{
@@ -28,7 +35,10 @@ export function createAdd<Fields extends FormFields>(
   }: AddProps<Fields>) {
     const actions = useListActions(listAtom);
 
-    return children({ add: (value) => actions.add(undefined, value) });
+    return children({
+      add: (value) => actions.add(undefined, value),
+      getItemFields: actions.getItemFields,
+    });
   }
 
   return { Add };

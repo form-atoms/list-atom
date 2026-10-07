@@ -223,6 +223,7 @@ export type ListAtom<Fields extends FormFields, Value> = ExtendFieldAtom<
 ### useListActions()
 
 A hook that returns a `add`, `remove` & `move` actions, that can be used to interact with the list atom state.
+Moreover you can get recently aded item's fields with the `getItemFields`.
 
 #### Arguments
 
@@ -263,6 +264,13 @@ export type UseListActions<Fields extends FormFields, Value> = {
     item: SplitListItem<Fields>,
     before?: SplitListItem<Fields> | undefined,
   ) => void;
+  /**
+   * Retrieves the fields of a given list item form.
+   *
+   * @param listItem - A list item form from which to get the fields.
+   * @returns The fields of the specified list item form.
+   */
+  getItemFields: (listItem: ListItemForm<Fields>) => Fields;
 };
 ```
 
@@ -397,6 +405,13 @@ type AddChildrenProps<Fields extends FormFields> = {
    * @returns The created ListItemForm<Fields>
    */
   add: (value?: FormFieldValues<Fields>) => ListItemForm<Fields>;
+  /**
+   * Retrieves the fields of a given list item form.
+   *
+   * @param listItem - A list item form from which to get the fields.
+   * @returns The fields of the specified list item form.
+   */
+  getItemFields: (listItem: ListItemForm<Fields>) => Fields;
 };
 ```
 

@@ -197,4 +197,26 @@ describe("useListActions()", () => {
       });
     });
   });
+
+  describe("getItemFields(item)", () => {
+    it("retrieves the fields of a given list item form", async () => {
+      const contacts = listAtom({
+        value: [{ email: "primary@contact.com" }],
+        fields: () => ({
+          email: fieldAtom({ value: "" }),
+        }),
+      });
+      const { result: actions } = renderHook(() => useListActions(contacts));
+
+      const fields = await act(() => {
+        const item = actions.current.add(undefined, {
+          email: "initial@value.test",
+        });
+
+        return actions.current.getItemFields(item);
+      });
+
+      expect(fields).toHaveProperty("email");
+    });
+  });
 });
