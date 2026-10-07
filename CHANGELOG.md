@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/form-atoms/list-atom/compare/v2.4.3...v2.5.0) (2026-10-07)
+
+
+### Features
+
+* **getItemFields:** a new helper callback for the listActions and the <List.Add> component. ([a2941cc](https://github.com/form-atoms/list-atom/commit/a2941cc788f1abcca939d78c1247d0a6c3d5a82d))
+
 ## [2.4.3](https://github.com/form-atoms/list-atom/compare/v2.4.2...v2.4.3) (2026-09-09)
 
 
