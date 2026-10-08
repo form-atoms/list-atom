@@ -19,6 +19,9 @@ npm install @form-atoms/list-atom jotai-effect
 <a aria-label="Code coverage report" href="https://codecov.io/gh/form-atoms/list-atom">
   <img alt="Code coverage" src="https://img.shields.io/codecov/c/gh/form-atoms/list-atom?style=for-the-badge&labelColor=202632">
 </a>
+<a aria-label="Storybook" href="https://form-atoms.github.io/list-atom/">
+  <img alt="Storybook" src="https://img.shields.io/badge/Storybook-FF4785?logo=storybook&logoColor=white&style=for-the-badge">
+</a>
 
 ## Features
 
