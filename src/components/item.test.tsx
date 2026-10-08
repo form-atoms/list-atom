@@ -23,6 +23,27 @@ describe("<Item />", () => {
     expect(screen.getByDisplayValue("Alice")).toBeInTheDocument();
   });
 
+  it("passes the total count of items to children", () => {
+    const friends = listAtom({
+      value: [{ name: "Alice" }, { name: "Bob" }],
+      fields: () => ({ name: fieldAtom({ value: "" }) }),
+    });
+
+    const { Item } = createItem(friends);
+    render(
+      <Item>
+        {({ fields, count }) => (
+          <>
+            <InputField atom={fields.name} component="input" />
+            <span>count: {count}</span>
+          </>
+        )}
+      </Item>,
+    );
+
+    expect(screen.getAllByText("count: 2")).toHaveLength(2);
+  });
+
   describe("remove action", () => {
     it("removes the respective list item", async () => {
       const friends = listAtom({

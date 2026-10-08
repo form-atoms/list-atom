@@ -19,6 +19,7 @@ export const useList = <Fields extends FormFields>(
     formList,
     formFields,
     isEmpty,
+    count,
   } = useListState(listAtom, options);
   const { add, move, remove } = useListActions(listAtom, options);
 
@@ -35,7 +36,7 @@ export const useList = <Fields extends FormFields>(
       ),
   }));
 
-  return { remove, add, move, isEmpty, items };
+  return { remove, add, move, isEmpty, count, items };
 };
 
 export type UseList<Fields extends FormFields> = UseListActions<Fields> & {
@@ -43,6 +44,10 @@ export type UseList<Fields extends FormFields> = UseListActions<Fields> & {
    * Resolved value from the list.empty atom.
    */
   isEmpty: boolean;
+  /**
+   * Resolved value from the list.count atom.
+   */
+  count: number;
   items: {
     /**
      * The item from the internal splitList.

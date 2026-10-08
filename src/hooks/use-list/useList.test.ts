@@ -25,6 +25,7 @@ describe("useListAtom()", () => {
 
       expect(onSubmit).toHaveBeenCalledWith({ contacts: [] });
       expect(list.current.isEmpty).toBe(true);
+      expect(list.current.count).toBe(0);
     });
   });
 

@@ -37,6 +37,33 @@ describe("listAtom()", () => {
     expect(onSubmit).toHaveBeenCalledWith({ nums: [{ age: 20 }, { age: 30 }] });
   });
 
+  describe("count atom", () => {
+    it("is the number of items in the list", () => {
+      const list = listAtom({
+        value: [{ age: 3 }, { age: 4 }],
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
+      });
+
+      const { result } = renderHook(() =>
+        useAtomValue(useAtomValue(list).count),
+      );
+
+      expect(result.current).toBe(2);
+    });
+
+    it("is zero when the list is empty", () => {
+      const list = listAtom({
+        fields: () => ({ age: fieldAtom<number>({ value: 0 }) }),
+      });
+
+      const { result } = renderHook(() =>
+        useAtomValue(useAtomValue(list).count),
+      );
+
+      expect(result.current).toBe(0);
+    });
+  });
+
   describe("empty atom", () => {
     it("is true when values is empty array", () => {
       const list = listAtom({

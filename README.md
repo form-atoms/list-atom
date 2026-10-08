@@ -105,7 +105,7 @@ export const Form = () => {
 
 ### listAtom()
 
-An atom that represents a **list of form fields** in a form. It manages state for the list, including the name, value, errors, dirty, validation and empty state.
+An atom that represents a **list of form fields** in a form. It manages state for the list, including the name, value, errors, dirty, validation, count and empty state.
 
 #### Arguments
 
@@ -183,6 +183,10 @@ An extended `FieldAtom`:
 export type ListAtom<Fields extends FormFields, Value> = ExtendFieldAtom<
   Value[],
   {
+    /**
+     * An atom holding the total count of items in the list.
+     */
+    count: Atom<number>;
     /**
      * An atom indicating whether the list is empty.
      */
@@ -298,6 +302,10 @@ export type UseList<Fields extends FormFields, Value> = UseListActions<
    * Resolved value from the list.empty atom.
    */
   isEmpty: boolean;
+  /**
+   * Resolved value from the list.count atom.
+   */
+  count: number;
   items: {
     /**
      * The item from the internal splitList.

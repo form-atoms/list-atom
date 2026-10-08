@@ -45,6 +45,10 @@ type ListAtomState<Fields extends FormFields> = FieldAtomState<
   FormFieldValues<Fields>[]
 > & {
   /**
+   * An atom holding the total count of items in the list.
+   */
+  count: Atom<number>;
+  /**
    * An atom indicating whether the list is empty.
    */
   empty: Atom<boolean>;
@@ -232,7 +236,8 @@ export function listAtom<Fields extends FormFields>({
   const refAtom = atom<
     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null
   >(null);
-  const emptyAtom = atom((get) => get(_formListAtom).length === 0);
+  const countAtom = atom((get) => get(_formListAtom).length);
+  const emptyAtom = atom((get) => get(countAtom) === 0);
   const valueAtom = atom(
     readListValue,
     (
@@ -356,6 +361,7 @@ export function listAtom<Fields extends FormFields>({
   const listAtoms = {
     name: nameAtom,
     value: valueAtom,
+    count: countAtom,
     empty: emptyAtom,
     validateStatus: validateResultAtom,
     touched: touchedAtom,

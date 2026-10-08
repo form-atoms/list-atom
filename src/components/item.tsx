@@ -54,7 +54,7 @@ export function createItem<Fields extends FormFields>(
   listAtom: ListAtom<Fields>,
 ) {
   function Item({ children }: ItemProps<Fields>) {
-    const { add, items } = useList(listAtom);
+    const { add, items, count } = useList(listAtom);
 
     return (
       <Fragment>
@@ -64,7 +64,7 @@ export function createItem<Fields extends FormFields>(
               item,
               fields,
               index,
-              count: items.length,
+              count,
               add,
               remove,
               moveUp,
