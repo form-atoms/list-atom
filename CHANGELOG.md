@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/form-atoms/list-atom/compare/v2.6.0...v2.7.0) (2026-10-08)
+
+
+### Features
+
+* **List.Empty:** add secondary mode for a children prop receiving  the count state ([36dd79f](https://github.com/form-atoms/list-atom/commit/36dd79f6e5428fb2e51f4a9cbbdc32f3e65bec83))
+
 # [2.6.0](https://github.com/form-atoms/list-atom/compare/v2.5.0...v2.6.0) (2026-10-08)
 
 
