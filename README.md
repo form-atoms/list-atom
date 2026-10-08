@@ -97,7 +97,7 @@ export const Form = () => {
 | [`createList(listAtom)`](#createlistlistatom) | A function to create components bound to the listAtom.          |                                                                                               |
 | [`<List>`](#list)                             | A component to initialize the listAtom via `initialValue` prop. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list--docs#examples)       |
 | [`<List.Add>`](#listadd)                      | Adds new or initialized items to the list.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)   |
-| [`<List.Empty>`](#listempty)                  | Render children only when the list has no items.                | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples) |
+| [`<List.Empty>`](#listempty)                  | Render children only when the list has no items. Also accepts a render prop with `isEmpty` and `count`. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples) |
 | [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)  |
 | [`<List.Of>`](#listof)                        | Render a nested list within a `<List.Item>`.                    | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples)    |
 
@@ -429,9 +429,25 @@ type AddChildrenProps<Fields extends FormFields> = {
 
 #### Props
 
-| Name     | Type        | Required? | Description                              |
-| -------- | ----------- | --------- | ---------------------------------------- |
-| children | `ReactNode` | No        | Content to render when the list is empty |
+| Name     | Type                                       | Required? | Description                              |
+| -------- | ------------------------------------------ | --------- | ---------------------------------------- |
+| children | `ReactNode`                                | No        | Content to render when the list is empty |
+| children | `(props: EmptyChildrenProps) => ReactNode` | No        | A render prop                            |
+
+#### Children Props
+
+```ts
+type EmptyChildrenProps = {
+  /**
+   * Indicates whether the list has no items.
+   */
+  isEmpty: boolean;
+  /**
+   * Total count of items in the list.
+   */
+  count: number;
+};
+```
 
 ### &lt;List.Item&gt;
 

@@ -33,4 +33,47 @@ describe("<Empty /> component", () => {
       expect(screen.queryByText("empty message")).not.toBeInTheDocument();
     });
   });
+
+  describe("when children is a render prop", () => {
+    it("passes isEmpty and count to the render prop when the list is empty", () => {
+      const friends = listAtom({
+        fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
+      });
+
+      const { Empty } = createEmpty(friends);
+
+      render(
+        <Empty>
+          {({ isEmpty, count }) => (
+            <p>
+              isEmpty: {String(isEmpty)}, count: {count}
+            </p>
+          )}
+        </Empty>,
+      );
+
+      expect(screen.getByText("isEmpty: true, count: 0")).toBeInTheDocument();
+    });
+
+    it("passes isEmpty and count to the render prop when the list has items", () => {
+      const friends = listAtom({
+        value: [{ name: "Bobette" }, { name: "Alice" }],
+        fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
+      });
+
+      const { Empty } = createEmpty(friends);
+
+      render(
+        <Empty>
+          {({ isEmpty, count }) => (
+            <p>
+              isEmpty: {String(isEmpty)}, count: {count}
+            </p>
+          )}
+        </Empty>,
+      );
+
+      expect(screen.getByText("isEmpty: false, count: 2")).toBeInTheDocument();
+    });
+  });
 });

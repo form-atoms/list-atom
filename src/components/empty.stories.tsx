@@ -58,3 +58,51 @@ export const EmptyList = createListStory({
     ),
   },
 });
+
+export const EmptyListRenderProp = createListStory({
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "When the `<List.Empty>` children is a render prop, it receives the `isEmpty` and `count` props. The render prop is called on every render, so it decides what to show for each state.",
+      },
+    },
+  },
+  args: {
+    atom: listAtom({
+      name: "hobbies",
+      fields: () => ({ hobby: fieldAtom<string>({ value: "" }) }),
+    }),
+    children: ({ List }) => (
+      <List>
+        <List.Empty>
+          {({ isEmpty, count }) => (
+            <p style={{ textAlign: "center" }}>
+              {isEmpty
+                ? "You don't have any hobbies in your list yet."
+                : `You have ${count} ${count === 1 ? "hobby" : "hobbies"} in your list.`}
+            </p>
+          )}
+        </List.Empty>
+        <List.Item>
+          {({ fields, remove }) => (
+            <fieldset role="group">
+              <InputField
+                atom={fields.hobby}
+                render={(props) => <input {...props} />}
+              />
+              <RemoveButton remove={remove} />
+            </fieldset>
+          )}
+        </List.Item>
+        <List.Add>
+          {({ add }) => (
+            <button type="button" className="outline" onClick={() => add()}>
+              Add hobby
+            </button>
+          )}
+        </List.Add>
+      </List>
+    ),
+  },
+});
