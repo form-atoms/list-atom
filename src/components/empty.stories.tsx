@@ -64,7 +64,7 @@ export const EmptyListRenderProp = createListStory({
     docs: {
       description: {
         story:
-          "When the `<List.Empty>` children is a render prop, it receives the `isEmpty` and `count` props. The render prop is called on every render, so it decides what to show for each state.",
+          "When the `<List.Empty>` children is a render prop, it receives the `isEmpty`, `count`, `isFull`, and `max` props. The render prop is called on every render, so it decides what to show for each state.",
       },
     },
   },

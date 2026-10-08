@@ -149,3 +149,61 @@ const Example = () => {
 ```
 
 </Example>
+
+### Disabling the add button
+
+<Example of={AddStories.DisablingAddButton} >
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { listAtom, createList } from "@form-atoms/list-atom";
+
+const atom = listAtom({
+  fields: () => ({ feature: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(atom);
+
+const Example = () => (
+  <List max={3}>
+    <List.Item>
+      {({ fields, remove }) => (
+        <fieldset role="group">
+          <InputField atom={fields.feature} component="input" />
+          <button type="button" className="outline secondary" onClick={remove}>
+            Remove
+          </button>
+        </fieldset>
+      )}
+    </List.Item>
+    <List.Add>
+      {({ add }) => (
+        <List.Empty>
+          {({ isEmpty, isFull, max }) => (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "baseline",
+                gap: 16,
+              }}
+            >
+              <button
+                type="button"
+                className="outline"
+                disabled={isFull}
+                onClick={() => add()}
+              >
+                {isEmpty ? "Add first" : "Add"}
+              </button>
+              {isFull && <small>Maximum of {max} items reached.</small>}
+            </div>
+          )}
+        </List.Empty>
+      )}
+    </List.Add>
+  </List>
+);
+```
+
+</Example>

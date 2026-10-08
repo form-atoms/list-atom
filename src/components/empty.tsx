@@ -13,6 +13,14 @@ export type EmptyChildrenProps = {
    * Total count of items in the list.
    */
   count: number;
+  /**
+   * Indicates whether the list has reached its maximum capacity.
+   */
+  isFull: boolean;
+  /**
+   * The maximum number of items allowed in the list.
+   */
+  max: number;
 };
 
 export type EmptyProps = {
@@ -23,10 +31,10 @@ export function createEmpty<Fields extends FormFields>(
   listAtom: ListAtom<Fields>,
 ) {
   function Empty({ children }: EmptyProps) {
-    const { isEmpty, count } = useListState(listAtom);
+    const { isEmpty, count, isFull, max } = useListState(listAtom);
 
     if (typeof children === "function") {
-      return children({ isEmpty, count });
+      return children({ isEmpty, count, isFull, max });
     }
 
     return isEmpty ? children : null;

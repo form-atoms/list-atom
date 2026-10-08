@@ -14,9 +14,11 @@ export const useListState = <Fields extends FormFields>(
   const formFields = useAtomValue(atoms._formFields, options);
   const isEmpty = useAtomValue(atoms.empty, options);
   const count = useAtomValue(atoms.count, options);
+  const isFull = useAtomValue(atoms.full, options);
+  const max = useAtomValue(atoms.max, options);
 
   return useMemo(
-    () => ({ items, formList, formFields, isEmpty, count }),
-    [items, formList, formFields, isEmpty, count],
+    () => ({ items, formList, formFields, isEmpty, count, isFull, max }),
+    [items, formList, formFields, isEmpty, count, isFull, max],
   );
 };

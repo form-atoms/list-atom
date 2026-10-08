@@ -53,6 +53,14 @@ type ListAtomState<Fields extends FormFields> = FieldAtomState<
    */
   empty: Atom<boolean>;
   /**
+   * An atom holding the maximum number of items allowed in the list.
+   */
+  max: PrimitiveAtom<number>;
+  /**
+   * An atom indicating whether the list has reached its maximum capacity.
+   */
+  full: Atom<boolean>;
+  /**
    * A splitAtom() instance from jotai/utils.
    * It handles adding, removing and moving of items in the list.
    * @internal
@@ -238,6 +246,8 @@ export function listAtom<Fields extends FormFields>({
   >(null);
   const countAtom = atom((get) => get(_formListAtom).length);
   const emptyAtom = atom((get) => get(countAtom) === 0);
+  const maxAtom = atom(Infinity);
+  const fullAtom = atom((get) => get(countAtom) >= get(maxAtom));
   const valueAtom = atom(
     readListValue,
     (
@@ -363,6 +373,8 @@ export function listAtom<Fields extends FormFields>({
     value: valueAtom,
     count: countAtom,
     empty: emptyAtom,
+    max: maxAtom,
+    full: fullAtom,
     validateStatus: validateResultAtom,
     touched: touchedAtom,
     dirty: dirtyAtom,

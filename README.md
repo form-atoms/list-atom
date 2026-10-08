@@ -97,7 +97,7 @@ export const Form = () => {
 | [`createList(listAtom)`](#createlistlistatom) | A function to create components bound to the listAtom.          |                                                                                               |
 | [`<List>`](#list)                             | A component to initialize the listAtom via `initialValue` prop. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list--docs#examples)       |
 | [`<List.Add>`](#listadd)                      | Adds new or initialized items to the list.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-add--docs#examples)   |
-| [`<List.Empty>`](#listempty)                  | Render children only when the list has no items. Also accepts a render prop with `isEmpty` and `count`. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples) |
+| [`<List.Empty>`](#listempty)                  | Render children only when the list has no items. Also accepts a render prop with `isEmpty`, `count`, `isFull`, and `max`. | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-empty--docs#examples) |
 | [`<List.Item>`](#listitem)                    | Iterate and render each of the list items.                      | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-item--docs#examples)  |
 | [`<List.Of>`](#listof)                        | Render a nested list within a `<List.Item>`.                    | [🎨](https://form-atoms.github.io/list-atom/?path=/docs/components-list-of--docs#examples)    |
 
@@ -191,6 +191,14 @@ export type ListAtom<Fields extends FormFields, Value> = ExtendFieldAtom<
      * An atom indicating whether the list is empty.
      */
     empty: Atom<boolean>;
+    /**
+     * An atom holding the maximum number of items allowed in the list.
+     */
+    max: PrimitiveAtom<number>;
+    /**
+     * An atom indicating whether the list has reached its maximum capacity.
+     */
+    full: Atom<boolean>;
     /**
      * A splitAtom() instance from jotai/utils.
      * It handles adding, removing and moving of items in the list.
@@ -391,6 +399,7 @@ export type ListComponents<Fields extends FormFields> = {
 | ------------ | ----------- | --------- | -------------------------------------------------------------- |
 | children     | `ReactNode` | Yes       | A react nodes                                                  |
 | initialValue | `Value[]`   | No        | A value to initialize the `listAtom`                           |
+| max          | `number`    | No        | The maximum number of items allowed in the list.               |
 | store        | `AtomStore` | No        | [A Jotai store](https://jotai.org/docs/core/store#createstore) |
 
 ### &lt;List.Add&gt;
@@ -446,6 +455,14 @@ type EmptyChildrenProps = {
    * Total count of items in the list.
    */
   count: number;
+  /**
+   * Indicates whether the list has reached its maximum capacity.
+   */
+  isFull: boolean;
+  /**
+   * The maximum number of items allowed in the list.
+   */
+  max: number;
 };
 ```
 

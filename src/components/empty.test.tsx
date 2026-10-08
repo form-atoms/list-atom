@@ -3,6 +3,7 @@ import { fieldAtom } from "form-atoms";
 import { describe, expect, it } from "vitest";
 import { listAtom } from "../atoms";
 import { createEmpty } from "./empty";
+import { createList } from "./list";
 
 describe("<Empty /> component", () => {
   describe("when there are no items in the list", () => {
@@ -74,6 +75,54 @@ describe("<Empty /> component", () => {
       );
 
       expect(screen.getByText("isEmpty: false, count: 2")).toBeInTheDocument();
+    });
+
+    it("passes isFull and max to the render prop", () => {
+      const friends = listAtom({
+        value: [{ name: "Alice" }, { name: "Bob" }, { name: "Carol" }],
+        fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
+      });
+
+      const { List } = createList(friends);
+      const { Empty } = createEmpty(friends);
+
+      render(
+        <List max={3}>
+          <Empty>
+            {({ isFull, max }) => (
+              <p>
+                isFull: {String(isFull)}, max: {max}
+              </p>
+            )}
+          </Empty>
+        </List>,
+      );
+
+      expect(screen.getByText("isFull: true, max: 3")).toBeInTheDocument();
+    });
+
+    it("passes isFull as false when the count is below max", () => {
+      const friends = listAtom({
+        value: [{ name: "Alice" }, { name: "Bob" }],
+        fields: () => ({ name: fieldAtom<string>({ value: "" }) }),
+      });
+
+      const { List } = createList(friends);
+      const { Empty } = createEmpty(friends);
+
+      render(
+        <List max={3}>
+          <Empty>
+            {({ isFull, max }) => (
+              <p>
+                isFull: {String(isFull)}, max: {max}
+              </p>
+            )}
+          </Empty>
+        </List>,
+      );
+
+      expect(screen.getByText("isFull: false, max: 3")).toBeInTheDocument();
     });
   });
 });

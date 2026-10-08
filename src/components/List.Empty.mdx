@@ -8,7 +8,7 @@ import * as EmptyStories from "./empty.stories";
 
 # List.Empty
 
-The Empty component renders children when the list has no items. Alternatively, pass a render prop to receive the `isEmpty` and `count` props.
+The Empty component renders children when the list has no items. Alternatively, pass a render prop to receive the `isEmpty`, `count`, `isFull`, and `max` props.
 
 </hgroup>
 
@@ -28,10 +28,12 @@ function BlankSlate() {
 
 When `children` is a render prop, it is called with the following props. The render prop is called on every render, so it decides what to show for each state.
 
-| Name    | Type      | Description                              |
-| ------- | --------- | ---------------------------------------- |
-| isEmpty | `boolean` | Indicates whether the list has no items. |
-| count   | `number`  | Total count of items in the list.        |
+| Name    | Type      | Description                                                  |
+| ------- | --------- | ------------------------------------------------------------ |
+| isEmpty | `boolean` | Indicates whether the list has no items.                     |
+| count   | `number`  | Total count of items in the list.                            |
+| isFull  | `boolean` | Indicates whether the list has reached its maximum capacity. |
+| max     | `number`  | The maximum number of items allowed in the list.             |
 
 ## Examples
 

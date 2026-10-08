@@ -36,6 +36,7 @@ function InitializeList() {
 | ------------ | ----------- | --------- | -------------------------------------------------------------- |
 | children     | `ReactNode` | Yes       | A react nodes                                                  |
 | initialValue | `Value[]`   | No        | A value to initialize the `listAtom`                           |
+| max          | `number`    | No        | The maximum number of items allowed in the list.               |
 | store        | `AtomStore` | No        | [A Jotai store](https://jotai.org/docs/core/store#createstore) |
 
 ## Examples
@@ -70,6 +71,63 @@ const Example = () => (
         </fieldset>
       )}
     </List.Item>
+  </List>
+);
+```
+
+</Example>
+
+<Example of={ListStories.MaxItems}>
+
+```tsx
+import { fieldAtom, InputField } from "form-atoms";
+import { listAtom, createList } from "@form-atoms/list-atom";
+
+const members = listAtom({
+  name: "teamMembers",
+  fields: () => ({ name: fieldAtom({ value: "" }) }),
+});
+
+const { List } = createList(members);
+
+const Example = () => (
+  <List max={2} initialValue={[{ name: "Alice" }]}>
+    <List.Item>
+      {({ fields, remove }) => (
+        <fieldset role="group">
+          <InputField atom={fields.name} component="input" />
+          <button type="button" className="outline secondary" onClick={remove}>
+            Remove
+          </button>
+        </fieldset>
+      )}
+    </List.Item>
+    <List.Add>
+      {({ add }) => (
+        <List.Empty>
+          {({ isFull, max }) => (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "baseline",
+                gap: 16,
+              }}
+            >
+              <button
+                type="button"
+                className="outline"
+                disabled={isFull}
+                onClick={() => add()}
+              >
+                Add member
+              </button>
+              {isFull && <small>Maximum of {max} members reached.</small>}
+            </div>
+          )}
+        </List.Empty>
+      )}
+    </List.Add>
   </List>
 );
 ```

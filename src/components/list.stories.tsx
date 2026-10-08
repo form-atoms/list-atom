@@ -442,6 +442,61 @@ export const WithComputedField = createListStory({
   },
 });
 
+export const MaxItems = createListStory({
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "The `max` prop limits the number of items. The `<List.Empty>` render prop receives `isFull` and `max`, so the `<List.Add>` button can be disabled once the limit is reached.",
+      },
+    },
+  },
+  args: {
+    atom: listAtom({
+      name: "teamMembers",
+      fields: () => ({ name: fieldAtom({ value: "" }) }),
+    }),
+    children: ({ List }) => (
+      <List max={2} initialValue={[{ name: "Alice" }]}>
+        <List.Item>
+          {({ fields, remove }) => (
+            <fieldset role="group">
+              <InputField atom={fields.name} component="input" />
+              <RemoveButton remove={remove} />
+            </fieldset>
+          )}
+        </List.Item>
+        <List.Add>
+          {({ add }) => (
+            <List.Empty>
+              {({ isFull, max }) => (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "baseline",
+                    gap: 16,
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="outline"
+                    disabled={isFull}
+                    onClick={() => add()}
+                  >
+                    Add member
+                  </button>
+                  {isFull && <small>Maximum of {max} members reached.</small>}
+                </div>
+              )}
+            </List.Empty>
+          )}
+        </List.Add>
+      </List>
+    ),
+  },
+});
+
 type ListFields<T> = T extends ListAtom<infer Fields> ? Fields : never;
 
 function PrimaryRadio({ phone, isPrimary }: ListFields<typeof phones>) {

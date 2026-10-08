@@ -127,3 +127,58 @@ export const PositioningAddButton = createListStory({
     },
   },
 });
+
+export const DisablingAddButton = createListStory({
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "The `<List.Add>` can nest a `<List.Empty>` render prop to read the `isEmpty`, `isFull` and `max` props. Here the add button is disabled once the list reaches its `max` of 3 items.",
+      },
+    },
+  },
+  args: {
+    atom: listAtom({
+      name: "productFeatures",
+      fields: () => ({ feature: fieldAtom({ value: "" }) }),
+    }),
+    children: ({ List }) => (
+      <List max={3}>
+        <List.Item>
+          {({ fields, remove }) => (
+            <fieldset role="group">
+              <InputField atom={fields.feature} component="input" />
+              <RemoveButton remove={remove} />
+            </fieldset>
+          )}
+        </List.Item>
+        <List.Add>
+          {({ add }) => (
+            <List.Empty>
+              {({ isEmpty, isFull, max }) => (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "baseline",
+                    gap: 16,
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="outline"
+                    disabled={isFull}
+                    onClick={() => add()}
+                  >
+                    {isEmpty ? "Add first" : "Add"}
+                  </button>
+                  {isFull && <small>Maximum of {max} items reached.</small>}
+                </div>
+              )}
+            </List.Empty>
+          )}
+        </List.Add>
+      </List>
+    ),
+  },
+});

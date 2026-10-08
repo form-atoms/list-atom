@@ -1,11 +1,15 @@
 import type { AtomStore, FormFields, FormFieldValues } from "form-atoms";
 import type { PropsWithChildren } from "react";
-
 import type { ListAtom } from "../atoms/list-atom";
-import { useFieldInitialValue } from "../hooks";
+import { useFieldInitialValue, useHydrateListMax } from "../hooks";
 
 export type ListProps<Fields extends FormFields> = PropsWithChildren<{
   initialValue?: FormFieldValues<Fields>[];
+  /**
+   * The maximum number of items allowed in the list.
+   * WARNING: This does not prevent setting more items than max via initialValue or explicitly with actions.setValue().
+   */
+  max?: number;
   /**
    * When using atoms with a scope, the provider with the same scope will be used.
    * The recommendation for the scope value is a unique symbol. The primary use case
@@ -17,8 +21,9 @@ export type ListProps<Fields extends FormFields> = PropsWithChildren<{
 export function createList<Fields extends FormFields>(
   listAtom: ListAtom<Fields>,
 ) {
-  function List({ initialValue, store, children }: ListProps<Fields>) {
+  function List({ initialValue, max, store, children }: ListProps<Fields>) {
     useFieldInitialValue(listAtom, initialValue, { store });
+    useHydrateListMax(listAtom, max, { store });
 
     return <>{children}</>;
   }
