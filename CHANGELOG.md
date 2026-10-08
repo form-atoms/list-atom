@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/form-atoms/list-atom/compare/v2.5.0...v2.6.0) (2026-10-08)
+
+
+### Features
+
+* **count:** add count tracking to list state ([9f5b206](https://github.com/form-atoms/list-atom/commit/9f5b206dde33f26b05e4594a43347581b9d839e5))
+
 # [2.5.0](https://github.com/form-atoms/list-atom/compare/v2.4.3...v2.5.0) (2026-10-07)
 
 
