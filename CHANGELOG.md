@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/form-atoms/list-atom/compare/v2.7.0...v2.8.0) (2026-10-08)
+
+
+### Features
+
+* **max&full:** enable configuring List max length, compute isFull ([83401ea](https://github.com/form-atoms/list-atom/commit/83401ea9ba87e096de4d168109f4eb35cca98070))
+
 # [2.7.0](https://github.com/form-atoms/list-atom/compare/v2.6.0...v2.7.0) (2026-10-08)
 
 
