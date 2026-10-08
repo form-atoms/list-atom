@@ -32,4 +32,12 @@ export default {
   core: {
     disableTelemetry: true,
   },
+
+  refs: {
+    "@form-atoms/upload-atom": {
+      title: "@form-atoms/upload-atom",
+      url: "https://form-atoms.github.io/upload-atom/",
+      expanded: false,
+    },
+  },
 } satisfies StorybookConfig;
